@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Elementia — Explore Every Element | ตารางธาตุ</title>
+<meta name="description" content="Elementia ตารางธาตุออนไลน์ครบ 118 ธาตุ ค้นหาทันที ดูรายละเอียด สุ่มธาตุ สลับภาษา TH/EN | Interactive periodic table of all 118 elements.">
+<meta property="og:title" content="Elementia — Explore Every Element">
+<meta property="og:description" content="ตารางธาตุออนไลน์ 118 ธาตุ ค้นหา สุ่ม และเรียนรู้">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#f6f7f9">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Elementia","description":"Interactive periodic table of the elements","inLanguage":["th","en"]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --ink:#14181f; --muted:#5c6572; --line:#dde1e7;
+  --accent:hsl(222 70% 50%);
+  --accent-text:color-mix(in srgb,var(--accent) 72%,#000);
+  --accent-soft:color-mix(in srgb,var(--accent) 12%,var(--card));
+  --tile-s:58%; --tile-l:90%; --tile-ink:#14181f;
+  --radius:10px;
+  --font:"IBM Plex Sans Thai","Noto Sans Thai","Sarabun",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+:root[data-theme="dark"]{
+  --bg:#0f1217; --card:#171b22; --ink:#eceff4; --muted:#9aa4b2; --line:#2a313c;
+  --accent-text:color-mix(in srgb,var(--accent) 65%,#fff);
+  --tile-s:34%; --tile-l:21%; --tile-ink:#eceff4;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.6;font-size:16px;
+  transition:background-color .35s ease}
+body.themed{background:color-mix(in srgb,var(--accent) 8%,var(--bg))}
+button,input,select{font:inherit;color:inherit}
+option{color:var(--ink);background:var(--card)}
+button{cursor:pointer}
+a{color:var(--accent-text)}
+:focus-visible{outline:3px solid var(--accent-text);outline-offset:2px;border-radius:6px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* header */
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top-in{max-width:1180px;margin:0 auto;padding:.6rem 1rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.6rem .8rem;align-items:center}
+.brand{font-weight:700;font-size:1.25rem;letter-spacing:-.01em;line-height:1.1}
+.brand small{display:block;font-weight:400;font-size:.72rem;color:var(--muted);letter-spacing:0}
+.tools{display:flex;gap:.4rem;align-items:center;flex-wrap:nowrap}
+.btn,.seg button,.ib{white-space:nowrap}
+.btn.icon{min-width:40px;min-height:40px;width:40px;height:40px;padding:0;display:inline-grid;place-items:center;font-size:1.1rem;line-height:1}
+.tools{gap:.35rem;align-items:center}
+.tools .btn,.tools .seg{height:40px;min-height:40px;box-sizing:border-box}
+.tools .btn.primary,#btnRandom{
+  min-width:40px;width:40px;height:40px;padding:0;
+  display:inline-grid;place-items:center;font-size:1.05rem;line-height:1;
+  border-radius:999px;
+}
+.tools .seg{height:40px;align-items:stretch;padding:2px}
+.tools .seg button{
+  min-height:0;height:100%;min-width:36px;padding:0 .7rem;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:.8rem;line-height:1;
+}
+#btnDark{min-width:40px;width:40px;height:40px;padding:0;font-size:1.05rem}
+.search input{min-width:0}
+.btn{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:.4rem .85rem;min-height:40px;
+  transition:transform .15s ease,border-color .15s ease}
+.btn:hover{border-color:var(--accent-text)}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
+.seg button{border:0;background:transparent;padding:.4rem .7rem;min-height:38px;min-width:42px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.search{grid-column:1/-1;position:relative}
+.search input{width:100%;min-height:46px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:.55rem 2.6rem .55rem 2.4rem;font-size:1rem}
+.search .ico{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.search .clear{position:absolute;right:.4rem;top:50%;transform:translateY(-50%);border:0;background:transparent;width:36px;height:36px;border-radius:50%;color:var(--muted)}
+.results{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 12px 32px rgba(0,0,0,.14);max-height:60vh;overflow:auto;padding:.3rem;z-index:30}
+.results[hidden]{display:none}
+.res{display:flex;align-items:center;gap:.7rem;width:100%;text-align:left;border:0;background:transparent;padding:.45rem .6rem;border-radius:8px;min-height:48px}
+.res:hover,.res[aria-selected="true"]{background:var(--accent-soft)}
+.res .sym{width:2.6rem;height:2.6rem;border-radius:8px;display:grid;place-items:center;font-weight:700;
+  background:hsl(var(--h) var(--tile-s) var(--tile-l));color:var(--tile-ink)}
+.res .nm{font-weight:600;line-height:1.25}
+.res .sub{font-size:.85rem;color:var(--muted)}
+.empty{padding:1.2rem;text-align:center;color:var(--muted)}
+
+main{max-width:1180px;margin:0 auto;padding:1rem 1rem 3rem}
+h1.title{font-size:clamp(1.5rem,4.5vw,2.3rem);line-height:1.2;margin:.8rem 0 .3rem;letter-spacing:-.015em}
+p.lead{margin:0 0 1rem;color:var(--muted);max-width:60ch}
+
+/* legend */
+.legend{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 1rem}
+.chip{display:inline-flex;align-items:center;gap:.45rem;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:.25rem .75rem;min-height:36px;font-size:.88rem}
+.chip i{width:.8rem;height:.8rem;border-radius:50%;background:hsl(var(--h) 60% 55%);display:inline-block}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+
+/* table */
+.table-wrap{overflow-x:auto;padding-bottom:.6rem;-webkit-overflow-scrolling:touch}
+.ptable{display:grid;grid-template-columns:repeat(18,minmax(40px,1fr));grid-template-rows:repeat(7,auto) .6rem repeat(2,auto);gap:3px;min-width:780px}
+.tile{position:relative;border:1px solid transparent;border-radius:6px;aspect-ratio:1/1.08;padding:2px 3px;text-align:left;
+  background:hsl(var(--h) var(--tile-s) var(--tile-l));color:var(--tile-ink);display:flex;flex-direction:column;justify-content:space-between;
+  transition:transform .12s ease,opacity .2s ease,box-shadow .12s ease;overflow:hidden}
+.tile:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.16);z-index:2}
+.tile .n{font-size:.62rem;opacity:.75;line-height:1.1}
+.tile .s{font-size:1.15rem;font-weight:700;line-height:1;text-align:center}
+.tile .t{font-size:.56rem;line-height:1.1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile.dim{opacity:.18}
+.tile.hit{outline:2px solid var(--ink);outline-offset:-2px}
+.tile .fav{position:absolute;top:1px;right:3px;font-size:.55rem}
+.ph{border:1px dashed var(--line);border-radius:6px;display:grid;place-items:center;font-size:.6rem;color:var(--muted);text-align:center}
+.hint{font-size:.85rem;color:var(--muted);margin:.4rem 0 0}
+
+/* accordion */
+.acc{margin-top:1rem;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.acc summary{cursor:pointer;list-style:none;padding:.9rem 1rem;font-weight:600;font-size:1.05rem;display:flex;justify-content:space-between;align-items:center;min-height:52px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"";width:9px;height:9px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg);transition:transform .2s;margin:0 .3rem 0 .8rem}
+.acc[open] summary::after{transform:rotate(-135deg)}
+.acc-body{padding:0 1rem 1rem}
+.note{text-wrap:pretty}
+.pill{font-size:.78rem;font-weight:600;color:var(--accent-text);background:var(--accent-soft);border-radius:999px;padding:.1rem .65rem;margin-left:.6rem;white-space:nowrap}
+.acc-body .lead{margin-bottom:.8rem}
+.sheet{overflow-x:hidden}
+.body,.body>*,.card{min-width:0}
+.seg.full{display:flex;width:100%}
+.seg.full button{flex:1 1 0;min-width:0;padding:.55rem .3rem;font-size:.95rem;white-space:normal;line-height:1.25}
+.heatrow{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem .7rem;margin:0 0 .8rem}
+.heatrow label{flex:none;white-space:nowrap;font-size:.9rem;color:var(--muted)}
+.heatrow select{flex:1 1 12rem;min-width:0;max-width:22rem;width:auto;text-overflow:ellipsis;border-radius:12px;padding:.5rem .8rem}
+.heatrow #heatBar{flex:1 1 100%;margin:0}
+.legend{min-width:0}
+@media(min-width:760px) and (max-width:1100px){
+  .heatrow select{max-width:18rem;flex:0 1 18rem}
+  .top-in{padding:.55rem .9rem;gap:.5rem .6rem}
+  .tools{gap:.35rem}
+  .btn.primary{padding:.4rem .7rem}
+}
+.hero2{background:var(--accent-soft)}
+.bignum{font-size:2.3rem;font-weight:700;line-height:1;color:var(--accent-text)}
+.of{color:var(--muted);font-size:1rem;margin-left:.2rem}
+.hero2 .pbar{height:10px;border-radius:5px;margin:.6rem 0 .9rem}
+.hero2 .pbar i{border-radius:5px}
+.stats3 .note{white-space:nowrap;font-size:.78rem}
+.bigbtn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;min-height:54px;font-size:1.1rem}
+.qbox{background:var(--accent-soft);border-radius:16px;padding:1.1rem 1rem;margin:.7rem 0 .9rem;text-align:center}
+.chips2{display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.chip2{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:.2rem .85rem;font-weight:600;font-size:.9rem;white-space:nowrap}
+.timer{font-size:1.25rem;font-weight:700;font-variant-numeric:tabular-nums}
+.opt{display:flex;align-items:center;gap:.7rem}
+.kb{flex:none;width:28px;height:28px;border-radius:8px;background:var(--accent-soft);display:grid;place-items:center;font-weight:700;font-size:.9rem;color:var(--accent-text)}
+.fb{border-radius:14px;padding:.8rem 1rem;margin:.7rem 0}
+.fb.ok{background:color-mix(in srgb,#1f9d55 16%,var(--card));border:1px solid #1f9d55}
+.fb.bad{background:color-mix(in srgb,#d64545 14%,var(--card));border:1px solid #d64545}
+.stack{display:grid;gap:.5rem}
+.stack .btn,.stack select{width:100%;min-height:48px}
+.resbox{text-align:center}
+.resbox .stars{display:flex;justify-content:center;gap:.3rem;color:var(--accent-text)}
+.resbox .stars svg{width:36px;height:36px}
+.bigscore{font-size:2.6rem;font-weight:700;line-height:1.1;margin:.3rem 0}
+#fPrev,#fNext{width:52px;height:52px;min-width:52px;border-radius:50%;padding:0;display:inline-grid;place-items:center}
+.stats3{display:grid;grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:.5rem;text-align:center;margin:0 0 .8rem}
+.stats3 b{display:block;font-size:1.15rem}
+.lbar{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:.4rem}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;width:100%}
+.two .btn{box-sizing:border-box;width:100%;min-width:0;min-height:48px;text-align:center;padding:.4rem .5rem;font-size:.95rem;line-height:1.25;white-space:normal;overflow-wrap:anywhere}
+.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
+.mode{min-width:0;overflow-wrap:anywhere;min-height:60px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:.6rem .8rem;text-align:left;font-weight:600;line-height:1.3}
+.mode:hover{border-color:var(--accent-text)}
+.pbar{height:6px;background:var(--line);border-radius:3px;margin:.5rem 0}
+.pbar i{display:block;height:100%;background:var(--accent);border-radius:3px;transition:width .25s}
+/* lists */
+.sec{margin-top:2rem}
+.sec h2{font-size:1.15rem;margin:0 0 .6rem}
+.row{display:flex;flex-wrap:wrap;gap:.5rem}
+.mini{display:flex;align-items:center;gap:.5rem;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:.35rem .7rem .35rem .35rem;min-height:46px}
+.mini b{width:2.2rem;height:2.2rem;border-radius:7px;display:grid;place-items:center;background:hsl(var(--h) var(--tile-s) var(--tile-l));color:var(--tile-ink)}
+.mini:hover{border-color:var(--accent-text)}
+footer .fdet summary{cursor:pointer;color:var(--accent-text);min-height:32px;display:flex;align-items:center}
+footer .fdet ul{margin:.2rem 0 0;padding-left:1.1rem}
+footer p,footer li{max-width:70ch}
+footer{max-width:1180px;margin:0 auto;padding:1.5rem 1rem 3rem;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
+
+/* sheet */
+.overlay{position:fixed;inset:0;z-index:50;background:color-mix(in srgb,var(--accent) 10%,rgba(10,12,16,.55));display:flex;justify-content:center;align-items:flex-end;
+  animation:fade .2s ease}
+.overlay[hidden]{display:none}
+.sheet{background:var(--bg);width:100%;max-width:920px;max-height:96vh;overflow:auto;border-radius:18px 18px 0 0;overscroll-behavior:contain}
+@media(min-width:760px){.overlay{align-items:center;padding:1.5rem}.sheet{border-radius:18px;max-height:92vh}}
+.bar{position:sticky;top:0;z-index:3;display:flex;gap:.4rem;align-items:center;justify-content:space-between;padding:.6rem .8rem;background:color-mix(in srgb,var(--accent) 6%,var(--bg));border-bottom:1px solid var(--line)}
+.bar .grp{display:flex;gap:.35rem;flex-wrap:wrap}
+.ib{border:1px solid var(--line);background:var(--card);border-radius:999px;min-width:40px;min-height:40px;padding:.2rem .7rem;font-size:.9rem}
+.bar .ib svg,#fPrev svg,#fNext svg{display:block}
+.bar .ib{width:44px;height:44px;min-width:44px;padding:0;display:inline-grid;place-items:center;font-size:1.15rem;line-height:1}
+.bar .grp{gap:.5rem}
+.ib:hover{border-color:var(--accent-text)}
+.ib[aria-pressed="true"]{color:var(--accent-text);border-color:var(--accent-text)}
+.hero{display:grid;grid-template-columns:auto 1fr;gap:1rem;padding:1.2rem 1rem 0;align-items:center}
+.bigsym{width:clamp(96px,26vw,150px);aspect-ratio:1;border-radius:20px;background:var(--accent-soft);border:2px solid var(--accent);
+  display:flex;flex-direction:column;justify-content:space-between;padding:.5rem .7rem;color:var(--accent-text)}
+.bigsym .z{font-size:.95rem;font-weight:600}
+.bigsym{container-type:inline-size}
+.bigsym .sy.l1{font-size:min(4.4rem,58cqw)}
+.bigsym .sy.l2{font-size:min(3.6rem,44cqw)}
+.bigsym .sy.l3{font-size:min(2.9rem,33cqw)}
+.bigsym .sy{font-size:clamp(2.6rem,10vw,4.4rem);font-weight:700;line-height:1;text-align:center;}
+.bigsym .ms{font-size:.8rem;text-align:right;opacity:.85}
+.hero h2{margin:0;font-size:clamp(1.6rem,6vw,2.4rem);line-height:1.15;letter-spacing:-.015em}
+.hero .en{color:var(--muted);font-size:1.05rem}
+.hero .lat{margin-top:.3rem;font-size:.9rem;color:var(--muted)}
+.body{padding:1rem;display:grid;gap:1rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem}
+.card h3{margin:0 0 .6rem;font-size:1rem}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.7rem}
+.kv div span{display:block;font-size:.78rem;color:var(--muted)}
+.kv div b{font-weight:600}
+.txt p{margin:.1rem 0 .7rem;max-width:70ch}
+.txt h4{margin:.8rem 0 .15rem;font-size:.92rem;color:var(--accent-text)}
+.warn{border-left:4px solid var(--accent);padding-left:.7rem}
+.note{font-size:.82rem;color:var(--muted)}
+.stat{padding:.7rem 0;border-top:1px solid var(--line)}
+.stat:first-of-type{border-top:0;padding-top:0}
+.stat .top2{display:flex;justify-content:space-between;gap:.8rem;align-items:baseline;flex-wrap:wrap}
+.stat .lab{font-weight:600}
+.stat .val{font-variant-numeric:tabular-nums}
+.dots{display:inline-flex;gap:4px;vertical-align:middle;margin-right:.4rem}
+.dots i{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--accent-text);display:inline-block}
+.dots i.on{background:var(--accent)}
+.tag{display:inline-block;font-size:.72rem;border:1px solid var(--line);border-radius:999px;padding:0 .5rem;margin-left:.4rem;color:var(--muted)}
+.tag.real{border-color:var(--accent-text);color:var(--accent-text)}
+.fact{display:flex;gap:.8rem;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.links a{display:inline-block;margin:.1rem .8rem .1rem 0}
+.emptybox{border:1px dashed var(--line);border-radius:12px;padding:1rem;color:var(--muted);text-align:center}
+.toast{position:fixed;left:50%;bottom:1.2rem;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.55rem 1rem;border-radius:999px;z-index:80;font-size:.9rem;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+
+.opt{display:block;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:.8rem 1rem;min-height:52px;margin:.45rem 0;font-size:1.05rem;line-height:1.4}
+.opt:disabled{color:var(--ink);opacity:1;cursor:default}
+.opt:hover:not(:disabled){border-color:var(--accent-text)}
+.opt.ok{border-color:#1f9d55;background:color-mix(in srgb,#1f9d55 16%,var(--card))}
+.opt.bad{border-color:#d64545;background:color-mix(in srgb,#d64545 14%,var(--card))}
+.qprompt{font-size:clamp(2rem,9vw,3.4rem);font-weight:700;text-align:center;margin:.6rem 0 1rem;line-height:1.2}
+.fcard{--accent-soft:color-mix(in srgb,var(--accent) 12%,var(--card));--accent-text:color-mix(in srgb,var(--accent) 72%,#000);width:100%;min-height:280px;border:2px solid var(--accent);border-radius:20px;background:var(--accent-soft);text-align:center;padding:1.2rem;display:flex;flex-direction:column;justify-content:center;gap:.3rem;color:var(--ink)}
+:root[data-theme="dark"] .fcard{--accent-text:color-mix(in srgb,var(--accent) 65%,#fff)}
+.fcard .sy{font-size:clamp(4rem,20vw,6rem);font-weight:700;line-height:1;color:var(--accent-text)}
+.fcard .nm{font-size:1.8rem;font-weight:700}
+.badge{font-size:.8rem;color:var(--muted);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:0 .5rem;margin-left:.3rem}
+@media(max-width:520px){.modes{grid-template-columns:minmax(0,1fr)}.mode{min-height:56px}.brand{font-size:1.1rem}.btn .lbl,.ib .lbl{display:none}.btn,.ib{padding:.35rem .6rem}.seg button{padding:.35rem .55rem;min-width:36px}.tools{gap:.3rem}.brand small{display:none}.hero{grid-template-columns:1fr;justify-items:start}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ===== iOS-like glass + motion layer ===== */
+:root{
+  --glass:color-mix(in srgb,var(--card) 72%,transparent);
+  --glass-line:rgba(20,24,31,.09);
+  --glass-hi:rgba(255,255,255,.88);
+  --ease:cubic-bezier(.32,.72,0,1);
+  --spring:cubic-bezier(.22,1,.36,1);
+  --spring-bounce:cubic-bezier(.34,1.3,.64,1);
+  --safe-t:env(safe-area-inset-top,0px);
+  --safe-b:env(safe-area-inset-bottom,0px);
+  --safe-l:env(safe-area-inset-left,0px);
+  --safe-r:env(safe-area-inset-right,0px);
+}
+:root[data-theme="dark"]{--glass-line:rgba(255,255,255,.12);--glass-hi:rgba(255,255,255,.12)}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{padding-left:var(--safe-l);padding-right:var(--safe-r);overscroll-behavior-y:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body.sheet-open{overflow:hidden;touch-action:none}
+button,select,input,a,.tile,.chip,.mini,.mode,.opt,.ib{touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+input,textarea{user-select:text;-webkit-user-select:text}
+header.top{
+  padding-top:var(--safe-t);
+  background:color-mix(in srgb,var(--bg) 72%,transparent);
+  -webkit-backdrop-filter:blur(28px) saturate(1.9);
+  backdrop-filter:blur(28px) saturate(1.9);
+  border-bottom-color:var(--glass-line);
+}
+.bar{
+  position:sticky;top:0;z-index:3;
+  padding:.55rem .8rem calc(.55rem + 2px);
+  padding-top:max(.7rem, calc(var(--safe-t) * .1 + .55rem));
+  background:color-mix(in srgb,var(--bg) 70%,transparent);
+  -webkit-backdrop-filter:blur(28px) saturate(1.9);
+  backdrop-filter:blur(28px) saturate(1.9);
+  border-bottom-color:var(--glass-line);
+}
+.bar::before{
+  content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  width:40px;height:5px;border-radius:100px;
+  background:color-mix(in srgb,var(--ink) 18%,transparent);
+  pointer-events:none;
+}
+.btn:not(.primary),.ib,.seg,.chip:not([aria-pressed="true"]),.chip2,.mini,.mode,.opt:not(.ok):not(.bad){
+  background:var(--glass);border-color:var(--glass-line);
+  box-shadow:inset 0 1px 0 var(--glass-hi),0 1px 6px rgba(0,0,0,.05);
+}
+.card,.acc{
+  border-radius:18px;border-color:var(--glass-line);
+  box-shadow:inset 0 1px 0 var(--glass-hi),0 6px 24px rgba(0,0,0,.06);
+}
+.btn.primary{box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 4px 14px rgba(0,0,0,.16)}
+.results{
+  background:color-mix(in srgb,var(--card) 86%,transparent);
+  -webkit-backdrop-filter:blur(28px) saturate(1.9);
+  backdrop-filter:blur(28px) saturate(1.9);
+  border-color:var(--glass-line);
+}
+.toast{
+  bottom:calc(1.2rem + var(--safe-b));
+  background:color-mix(in srgb,var(--ink) 88%,transparent);
+  -webkit-backdrop-filter:blur(24px) saturate(1.8);
+  backdrop-filter:blur(24px) saturate(1.8);
+  transition:opacity .28s var(--ease),transform .35s var(--spring);
+  will-change:opacity,transform;
+}
+.toast[hidden]{display:block!important;opacity:0;transform:translateX(-50%) translateY(12px) scale(.96);pointer-events:none}
+.toast:not([hidden]){opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+.btn,.ib,.mode,.opt,.tile,.mini,.chip{
+  transition:transform .28s var(--spring),box-shadow .2s var(--ease),border-color .2s,background-color .2s,opacity .2s;
+  -webkit-transform:translateZ(0);transform:translateZ(0);
+}
+.btn:active,.ib:active,.mode:active,.opt:active:not(:disabled),.mini:active,.chip:active{transform:scale(.98)}
+.tile:active{transform:scale(.97)}
+.ib:active{transition-duration:.08s}
+.tile{will-change:transform}
+.seg button{transition:background-color .22s var(--ease),color .22s var(--ease)}
+.overlay{
+  -webkit-backdrop-filter:blur(12px) saturate(1.4);
+  backdrop-filter:blur(12px) saturate(1.4);
+  transition:opacity .32s var(--ease);
+  overscroll-behavior:none;
+}
+.overlay[hidden]{display:none}
+.sheet{
+  will-change:transform;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior:contain;
+  padding-bottom:var(--safe-b);
+  border-top-width:0;
+  box-shadow:0 -8px 40px rgba(0,0,0,.18);
+}
+.sheet.enter{animation:sheetIn .42s var(--spring) both}
+@keyframes sheetIn{from{transform:translate3d(0,100%,0)}to{transform:translate3d(0,0,0)}}
+@keyframes rise{from{transform:translate3d(0,28px,0);opacity:.5}to{transform:none;opacity:1}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.overlay.closing{animation:fadeOut .28s var(--ease) forwards}
+.overlay.closing .sheet{animation:sheetOut .32s cubic-bezier(.4,0,1,1) forwards}
+@keyframes fadeOut{to{opacity:0}}
+@keyframes sheetOut{to{transform:translate3d(0,108%,0)}}
+@keyframes viewIn{from{opacity:0}to{opacity:1}}
+.body.in{animation:viewIn .22s var(--ease) both}
+.body.swap{animation:none}
+@keyframes grow{from{width:0}}
+.body.in .pbar i{animation:grow .65s var(--ease) both}
+@keyframes pop{0%{transform:scale(.94)}60%{transform:scale(1.03)}100%{transform:scale(1)}}
+@keyframes shake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.opt.ok{animation:pop .4s var(--spring-bounce)}
+.opt.bad{animation:shake .38s ease}
+.fb{animation:viewIn .28s var(--ease)}
+.resbox .stars svg{animation:pop .5s var(--spring-bounce) both}
+.resbox .stars svg:nth-child(2){animation-delay:.1s}
+.resbox .stars svg:nth-child(3){animation-delay:.2s}
+.fcard{transition:transform .18s var(--ease);-webkit-transform-style:preserve-3d;transform-style:preserve-3d}
+.fcard.flipOut{transform:perspective(900px) rotateY(90deg)}
+.fcard.flipIn{animation:flipIn .26s var(--ease)}
+@keyframes flipIn{from{transform:perspective(900px) rotateY(-90deg)}to{transform:perspective(900px) rotateY(0)}}
+.table-wrap{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.sheet .body{padding-bottom:calc(1rem + var(--safe-b))}
+@media(min-width:760px){
+  .sheet.enter{animation-name:sheetInDesk}
+  @keyframes sheetInDesk{from{transform:translate3d(0,24px,0) scale(.97);opacity:.6}to{transform:none;opacity:1}}
+  .overlay.closing .sheet{animation-name:sheetOutDesk}
+  @keyframes sheetOutDesk{to{transform:translate3d(0,16px,0) scale(.98);opacity:0}}
+}
+@media(hover:hover) and (pointer:fine){
+  .tile:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.16);z-index:2}
+  .btn:hover,.ib:hover,.mini:hover,.chip:hover{border-color:var(--accent-text)}
+}
+@media(hover:none){
+  .tile:hover{transform:none;box-shadow:none}
+}
+
+/* ===== Professional polish layer ===== */
+:root{
+  --radius-sm:8px; --radius-md:12px; --radius-lg:16px; --radius-xl:22px;
+  --elev-1:0 1px 2px rgba(15,18,23,.04),0 1px 3px rgba(15,18,23,.06);
+  --elev-2:0 4px 16px rgba(15,18,23,.08),0 1px 3px rgba(15,18,23,.04);
+  --elev-3:0 12px 40px rgba(15,18,23,.14),0 2px 8px rgba(15,18,23,.06);
+  --ink-soft:color-mix(in srgb,var(--ink) 78%,var(--muted));
+  --tracking:-.02em;
+}
+:root[data-theme="dark"]{
+  --elev-1:0 1px 2px rgba(0,0,0,.2),0 1px 3px rgba(0,0,0,.15);
+  --elev-2:0 4px 20px rgba(0,0,0,.35),0 1px 4px rgba(0,0,0,.2);
+  --elev-3:0 16px 48px rgba(0,0,0,.45),0 2px 10px rgba(0,0,0,.25);
+  --bg:#0c0f14; --card:#141920; --line:#252b36;
+}
+body{letter-spacing:var(--tracking);text-rendering:optimizeLegibility}
+::selection{background:color-mix(in srgb,var(--accent) 28%,transparent);color:var(--ink)}
+
+/* brand + header */
+.brand{font-size:1.2rem;letter-spacing:-.03em;font-weight:700}
+.brand small{margin-top:.12rem;opacity:.85;letter-spacing:0;font-size:.68rem}
+header.top{border-bottom:1px solid var(--glass-line)}
+.top-in{padding:.7rem 1.1rem;max-width:1120px}
+.search input{
+  border-radius:var(--radius-md);border-color:var(--glass-line);
+  box-shadow:var(--elev-1);min-height:44px;
+  transition:border-color .2s var(--ease),box-shadow .2s var(--ease),background .2s;
+}
+.search input:focus{
+  border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent),var(--elev-1);
+  outline:none;
+}
+.results{border-radius:var(--radius-lg);box-shadow:var(--elev-3);border-color:var(--glass-line);padding:.35rem}
+.res{border-radius:var(--radius-sm);transition:background .15s var(--ease)}
+.res .sym{border-radius:var(--radius-sm);font-variant-numeric:tabular-nums}
+
+/* buttons */
+.btn,.ib{
+  border-radius:999px;font-weight:550;
+  letter-spacing:-.01em;
+  transition:transform .25s var(--spring),box-shadow .2s,border-color .2s,background .2s,opacity .2s;
+}
+.btn{min-height:42px;padding:.42rem .95rem}
+.btn.primary{
+  background:var(--ink);color:var(--bg);border-color:transparent;
+  font-weight:600;letter-spacing:-.015em;
+}
+.btn.primary:hover{filter:brightness(1.06)}
+.seg{border-radius:999px;padding:2px;gap:0;box-shadow:var(--elev-1)}
+.seg button{border-radius:999px;font-size:.82rem;font-weight:650;letter-spacing:.02em;min-height:34px;padding:.3rem .65rem}
+.seg button[aria-pressed="true"]{box-shadow:0 1px 3px rgba(0,0,0,.12)}
+
+/* main typography */
+main{max-width:1120px;padding:1.15rem 1.1rem 3.5rem}
+h1.title{
+  font-size:clamp(1.55rem,4.2vw,2.15rem);font-weight:700;
+  letter-spacing:-.03em;margin:.5rem 0 .2rem;line-height:1.15;
+}
+p.lead{font-size:.95rem;line-height:1.55;color:var(--muted);max-width:52ch;margin:0 0 1.15rem}
+
+/* heat + legend */
+.heatrow{margin:0 0 1rem;gap:.5rem .75rem}
+.heatrow label{font-size:.8rem;font-weight:600;letter-spacing:.01em;text-transform:none;color:var(--muted)}
+.heatrow select{
+  border-radius:var(--radius-md);min-height:42px;font-size:.92rem;
+  box-shadow:var(--elev-1);border-color:var(--glass-line);
+}
+.legend{gap:.35rem;margin:0 0 1.1rem}
+.chip{
+  font-size:.8rem;font-weight:550;min-height:34px;padding:.2rem .7rem;
+  border-radius:999px;letter-spacing:-.01em;
+  transition:transform .22s var(--spring),background .2s,border-color .2s,color .2s;
+}
+.chip i{width:.7rem;height:.7rem;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+
+/* periodic table tiles */
+.ptable{gap:4px}
+.tile{
+  border-radius:var(--radius-sm);
+  border:1px solid color-mix(in srgb,var(--ink) 6%,transparent);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
+  padding:3px 4px;
+}
+:root[data-theme="dark"] .tile{
+  border-color:color-mix(in srgb,#fff 8%,transparent);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+}
+.tile .n{font-size:.58rem;font-weight:500;font-variant-numeric:tabular-nums;opacity:.7;letter-spacing:0}
+.tile .s{font-size:1.12rem;font-weight:700;letter-spacing:-.03em}
+.tile .t{font-size:.52rem;opacity:.85;font-weight:500}
+.tile.hit{outline:2.5px solid var(--ink);outline-offset:-2px;box-shadow:0 0 0 1px var(--bg)}
+.hint{font-size:.8rem;margin:.5rem 0 0;opacity:.9}
+
+/* cards / accordion */
+.card,.acc{
+  border-radius:var(--radius-lg);
+  box-shadow:var(--elev-1);
+  border:1px solid var(--glass-line);
+}
+.card{padding:1.05rem 1.1rem}
+.card h3{
+  font-size:.78rem;font-weight:650;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 .75rem;
+}
+.kv{gap:.85rem .9rem}
+.kv div span{font-size:.72rem;font-weight:500;letter-spacing:.01em;margin-bottom:.15rem}
+.kv div b{font-size:.98rem;font-weight:650;letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.acc summary{font-size:1rem;font-weight:650;letter-spacing:-.015em;padding:1rem 1.1rem}
+.acc-body{padding:0 1.1rem 1.1rem}
+.pill{font-size:.7rem;letter-spacing:.02em;padding:.15rem .55rem}
+
+/* sheet detail */
+.sheet{
+  border-radius:20px 20px 0 0;
+  box-shadow:var(--elev-3);
+  max-width:880px;
+}
+@media(min-width:760px){.sheet{border-radius:var(--radius-xl)}}
+.bar{padding:.65rem .9rem .55rem}
+.bar .ib{
+  width:42px;height:42px;min-width:42px;
+  box-shadow:var(--elev-1);
+}
+.hero{padding:1rem 1.1rem 0;gap:.95rem}
+.bigsym{
+  width:clamp(88px,24vw,132px);border-radius:18px;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 35%,transparent),var(--elev-1);
+}
+.bigsym .z{font-variant-numeric:tabular-nums;font-weight:600;opacity:.9}
+.bigsym .sy{letter-spacing:-.04em}
+.bigsym .ms{font-variant-numeric:tabular-nums;font-size:.75rem}
+.hero h2{font-size:clamp(1.45rem,5vw,2.1rem);letter-spacing:-.03em;font-weight:700}
+.hero .en{font-size:.95rem;letter-spacing:-.01em}
+.hero .lat{font-size:.82rem}
+.body{padding:1rem 1.1rem 1.4rem;gap:1rem}
+.txt h4{font-size:.8rem;font-weight:650;letter-spacing:.03em;text-transform:uppercase;margin:.9rem 0 .2rem}
+.txt p{line-height:1.55;font-size:.95rem}
+.note{font-size:.78rem;line-height:1.45}
+.warn{border-left-width:3px;padding-left:.85rem}
+
+/* learn / quiz polish */
+.mode{
+  border-radius:var(--radius-md);min-height:56px;padding:.65rem .85rem;
+  font-size:.92rem;font-weight:600;letter-spacing:-.015em;
+  box-shadow:var(--elev-1);transition:transform .25s var(--spring),border-color .2s,box-shadow .2s;
+}
+.mode:hover{box-shadow:var(--elev-2)}
+.qbox{border-radius:var(--radius-lg);padding:1.2rem 1rem}
+.qprompt{letter-spacing:-.03em}
+.opt{
+  border-radius:var(--radius-md);font-size:1rem;font-weight:500;
+  box-shadow:var(--elev-1);transition:transform .22s var(--spring),border-color .2s,background .2s;
+}
+.kb{border-radius:7px;font-variant-numeric:tabular-nums}
+.fcard{border-radius:var(--radius-xl);border-width:1.5px;min-height:260px}
+.bigbtn{min-height:50px;font-size:1.05rem;font-weight:650;letter-spacing:-.015em;border-radius:999px}
+.pbar{height:5px;border-radius:100px;overflow:hidden}
+.pbar i{border-radius:100px}
+.chip2{font-size:.82rem;font-weight:600;box-shadow:var(--elev-1)}
+.resbox .bigscore{letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.mini{border-radius:var(--radius-md);box-shadow:var(--elev-1);transition:border-color .2s,transform .22s var(--spring)}
+.mini b{border-radius:7px;font-weight:700}
+
+/* footer */
+footer{
+  max-width:1120px;padding:2rem 1.1rem 3.5rem;
+  font-size:.8rem;line-height:1.5;color:var(--muted);
+  border-top-color:var(--glass-line);
+}
+footer .fdet summary{font-weight:600;color:var(--accent-text)}
+
+/* toast */
+.toast{
+  font-size:.85rem;font-weight:550;letter-spacing:-.01em;
+  padding:.6rem 1.15rem;box-shadow:var(--elev-3);
+}
+
+/* section headers */
+.sec{margin-top:2.25rem}
+.sec h2{font-size:.95rem;font-weight:650;letter-spacing:-.015em;margin:0 0 .7rem}
+
+/* subtle focus ring */
+:focus-visible{outline:2.5px solid var(--accent-text);outline-offset:2px;border-radius:8px}
+
+/* desktop sheet */
+@media(min-width:760px){
+  .overlay{padding:2rem}
+  .sheet{max-height:90vh}
+}
+
+
+
+/* tools bar equal height */
+.tools{display:flex;align-items:center;gap:.35rem}
+.tools > .btn,
+.tools > #btnRandom,
+.tools > #btnDark,
+.tools > #btnLang{
+  width:40px;height:40px;min-width:40px;min-height:40px;padding:0;
+  display:inline-grid;place-items:center;font-size:1.05rem;line-height:1;
+  border-radius:999px;flex:none;
+}
+#btnLang{font-size:.72rem;font-weight:700;letter-spacing:.02em}
+</style>
+</head>
+<body>
+<a class="sr" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-in">
+    <div class="brand">Elementia<small id="tagline"></small></div>
+    <div class="tools">
+      <button class="btn primary icon" id="btnRandom" type="button"></button>
+      <button class="btn icon" id="btnLang" type="button" aria-label="Language">TH</button>
+      <button class="btn icon" id="btnDark" aria-pressed="false"></button>
+    </div>
+    <div class="search">
+      <span class="ico" aria-hidden="true">⌕</span>
+      <label class="sr" for="q" id="qLabel"></label>
+      <input id="q" type="search" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list">
+      <button class="clear" id="qClear" hidden aria-label="Clear">✕</button>
+      <div class="results" id="results" role="listbox" hidden></div>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <h1 class="title" id="h1"></h1>
+  <p class="lead" id="lead"></p>
+  <div class="heatrow"><label for="heat" id="heatL"></label><select id="heat" class="btn"></select><span id="heatBar" class="note"></span></div>
+  <div class="legend" id="legend" role="group"></div>
+  <div class="table-wrap"><div class="ptable" id="ptable"></div></div>
+  <p class="hint" id="hint"></p>
+
+  <details class="acc" id="accLearn" open><summary><span><span id="learnH"></span><span class="pill" id="learnPill"></span></span></summary><div class="acc-body"><p class="lead" id="learnP"></p><div class="two"><button class="btn primary" id="btnQuick"></button><button class="btn" id="btnLearn"></button></div></div></details>
+  <section class="sec" aria-labelledby="favH"><h2 id="favH"></h2><div class="row" id="favList"></div></section>
+  <section class="sec" aria-labelledby="recH"><h2 id="recH"></h2><div class="row" id="recList"></div></section>
+</main>
+<footer id="foot"></footer>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" tabindex="-1"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+"use strict";
+/* ============ DATA ============
+ แหล่งข้อมูลหลัก: เลขอะตอม/สัญลักษณ์/ชื่อ/มวลอะตอม (IUPAC/CIAAW ค่าย่อ).
+ [ ] = เลขมวลของไอโซโทปที่มีอายุยาวที่สุด (ธาตุที่ไม่มีมวลมาตรฐาน)
+ รูปแบบ: Z|Symbol|English|ไทย|mass|category|phase */
+const RAW = `1|H|Hydrogen|ไฮโดรเจน|1.008|nm|g
+2|He|Helium|ฮีเลียม|4.0026|ng|g
+3|Li|Lithium|ลิเทียม|6.94|ak|s
+4|Be|Beryllium|เบริลเลียม|9.0122|ae|s
+5|B|Boron|โบรอน|10.81|md|s
+6|C|Carbon|คาร์บอน|12.011|nm|s
+7|N|Nitrogen|ไนโตรเจน|14.007|nm|g
+8|O|Oxygen|ออกซิเจน|15.999|nm|g
+9|F|Fluorine|ฟลูออรีน|18.998|hl|g
+10|Ne|Neon|นีออน|20.180|ng|g
+11|Na|Sodium|โซเดียม|22.990|ak|s
+12|Mg|Magnesium|แมกนีเซียม|24.305|ae|s
+13|Al|Aluminium|อะลูมิเนียม|26.982|pt|s
+14|Si|Silicon|ซิลิคอน|28.085|md|s
+15|P|Phosphorus|ฟอสฟอรัส|30.974|nm|s
+16|S|Sulfur|กำมะถัน|32.06|nm|s
+17|Cl|Chlorine|คลอรีน|35.45|hl|g
+18|Ar|Argon|อาร์กอน|39.95|ng|g
+19|K|Potassium|โพแทสเซียม|39.098|ak|s
+20|Ca|Calcium|แคลเซียม|40.078|ae|s
+21|Sc|Scandium|สแกนเดียม|44.956|tm|s
+22|Ti|Titanium|ไทเทเนียม|47.867|tm|s
+23|V|Vanadium|วาเนเดียม|50.942|tm|s
+24|Cr|Chromium|โครเมียม|51.996|tm|s
+25|Mn|Manganese|แมงกานีส|54.938|tm|s
+26|Fe|Iron|เหล็ก|55.845|tm|s
+27|Co|Cobalt|โคบอลต์|58.933|tm|s
+28|Ni|Nickel|นิกเกิล|58.693|tm|s
+29|Cu|Copper|ทองแดง|63.546|tm|s
+30|Zn|Zinc|สังกะสี|65.38|tm|s
+31|Ga|Gallium|แกลเลียม|69.723|pt|s
+32|Ge|Germanium|เจอร์เมเนียม|72.630|md|s
+33|As|Arsenic|สารหนู|74.922|md|s
+34|Se|Selenium|ซีลีเนียม|78.971|nm|s
+35|Br|Bromine|โบรมีน|79.904|hl|l
+36|Kr|Krypton|คริปทอน|83.798|ng|g
+37|Rb|Rubidium|รูบิเดียม|85.468|ak|s
+38|Sr|Strontium|สตรอนเชียม|87.62|ae|s
+39|Y|Yttrium|อิตเทรียม|88.906|tm|s
+40|Zr|Zirconium|เซอร์โคเนียม|91.224|tm|s
+41|Nb|Niobium|ไนโอเบียม|92.906|tm|s
+42|Mo|Molybdenum|โมลิบดีนัม|95.95|tm|s
+43|Tc|Technetium|เทคนีเชียม|[98]|tm|s
+44|Ru|Ruthenium|รูเทเนียม|101.07|tm|s
+45|Rh|Rhodium|โรเดียม|102.91|tm|s
+46|Pd|Palladium|แพลเลเดียม|106.42|tm|s
+47|Ag|Silver|เงิน|107.87|tm|s
+48|Cd|Cadmium|แคดเมียม|112.41|tm|s
+49|In|Indium|อินเดียม|114.82|pt|s
+50|Sn|Tin|ดีบุก|118.71|pt|s
+51|Sb|Antimony|พลวง|121.76|md|s
+52|Te|Tellurium|เทลลูเรียม|127.60|md|s
+53|I|Iodine|ไอโอดีน|126.90|hl|s
+54|Xe|Xenon|ซีนอน|131.29|ng|g
+55|Cs|Caesium|ซีเซียม|132.91|ak|s
+56|Ba|Barium|แบเรียม|137.33|ae|s
+57|La|Lanthanum|แลนทานัม|138.91|ln|s
+58|Ce|Cerium|ซีเรียม|140.12|ln|s
+59|Pr|Praseodymium|เพรซีโอดิเมียม|140.91|ln|s
+60|Nd|Neodymium|นีโอดิเมียม|144.24|ln|s
+61|Pm|Promethium|โพรมีเทียม|[145]|ln|s
+62|Sm|Samarium|ซาแมเรียม|150.36|ln|s
+63|Eu|Europium|ยูโรเพียม|151.96|ln|s
+64|Gd|Gadolinium|แกโดลิเนียม|157.25|ln|s
+65|Tb|Terbium|เทอร์เบียม|158.93|ln|s
+66|Dy|Dysprosium|ดิสโพรเซียม|162.50|ln|s
+67|Ho|Holmium|โฮลเมียม|164.93|ln|s
+68|Er|Erbium|เออร์เบียม|167.26|ln|s
+69|Tm|Thulium|ทูเลียม|168.93|ln|s
+70|Yb|Ytterbium|อิตเทอร์เบียม|173.05|ln|s
+71|Lu|Lutetium|ลูทีเชียม|174.97|ln|s
+72|Hf|Hafnium|แฮฟเนียม|178.49|tm|s
+73|Ta|Tantalum|แทนทาลัม|180.95|tm|s
+74|W|Tungsten|ทังสเตน|183.84|tm|s
+75|Re|Rhenium|รีเนียม|186.21|tm|s
+76|Os|Osmium|ออสเมียม|190.23|tm|s
+77|Ir|Iridium|อิริเดียม|192.22|tm|s
+78|Pt|Platinum|แพลทินัม|195.08|tm|s
+79|Au|Gold|ทองคำ|196.97|tm|s
+80|Hg|Mercury|ปรอท|200.59|tm|l
+81|Tl|Thallium|แทลเลียม|204.38|pt|s
+82|Pb|Lead|ตะกั่ว|207.2|pt|s
+83|Bi|Bismuth|บิสมัท|208.98|pt|s
+84|Po|Polonium|พอโลเนียม|[209]|pt|s
+85|At|Astatine|แอสทาทีน|[210]|hl|u
+86|Rn|Radon|เรดอน|[222]|ng|g
+87|Fr|Francium|แฟรนเซียม|[223]|ak|u
+88|Ra|Radium|เรเดียม|[226]|ae|s
+89|Ac|Actinium|แอกทิเนียม|[227]|ac|s
+90|Th|Thorium|ทอเรียม|232.04|ac|s
+91|Pa|Protactinium|โพรแทกทิเนียม|231.04|ac|s
+92|U|Uranium|ยูเรเนียม|238.03|ac|s
+93|Np|Neptunium|เนปทูเนียม|[237]|ac|s
+94|Pu|Plutonium|พลูโทเนียม|[244]|ac|s
+95|Am|Americium|อะเมริเซียม|[243]|ac|s
+96|Cm|Curium|คูเรียม|[247]|ac|s
+97|Bk|Berkelium|เบอร์คีเลียม|[247]|ac|s
+98|Cf|Californium|แคลิฟอร์เนียม|[251]|ac|s
+99|Es|Einsteinium|ไอน์สไตเนียม|[252]|ac|s
+100|Fm|Fermium|เฟอร์เมียม|[257]|ac|u
+101|Md|Mendelevium|เมนเดลีเวียม|[258]|ac|u
+102|No|Nobelium|โนเบเลียม|[259]|ac|u
+103|Lr|Lawrencium|ลอว์เรนเซียม|[266]|ac|u
+104|Rf|Rutherfordium|รัทเทอร์ฟอร์เดียม|[267]|tm|u
+105|Db|Dubnium|ดุบเนียม|[268]|tm|u
+106|Sg|Seaborgium|ซีบอร์เกียม|[269]|tm|u
+107|Bh|Bohrium|โบห์เรียม|[270]|tm|u
+108|Hs|Hassium|ฮาสเซียม|[277]|tm|u
+109|Mt|Meitnerium|ไมต์เนเรียม|[278]|tm|u
+110|Ds|Darmstadtium|ดาร์มสตัดเทียม|[281]|tm|u
+111|Rg|Roentgenium|เรินต์เกเนียม|[282]|tm|u
+112|Cn|Copernicium|โคเปอร์นิเซียม|[285]|tm|u
+113|Nh|Nihonium|นิโฮเนียม|[286]|pt|u
+114|Fl|Flerovium|เฟลโรเวียม|[289]|pt|u
+115|Mc|Moscovium|มอสโกเวียม|[290]|pt|u
+116|Lv|Livermorium|ลิเวอร์มอเรียม|[293]|pt|u
+117|Ts|Tennessine|เทนเนสซีน|[294]|hl|u
+118|Og|Oganesson|ออกาเนสซอน|[294]|ng|u`;
+
+const CATS = { // hue ใช้เฉพาะการแบ่งสีหมวดหมู่
+  ak:{h:8},  ae:{h:30}, tm:{h:48}, pt:{h:150}, md:{h:172},
+  nm:{h:200}, hl:{h:228}, ng:{h:275}, ln:{h:318}, ac:{h:345}
+};
+
+function position(z){
+  if(z===1) return [1,1]; if(z===2) return [1,18];
+  if(z<=4) return [2,z-2]; if(z<=10) return [2,z+8];
+  if(z<=12) return [3,z-10]; if(z<=18) return [3,z];
+  if(z<=36) return [4,z-18]; if(z<=54) return [5,z-36];
+  if(z<=56) return [6,z-54]; if(z<=71) return [9,z-54];
+  if(z<=86) return [6,z-68]; if(z<=88) return [7,z-86];
+  if(z<=103) return [10,z-86]; return [7,z-100];
+}
+const EL = RAW.split("\n").map(l=>{
+  const [z,sym,en,th,mass,cat,phase]=l.split("|"); const Z=+z;
+  return {z:Z,sym,en,th,mass,cat,phase,pos:position(Z)};
+});
+const BY_SYM = Object.fromEntries(EL.map(e=>[e.sym.toLowerCase(),e]));
+
+/* ---- ค่าทางวิทยาศาสตร์ (เฉพาะที่มีข้อมูล ไม่เดา) ---- */
+// อิเล็กโทรเนกาติวิตี (Pauling) — ธาตุที่ไม่มีค่าจะไม่แสดง
+const EN_PAULING = {1:2.20,3:0.98,4:1.57,5:2.04,6:2.55,7:3.04,8:3.44,9:3.98,11:0.93,12:1.31,13:1.61,14:1.90,15:2.19,16:2.58,17:3.16,
+ 19:0.82,20:1.00,21:1.36,22:1.54,23:1.63,24:1.66,25:1.55,26:1.83,27:1.88,28:1.91,29:1.90,30:1.65,31:1.81,32:2.01,33:2.18,34:2.55,35:2.96,36:3.00,
+ 37:0.82,38:0.95,39:1.22,40:1.33,41:1.6,42:2.16,43:1.9,44:2.2,45:2.28,46:2.20,47:1.93,48:1.69,49:1.78,50:1.96,51:2.05,52:2.1,53:2.66,54:2.6,
+ 55:0.79,56:0.89,57:1.10,58:1.12,59:1.13,60:1.14,62:1.17,64:1.2,66:1.22,67:1.23,68:1.24,69:1.25,71:1.27,72:1.3,73:1.5,74:2.36,75:1.9,76:2.2,77:2.20,78:2.28,79:2.54,80:2.00,
+ 81:1.62,82:2.33,83:2.02,84:2.0,85:2.2,88:0.9,89:1.1,90:1.3,91:1.5,92:1.38,93:1.36,94:1.28};
+// สัดส่วนในเปลือกโลก (ppm โดยมวล) ค่าโดยประมาณตามตาราง CRC Handbook — ต่างกันเล็กน้อยได้ตามแหล่ง
+const CRUST_PPM = {O:461000,Si:282000,Al:82300,Fe:56300,Ca:41500,Na:23600,Mg:23300,K:20900,Ti:5650,H:1400,P:1050,Mn:950,F:585,S:350,C:200,Cl:145,Cr:102,Ni:84,Zn:70,Cu:60,Li:20,N:19,Pb:14,Sn:2.3,U:2.7,Hg:0.085,Ag:0.075,Pt:0.005,Au:0.004};
+// สภาพนำไฟฟ้าที่ ~20 °C (S/m)
+const COND = {Ag:6.30e7,Cu:5.96e7,Au:4.10e7,Al:3.77e7,Fe:1.00e7,Zn:1.69e7,Ni:1.43e7,Sn:9.17e6,Pb:4.8e6,Pt:9.4e6,W:1.89e7,Li:1.08e7,Na:2.10e7,K:1.39e7,Mg:2.26e7,Ti:2.38e6,Hg:1.04e6};
+// ความแข็งโมห์ส (Mohs) — เฉพาะธาตุที่มีค่ามาตรฐานชัดเจน (CRC Handbook / Wikipedia)
+const MOHS={Li:.6,Na:.5,K:.4,Rb:.3,Cs:.2,Mg:2.5,Ca:1.75,Sr:1.5,Ba:1.25,Al:2.75,Ga:1.5,In:1.2,Sn:1.5,Pb:1.5,Bi:2.25,Zn:2.5,Cd:2,Cu:3,Ag:2.5,Au:2.5,Pt:3.5,Pd:4.75,Fe:4,Co:5,Ni:4,Mn:6,Ti:6,Zr:5,V:7,Nb:6,Mo:5.5,Ta:6.5,W:7.5,Re:7,Os:7,Ir:6.5,Rh:6,Ru:6.5,Cr:8.5,Be:5.5,B:9.3,Si:6.5,Ge:6,Sb:3,Se:2,Te:2.25,Tl:1.2,Hf:5.5,La:2.5,Ce:2.5,Th:3,U:6};
+function scoreHard(m){return m>=7?5:m>=5?4:m>=3?3:m>=1.5?2:1}
+// ความหนาแน่น (g/cm³ ที่สภาวะมาตรฐาน), จุดหลอมเหลว/จุดเดือด (K) — ชุดข้อมูลตารางธาตุจาก Wikipedia
+// ไม่ใส่ค่าประมาณ/ค่าคาดการณ์ (ที่อยู่ในวงเล็บในแหล่งข้อมูล) และธาตุที่ค่าขึ้นกับรูปแบบมาก (C, As จุดหลอม/เดือด)
+const PHYS={}; `1|0.00008988|14.01|20.28
+2|0.0001785||4.22
+3|0.534|453.69|1560
+4|1.85|1560|2742
+5|2.34|2349|4200
+7|0.0012506|63.15|77.36
+8|0.001429|54.36|90.2
+9|0.001696|53.53|85.03
+10|0.0008999|24.56|27.07
+11|0.971|370.87|1156
+12|1.738|923|1363
+13|2.698|933.47|2792
+14|2.3296|1687|3538
+15|1.82|317.3|550
+16|2.067|388.36|717.87
+17|0.003214|171.6|239.11
+18|0.0017837|83.8|87.3
+19|0.862|336.53|1032
+20|1.54|1115|1757
+21|2.989|1814|3109
+22|4.54|1941|3560
+23|6.11|2183|3680
+24|7.15|2180|2944
+25|7.44|1519|2334
+26|7.874|1811|3134
+27|8.86|1768|3200
+28|8.912|1728|3186
+29|8.96|1357.77|2835
+30|7.134|692.88|1180
+31|5.907|302.9146|2673
+32|5.323|1211.4|3106
+33|5.776||
+34|4.809|453|958
+35|3.122|265.8|332
+36|0.003733|115.79|119.93
+37|1.532|312.46|961
+38|2.64|1050|1655
+39|4.469|1799|3609
+40|6.506|2128|4682
+41|8.57|2750|5017
+42|10.22|2896|4912
+43|11.5|2430|4538
+44|12.37|2607|4423
+45|12.41|2237|3968
+46|12.02|1828.05|3236
+47|10.501|1234.93|2435
+48|8.69|594.22|1040
+49|7.31|429.75|2345
+50|7.287|505.08|2875
+51|6.685|903.78|1860
+52|6.232|722.66|1261
+53|4.93|386.85|457.4
+54|0.005887|161.4|165.03
+55|1.873|301.59|944
+56|3.594|1000|2170
+57|6.145|1193|3737
+58|6.77|1068|3716
+59|6.773|1208|3793
+60|7.007|1297|3347
+61|7.26|1315|3273
+62|7.52|1345|2067
+63|5.243|1099|1802
+64|7.895|1585|3546
+65|8.229|1629|3503
+66|8.55|1680|2840
+67|8.795|1734|2993
+68|9.066|1802|3141
+69|9.321|1818|2223
+70|6.965|1097|1469
+71|9.84|1925|3675
+72|13.31|2506|4876
+73|16.654|3290|5731
+74|19.25|3695|5828
+75|21.02|3459|5869
+76|22.61|3306|5285
+77|22.56|2719|4701
+78|21.46|2041.4|4098
+79|19.282|1337.33|3129
+80|13.5336|234.43|629.88
+81|11.85|577|1746
+82|11.342|600.61|2022
+83|9.807|544.7|1837
+84|9.32|527|1235
+86|0.00973|202|211.3
+88|5.5|973|2010
+89|10.07|1323|3471
+90|11.72|2115|5061
+91|15.37|1841|4300
+92|18.95|1405.3|4404
+93|20.45|917|4273
+94|19.84|912.5|3501
+95|13.69|1449|2880
+96|13.51|1613|3383
+97|14.79|1259|2900
+98|15.1|1173|
+99|8.84|1133|`.split("\n").forEach(l=>{const [z,d,m,b]=l.split("|");PHYS[+z]={d:d?+d:null,mp:m?+m:null,bp:b?+b:null}});
+// ค่าพิเศษที่ต้องระบุเงื่อนไข (ไม่ใช่จุดหลอมเหลว/เดือดที่ความดันปกติ)
+const SPECIAL={2:{mp:{th:"0.95 K ที่ความดัน 25 บรรยากาศ (ไม่แข็งตัวที่ความดันปกติ)",en:"0.95 K at 25 atm (does not solidify at normal pressure)"}},
+ 6:{mp:{th:"ไม่หลอมเหลวที่ความดันปกติ",en:"Does not melt at normal pressure"},bp:{th:"ระเหิดที่ประมาณ 3,900 K (ราว 3,600 °C)",en:"Sublimes at about 3,900 K (about 3,600 °C)"}},
+ 33:{mp:{th:"1090 K (817 °C) ที่ความดันสูงประมาณ 36 บรรยากาศ",en:"1090 K (817 °C) at about 36 atm"},bp:{th:"ระเหิดที่ 887 K (614 °C)",en:"Sublimes at 887 K (614 °C)"}}};
+function physTxt(e,key){return fmtK((PHYS[e.z]||{})[key])||((SPECIAL[e.z]||{})[key]||{})[state.lang]||T().noData}
+function fmtK(k){return k==null?null:`${+k.toFixed(2)} K (${Math.round(k-273.15)} °C)`}
+function fmtD(d){return d==null?null:d<0.01?`${+(d*1000).toPrecision(4)} g/L`:`${d} g/cm³`}
+Object.assign(CRUST_PPM,{He:0.008,Ar:3.5,Ne:0.005,Be:2.8,B:10,Sc:22,V:120,Co:25,Ga:19,Ge:1.5,As:1.8,Se:0.05,Br:2.4,Rb:90,Sr:370,Y:33,Zr:165,Nb:20,Mo:1.2,Ru:0.001,Rh:0.001,Pd:0.015,Cd:0.159,In:0.25,Sb:0.2,Te:0.001,I:0.45,Cs:3,Ba:425,La:39,Ce:66.5,Pr:9.2,Nd:41.5,Sm:7.05,Eu:2,Gd:6.2,Tb:1.2,Dy:5.2,Ho:1.3,Er:3.5,Tm:0.52,Yb:3.2,Lu:0.8,Hf:3,Ta:2,W:1.3,Re:0.0007,Os:0.002,Ir:0.001,Tl:0.85,Bi:0.009,Th:9.6});
+// ปีและผู้ค้นพบ: Jefferson Lab (Who discovered the elements) แก้การสะกดชื่อบุคคลบางชื่อ; ธาตุ 107 และ 113 ปรับตามที่ IUPAC/ห้องปฏิบัติการผู้ค้นพบรับรอง
+// ปีว่าง = รู้จักมาตั้งแต่สมัยโบราณ
+const DISC={}; `1|1766|Henry Cavendish
+2|1868|Pierre Janssen
+3|1817|Johan August Arfwedson
+4|1798|Louis-Nicolas Vauquelin
+5|1808|Joseph Louis Gay-Lussac, Louis Jacques Thénard, Humphry Davy
+6||
+7|1772|Daniel Rutherford
+8|1774|Joseph Priestley
+9|1886|Henri Moissan
+10|1898|William Ramsay, Morris Travers
+11|1807|Humphry Davy
+12|1808|Humphry Davy
+13|1825|Hans Christian Ørsted
+14|1824|Jöns Jacob Berzelius
+15|1669|Hennig Brand
+16||
+17|1774|Carl Wilhelm Scheele
+18|1894|William Ramsay, Lord Rayleigh
+19|1807|Humphry Davy
+20|1808|Humphry Davy
+21|1879|Lars Fredrik Nilson
+22|1791|William Gregor
+23|1801 / 1830|Andrés Manuel del Río, Nils Gabriel Sefström
+24|1797|Louis-Nicolas Vauquelin
+25|1774|Johan Gottlieb Gahn
+26||
+27|1739|Georg Brandt
+28|1751|Axel Fredrik Cronstedt
+29||
+30||
+31|1875|Paul-Émile Lecoq de Boisbaudran
+32|1886|Clemens Winkler
+33||
+34|1817|Jöns Jacob Berzelius
+35|1826|Antoine-Jérôme Balard
+36|1898|William Ramsay, Morris Travers
+37|1861|Robert Bunsen, Gustav Kirchhoff
+38|1790|Adair Crawford
+39|1789|Johan Gadolin
+40|1789|Martin Heinrich Klaproth
+41|1801|Charles Hatchett
+42|1778|Carl Wilhelm Scheele
+43|1937|Carlo Perrier, Emilio Segrè
+44|1844|Karl Ernst Claus
+45|1803|William Hyde Wollaston
+46|1803|William Hyde Wollaston
+47||
+48|1817|Friedrich Stromeyer
+49|1863|Ferdinand Reich, Hieronymus Theodor Richter
+50||
+51||
+52|1782|Franz-Joseph Müller von Reichenstein
+53|1811|Bernard Courtois
+54|1898|William Ramsay, Morris Travers
+55|1860|Robert Bunsen, Gustav Kirchhoff
+56|1808|Humphry Davy
+57|1839|Carl Gustaf Mosander
+58|1803|Jöns Jacob Berzelius, Wilhelm Hisinger, Martin Heinrich Klaproth
+59|1885|Carl Auer von Welsbach
+60|1885|Carl Auer von Welsbach
+61|1944|Jacob Marinsky, Lawrence Glendenin, Charles Coryell
+62|1853|Jean Charles Galissard de Marignac
+63|1896|Eugène-Anatole Demarçay
+64|1880|Jean Charles Galissard de Marignac
+65|1843|Carl Gustaf Mosander
+66|1886|Paul-Émile Lecoq de Boisbaudran
+67|1879|Per Teodor Cleve
+68|1843|Carl Gustaf Mosander
+69|1879|Per Teodor Cleve
+70|1878|Jean Charles Galissard de Marignac
+71|1907|Georges Urbain
+72|1923|Dirk Coster, George de Hevesy
+73|1802|Anders Gustaf Ekeberg
+74|1783|Juan José Elhuyar, Fausto Elhuyar
+75|1925|Ida Tacke, Walter Noddack, Otto Berg
+76|1803|Smithson Tennant
+77|1803|Smithson Tennant
+78|1735|Antonio de Ulloa
+79||
+80||
+81|1861|William Crookes
+82||
+83|1753|Claude François Geoffroy
+84|1898|Marie Curie
+85|1940|Dale Corson, Kenneth MacKenzie, Emilio Segrè
+86|1900|Friedrich Ernst Dorn
+87|1939|Marguerite Perey
+88|1898|Marie Curie, Pierre Curie
+89|1899|André-Louis Debierne
+90|1828|Jöns Jacob Berzelius
+91|1913|Kasimir Fajans, Oswald Göhring
+92|1789|Martin Heinrich Klaproth
+93|1940|Edwin McMillan, Philip Abelson
+94|1941|Glenn Seaborg, Joseph Kennedy, Edwin McMillan, Arthur Wahl
+95|1944|Glenn Seaborg, Ralph James, Leon Morgan, Albert Ghiorso
+96|1944|Glenn Seaborg, Ralph James, Albert Ghiorso
+97|1949|Stanley Thompson, Glenn Seaborg, Kenneth Street Jr., Albert Ghiorso
+98|1950|Stanley Thompson, Kenneth Street Jr., Albert Ghiorso, Glenn Seaborg
+99|1952|Albert Ghiorso et al.
+100|1952|Albert Ghiorso et al.
+101|1955|Albert Ghiorso, Glenn Seaborg et al.
+102|1958|Albert Ghiorso, Glenn Seaborg, Torbjørn Sikkeland, John Walton
+103|1961|Albert Ghiorso, Torbjørn Sikkeland, Almon Larsh, Robert Latimer
+104|1964 / 1969|Dubna (JINR) team; Albert Ghiorso et al.
+105|1967 / 1970|Dubna (JINR) team; Lawrence Berkeley Laboratory
+106|1974|Albert Ghiorso et al.
+107|1981|Peter Armbruster, Gottfried Münzenberg et al. (GSI)
+108|1984|Peter Armbruster, Gottfried Münzenberg et al. (GSI)
+109|1982|Peter Armbruster, Gottfried Münzenberg et al. (GSI)
+110|1994|Peter Armbruster, Gottfried Münzenberg et al. (GSI)
+111|1994|Peter Armbruster, Gottfried Münzenberg et al. (GSI)
+112|1996|Peter Armbruster, Gottfried Münzenberg et al. (GSI)
+113|2004|Kosuke Morita et al. (RIKEN)
+114|1998|Dubna (JINR) team with Lawrence Livermore scientists
+115|2004|Yuri Oganessian et al. (Dubna)
+116|2001|Dubna (JINR) team with Lawrence Livermore scientists
+117|2010|Yuri Oganessian et al. (Dubna)
+118|2006|Yuri Oganessian et al. (Dubna)`.split("\n").forEach(l=>{const [z,y,w]=l.split("|");DISC[+z]={y:y||null,w:w||null}});
+// การจัดเรียงอิเล็กตรอนตามชั้น: เติมตามลำดับ Madelung + ข้อยกเว้น 20 ธาตุ ตรงกับตาราง 1728 Software Systems (shells.htm)
+const ORB=[[1,2],[2,2],[2,6],[3,2],[3,6],[4,2],[3,10],[4,6],[5,2],[4,10],[5,6],[6,2],[4,14],[5,10],[6,6],[7,2],[5,14],[6,10],[7,6]];
+const SHELL_EXC={24:[2,8,13,1],29:[2,8,18,1],41:[2,8,18,12,1],42:[2,8,18,13,1],44:[2,8,18,15,1],45:[2,8,18,16,1],46:[2,8,18,18],47:[2,8,18,18,1],57:[2,8,18,18,9,2],58:[2,8,18,19,9,2],64:[2,8,18,25,9,2],78:[2,8,18,32,17,1],79:[2,8,18,32,18,1],89:[2,8,18,32,18,9,2],90:[2,8,18,32,18,10,2],91:[2,8,18,32,20,9,2],92:[2,8,18,32,21,9,2],93:[2,8,18,32,22,9,2],96:[2,8,18,32,25,9,2],103:[2,8,18,32,32,8,3]};
+function shells(z){ if(SHELL_EXC[z]) return SHELL_EXC[z]; let r=z; const out=[]; for(const [n,c] of ORB){ if(r<=0) break; const k=Math.min(c,r); out[n-1]=(out[n-1]||0)+k; r-=k; } return out; }
+function bohrSvg(e){
+  const sh=shells(e.z); let g="";
+  sh.forEach((c,i)=>{ const r=26+i*11; let d="";
+    for(let k=0;k<c;k++){const a=2*Math.PI*k/c; d+=`<circle cx="${(100+r*Math.cos(a)).toFixed(1)}" cy="${(100+r*Math.sin(a)).toFixed(1)}" r="2.6" fill="var(--accent)"/>`}
+    g+=`<circle cx="100" cy="100" r="${r}" fill="none" stroke="var(--line)" stroke-width="1"/><g><animateTransform attributeName="transform" type="rotate" from="${i%2?"360":"0"} 100 100" to="${i%2?"0":"360"} 100 100" dur="${16+i*7}s" repeatCount="indefinite"/>${d}</g>`; });
+  return `<svg class="bohr" viewBox="0 0 200 200" role="img" aria-label="${esc(nameOf(e))}: ${sh.join(", ")}" width="240" height="240" style="display:block;margin:0 auto;max-width:100%;height:auto">${g}<circle cx="100" cy="100" r="18" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/><text x="100" y="105" text-anchor="middle" font-size="15" font-weight="700" fill="var(--accent-text)">${e.sym}</text></svg>`;
+}
+const ESSENTIAL_MAJOR = new Set(["H","C","N","O","Na","Mg","P","S","Cl","K","Ca"]);
+const ESSENTIAL_TRACE = new Set(["Fe","Zn","Cu","Mn","Co","I","Se","Mo"]);
+const LATIN = {Na:"natrium",K:"kalium",Fe:"ferrum",Cu:"cuprum",Ag:"argentum",Au:"aurum",Sn:"stannum",Sb:"stibium",Pb:"plumbum",W:"wolfram",Hg:"hydrargyrum"};
+
+function scoreRarity(ppm){return ppm>=10000?1:ppm>=1000?2:ppm>=100?3:ppm>=1?4:5}
+function scoreCond(s){return s>=3e7?5:s>=1e7?4:s>=1e6?3:s>=1e4?2:1}
+function occurrence(z){ if(z>=95) return "syn"; if(z===43||z===61||(z>=84&&z<=89)||z===91||z===93||z===94) return "trace"; return "prim"; }
+function noStableIsotope(z){return z===43||z===61||z>=83}
+
+/* ---- เนื้อหาเชิงบรรยาย (เฉพาะธาตุที่จัดทำแล้ว — ธาตุอื่นแสดง Empty state) ---- */
+const WIKI = n=>"https://en.wikipedia.org/wiki/"+n;
+const FEATURED = {
+H:{th:{sum:"ธาตุที่เบาที่สุด ในสภาพปกติเป็นแก๊สไม่มีสี ไม่มีกลิ่น",use:"ผลิตแอมโมเนีย กลั่นน้ำมัน เชื้อเพลิงจรวด และเซลล์เชื้อเพลิง",occ:"ส่วนใหญ่พบในรูปสารประกอบ เช่น น้ำและสารอินทรีย์",safe:"ติดไฟและระเบิดได้ง่ายเมื่อผสมกับอากาศ"},
+   en:{sum:"The lightest element; a colourless, odourless gas under normal conditions.",use:"Ammonia production, oil refining, rocket fuel and fuel cells.",occ:"Mostly found in compounds such as water and organic matter.",safe:"Highly flammable and can form explosive mixtures with air."},
+   app:{th:"แก๊สไม่มีสี",en:"Colourless gas"},
+   facts:[{th:"ไฮโดรเจนเป็นธาตุที่มีมากที่สุดในเอกภพ",en:"Hydrogen is the most abundant element in the universe.",src:WIKI("Hydrogen")}]},
+C:{th:{sum:"ธาตุพื้นฐานของสารอินทรีย์ มีหลายรูปแบบ เช่น เพชรและแกรไฟต์",use:"เหล็กกล้า เชื้อเพลิง ถ่านกัมมันต์ และเส้นใยคาร์บอน",occ:"ถ่านหิน น้ำมัน หินปูน และสิ่งมีชีวิต",safe:"ตัวธาตุปลอดภัยโดยทั่วไป แต่การเผาไหม้ไม่สมบูรณ์ให้คาร์บอนมอนอกไซด์ซึ่งเป็นพิษ"},
+   en:{sum:"The backbone of organic chemistry, found as diamond, graphite and other forms.",use:"Steel, fuels, activated carbon and carbon fibre.",occ:"Coal, oil, limestone and all living things.",safe:"Generally safe as an element, but incomplete combustion produces toxic carbon monoxide."},
+   app:{th:"แกรไฟต์สีเทาดำ / เพชรใส",en:"Grey-black graphite / clear diamond"},
+   facts:[{th:"เพชรและแกรไฟต์เป็นรูปแบบต่างกัน (allotrope) ของคาร์บอนชนิดเดียวกัน",en:"Diamond and graphite are different allotropes of the same element.",src:WIKI("Carbon")}]},
+O:{th:{sum:"แก๊สที่ช่วยการเผาไหม้และการหายใจ",use:"การหายใจ การแพทย์ การผลิตเหล็กกล้า การเชื่อมตัดโลหะ",occ:"ราว 21% ของบรรยากาศโดยปริมาตร และพบในน้ำและหินเปลือกโลก",safe:"ทำให้ไฟลุกไหม้รุนแรง ออกซิเจนเข้มข้นทำให้วัสดุติดไฟง่ายขึ้น"},
+   en:{sum:"A gas that supports combustion and respiration.",use:"Breathing, medicine, steelmaking, welding and cutting.",occ:"About 21% of air by volume; also in water and crustal rocks.",safe:"Intensifies fire; concentrated oxygen makes materials far more flammable."},
+   app:{th:"แก๊สไม่มีสี (ของเหลวสีฟ้าอ่อน)",en:"Colourless gas (pale blue liquid)"},
+   facts:[{th:"ออกซิเจนเป็นธาตุที่มีมากที่สุดในเปลือกโลกโดยมวล",en:"Oxygen is the most abundant element in Earth's crust by mass.",src:WIKI("Oxygen")}]},
+Na:{th:{sum:"โลหะอ่อนสีเงิน ทำปฏิกิริยารุนแรงกับน้ำ",use:"เกลือแกง (โซเดียมคลอไรด์) แก้ว สบู่ และหลอดไฟโซเดียม",occ:"เกลือในน้ำทะเลและเกลือหิน",safe:"ทำปฏิกิริยารุนแรงกับน้ำ ต้องเก็บแยกจากน้ำและอากาศ"},
+   en:{sum:"A soft, silvery metal that reacts vigorously with water.",use:"Table salt (sodium chloride), glass, soap and sodium lamps.",occ:"Seawater salt and rock salt.",safe:"Reacts violently with water; must be stored away from moisture and air."},
+   app:{th:"โลหะอ่อนสีขาวเงิน",en:"Soft silvery-white metal"},
+   facts:[{th:"สัญลักษณ์ Na มาจากชื่อละติน natrium",en:"The symbol Na comes from the Latin name natrium.",src:WIKI("Sodium")}]},
+Al:{th:{sum:"โลหะเบาสีเงินขาว ทนการกัดกร่อนเพราะมีฟิล์มออกไซด์บาง ๆ ปกคลุม",use:"กระป๋อง ภาชนะ สายไฟ ตัวถังเครื่องบิน",occ:"แร่บอกไซต์",safe:"ผงอะลูมิเนียมละเอียดติดไฟได้"},
+   en:{sum:"A light, silvery metal protected from corrosion by a thin oxide film.",use:"Cans, cookware, power lines and aircraft bodies.",occ:"Bauxite ore.",safe:"Fine aluminium powder is flammable."},
+   app:{th:"โลหะสีเงินขาว",en:"Silvery-white metal"},
+   facts:[{th:"อะลูมิเนียมเป็นโลหะที่มีมากที่สุดในเปลือกโลก",en:"Aluminium is the most abundant metal in Earth's crust.",src:WIKI("Aluminium")}]},
+Si:{th:{sum:"กึ่งโลหะที่เป็นสารกึ่งตัวนำ",use:"ชิปคอมพิวเตอร์ เซลล์แสงอาทิตย์ แก้ว ซีเมนต์ ซิลิโคน",occ:"ทราย ควอตซ์ และหินในเปลือกโลก",safe:"การหายใจฝุ่นซิลิกาผลึกเป็นเวลานานทำให้เกิดโรคปอด (ซิลิโคซิส)"},
+   en:{sum:"A metalloid and semiconductor.",use:"Computer chips, solar cells, glass, cement and silicones.",occ:"Sand, quartz and crustal rocks.",safe:"Long-term inhalation of crystalline silica dust causes silicosis."},
+   app:{th:"ผลึกเทาออกน้ำเงิน เป็นประกายโลหะ",en:"Bluish-grey crystals with metallic lustre"},
+   facts:[{th:"ซิลิคอนเป็นธาตุที่มีมากเป็นอันดับสองในเปลือกโลก",en:"Silicon is the second most abundant element in Earth's crust.",src:WIKI("Silicon")}]},
+Fe:{th:{sum:"โลหะหลักที่ใช้ทำเหล็กและเหล็กกล้า",use:"งานก่อสร้าง ยานพาหนะ เครื่องจักร",occ:"แร่เฮมาไทต์และแมกนีไทต์",safe:"เกิดสนิมเมื่อสัมผัสน้ำและอากาศ ผงเหล็กละเอียดติดไฟได้ และการได้รับธาตุเหล็กเสริมเกินขนาดเป็นอันตราย"},
+   en:{sum:"The main metal in iron and steel.",use:"Construction, vehicles and machinery.",occ:"Hematite and magnetite ores.",safe:"Rusts in moist air; fine powder is flammable; iron supplements in excess are hazardous."},
+   app:{th:"โลหะเป็นมันสีเทา",en:"Lustrous grey metal"},color:"#7a808a",
+   facts:[{th:"สัญลักษณ์ Fe มาจากชื่อละติน ferrum",en:"The symbol Fe comes from the Latin name ferrum.",src:WIKI("Iron")}]},
+Cu:{th:{sum:"โลหะสีส้มแดง นำไฟฟ้าและความร้อนได้ดี",use:"สายไฟ ท่อน้ำ เหรียญ และโลหะผสมอย่างทองเหลือง",occ:"แร่คาลโคไพไรต์และมาลาไคต์",safe:"จำเป็นต่อร่างกายในปริมาณน้อย แต่ได้รับมากเกินไปเป็นพิษ"},
+   en:{sum:"A reddish-orange metal and an excellent conductor of heat and electricity.",use:"Wiring, pipes, coins and alloys such as brass.",occ:"Chalcopyrite and malachite ores.",safe:"Essential in small amounts but toxic in excess."},
+   app:{th:"โลหะสีส้มแดง",en:"Reddish-orange metal"},color:"#b87333",
+   facts:[{th:"สัญลักษณ์ Cu มาจากชื่อละติน cuprum",en:"The symbol Cu comes from the Latin name cuprum.",src:WIKI("Copper")}]},
+Au:{th:{sum:"โลหะสีเหลืองเป็นมัน ไม่ถูกออกซิไดซ์ในอากาศ",use:"เครื่องประดับ อุปกรณ์อิเล็กทรอนิกส์ ทันตกรรม และทุนสำรอง",occ:"พบเป็นธาตุอิสระในสายแร่และตะกอนแม่น้ำ",safe:"ทองบริสุทธิ์ค่อนข้างเฉื่อย แต่สารที่ใช้สกัด เช่น ไซยาไนด์ เป็นพิษ"},
+   en:{sum:"A lustrous yellow metal that does not oxidise in air.",use:"Jewellery, electronics, dentistry and reserves.",occ:"Found native in veins and river sediments.",safe:"Pure gold is fairly inert, but extraction chemicals such as cyanide are toxic."},
+   app:{th:"โลหะสีเหลืองเป็นมัน",en:"Lustrous yellow metal"},color:"#d4a017",
+   facts:[{th:"สัญลักษณ์ Au มาจากชื่อละติน aurum",en:"The symbol Au comes from the Latin name aurum.",src:WIKI("Gold")}]},
+Hg:{th:{sum:"โลหะที่เป็นของเหลวที่อุณหภูมิห้อง",use:"หลอดฟลูออเรสเซนต์ และเครื่องมือวัดบางชนิด (ปัจจุบันลดการใช้)",occ:"แร่ซินนาบาร์",safe:"ไอปรอทและสารประกอบเป็นพิษต่อระบบประสาทและไต ไม่ควรสัมผัสโดยตรง"},
+   en:{sum:"A metal that is liquid at room temperature.",use:"Fluorescent lamps and some instruments (use now being phased down).",occ:"Cinnabar ore.",safe:"Mercury vapour and its compounds are toxic to the nervous system and kidneys; avoid direct contact."},
+   app:{th:"ของเหลวสีเงินวาว",en:"Shiny silvery liquid"},color:"#8c96a3",
+   facts:[{th:"ปรอทเป็นโลหะเพียงชนิดเดียวที่เป็นของเหลวที่สภาวะมาตรฐาน",en:"Mercury is the only metal that is liquid at standard conditions.",src:WIKI("Mercury_(element)")}]},
+Cl:{th:{sum:"แก๊สสีเหลืองอมเขียว กลิ่นฉุน",use:"ฆ่าเชื้อน้ำ ผลิตพลาสติก PVC สารฟอกขาว",occ:"เกลือในน้ำทะเลและเกลือหิน",safe:"เป็นแก๊สพิษ ระคายเคืองทางเดินหายใจและดวงตา"},
+   en:{sum:"A yellow-green gas with a sharp odour.",use:"Water disinfection, PVC plastics and bleaches.",occ:"Seawater salt and rock salt.",safe:"Toxic gas; irritates the airways and eyes."},
+   app:{th:"แก๊สสีเหลืองอมเขียว",en:"Yellow-green gas"},color:"#a3b02a",
+   facts:[{th:"ชื่อ chlorine มาจากคำกรีก chloros ที่แปลว่าเขียวอมเหลือง",en:"The name chlorine comes from the Greek chloros, meaning pale green.",src:WIKI("Chlorine")}]},
+U:{th:{sum:"โลหะหนักที่มีกัมมันตรังสี",use:"เชื้อเพลิงโรงไฟฟ้านิวเคลียร์",occ:"แร่ยูเรนิไนต์",safe:"มีกัมมันตรังสีและเป็นพิษแบบโลหะหนัก ต้องจัดการตามข้อกำหนดเฉพาะ"},
+   en:{sum:"A radioactive heavy metal.",use:"Nuclear power fuel.",occ:"Uraninite ore.",safe:"Radioactive and chemically toxic like other heavy metals; requires regulated handling."},
+   app:{th:"โลหะสีเทาเงิน",en:"Silvery-grey metal"},
+   facts:[{th:"ยูเรเนียมได้ชื่อมาจากดาวยูเรนัส",en:"Uranium is named after the planet Uranus.",src:WIKI("Uranium")}]}
+};
+// ข้อเท็จจริงเฉพาะของธาตุที่ไม่มีเนื้อหา Featured: ใช้ข้อมูลหลักที่คำนวณจากข้อมูลจริงเท่านั้น
+function D(a,b,at,ae,ft,fe,w,col){const x=a.split("|"),y=b.split("|");
+  return {th:{sum:x[0],use:x[1],occ:x[2],safe:x[3]},en:{sum:y[0],use:y[1],occ:y[2],safe:y[3]},app:{th:at,en:ae},color:col,facts:[{th:ft,en:fe,src:WIKI(w)}]}}
+Object.assign(FEATURED,{
+He:D("แก๊สเฉื่อยเบามาก ไม่มีสี ไม่ทำปฏิกิริยา|บอลลูน ระบบทำความเย็นของ MRI การเชื่อม|พบในแก๊สธรรมชาติ|ไม่ติดไฟ แต่ในที่อับแทนที่ออกซิเจนจนขาดอากาศได้","A very light, colourless, inert noble gas.|Balloons, MRI cooling and welding.|Found in natural gas.|Non-flammable, but can displace oxygen in enclosed spaces.","แก๊สไม่มีสี","Colourless gas","ฮีเลียมเป็นธาตุที่มีมากเป็นอันดับสองในเอกภพ","Helium is the second most abundant element in the universe.","Helium"),
+Li:D("โลหะอ่อนที่เบาที่สุด|แบตเตอรี่ลิเทียมไอออน เซรามิก ยาบางชนิด|น้ำเกลือใต้ดินและแร่สโพดูมีน|ทำปฏิกิริยากับน้ำและติดไฟได้ แบตเตอรี่ที่เสียหายอาจลุกไหม้","The lightest metal, and soft.|Lithium-ion batteries, ceramics and some medicines.|Underground brines and spodumene ore.|Reacts with water and can ignite; damaged batteries may catch fire.","โลหะอ่อนสีขาวเงิน","Soft silvery-white metal","ลิเทียมเป็นโลหะที่มีความหนาแน่นต่ำที่สุด","Lithium is the least dense metal.","Lithium"),
+N:D("แก๊สเฉื่อยเกือบทั้งหมดที่เป็นส่วนประกอบหลักของอากาศ|ปุ๋ย แอมโมเนีย ไนโตรเจนเหลวใช้ทำความเย็น|ราว 78% ของบรรยากาศ|ในที่อับแทนที่ออกซิเจนได้ ไนโตรเจนเหลวเย็นจัดทำให้ผิวไหม้เย็น","A fairly unreactive gas that makes up most of the air.|Fertiliser, ammonia and liquid-nitrogen cooling.|About 78% of the atmosphere.|Can displace oxygen in enclosed spaces; liquid nitrogen causes cold burns.","แก๊สไม่มีสี","Colourless gas","ไนโตรเจนเป็นราว 78% ของอากาศโดยปริมาตร","Nitrogen makes up about 78% of air by volume.","Nitrogen"),
+Ag:D("โลหะสีขาวเงาวับ นำไฟฟ้าดีที่สุดในบรรดาโลหะ|เครื่องประดับ อุปกรณ์อิเล็กทรอนิกส์ เหรียญ ภาชนะ|ผลพลอยได้จากการผลิตทองแดงและตะกั่ว|ตัวโลหะเสี่ยงต่ำ แต่เกลือเงินบางชนิดระคายเคือง","A bright white metal and the best electrical conductor of all metals.|Jewellery, electronics, coins and tableware.|A by-product of copper and lead production.|Low risk as a metal; some silver salts are irritants.","โลหะสีขาวเงา","Shiny white metal","เงินมีสภาพนำไฟฟ้าสูงที่สุดในบรรดาโลหะ","Silver has the highest electrical conductivity of any metal.","Silver"),
+Zn:D("โลหะสีเงินอมฟ้า ทนการกัดกร่อน|ชุบเหล็กกันสนิม ทองเหลือง แบตเตอรี่|แร่สฟาเลอไรต์|จำเป็นต่อร่างกาย แต่ไอสังกะสีจากการเชื่อมอาจทำให้เป็นไข้ได้","A bluish-silver metal that resists corrosion.|Galvanising steel, brass and batteries.|Sphalerite ore.|Essential in small amounts, but welding fumes can cause metal-fume fever.","โลหะสีเงินอมฟ้า","Bluish-silver metal","สังกะสีที่เคลือบเหล็กช่วยป้องกันสนิม","A zinc coating protects steel from rusting.","Zinc"),
+Pb:D("โลหะหนักอ่อน สีเทาอมฟ้า|แบตเตอรี่ตะกั่ว-กรด ป้องกันรังสี|แร่กาเลนา|เป็นพิษสะสม ทำลายระบบประสาท โดยเฉพาะในเด็ก","A soft, heavy, bluish-grey metal.|Lead-acid batteries and radiation shielding.|Galena ore.|Cumulative poison that damages the nervous system, especially in children.","โลหะสีเทาอมฟ้า","Bluish-grey metal","สัญลักษณ์ Pb มาจากชื่อละติน plumbum","The symbol Pb comes from the Latin name plumbum.","Lead"),
+Ti:D("โลหะเบาแต่แข็งแรง ทนการกัดกร่อนสูง|อากาศยาน ข้อเทียม เครื่องประดับ|แร่รูไทล์และอิลเมไนต์|ตัวโลหะปลอดภัยต่อร่างกาย แต่ผงละเอียดติดไฟได้","A light but strong, highly corrosion-resistant metal.|Aircraft, joint implants and jewellery.|Rutile and ilmenite ores.|Biocompatible as a metal, but fine powder is flammable.","โลหะสีเงินเทา","Silvery-grey metal","ชื่อไทเทเนียมมาจากไททันในเทพปกรณัมกรีก","Titanium is named after the Titans of Greek mythology.","Titanium"),
+I:D("ของแข็งสีม่วงดำ ระเหิดเป็นไอสีม่วง|ฆ่าเชื้อ เกลือไอโอดีน ยา|สาหร่ายทะเลและน้ำเกลือ|ผงและไอระคายเคืองและเป็นพิษถ้าสัมผัสหรือกลืน แต่จำเป็นต่อต่อมไทรอยด์ในปริมาณน้อย","A violet-black solid that sublimes to a violet vapour.|Disinfectants, iodised salt and medicines.|Seaweed and brines.|Dust and vapour are irritating and toxic; essential for the thyroid in small amounts.","ของแข็งสีม่วงดำ","Violet-black solid","ชื่อไอโอดีนมาจากคำกรีก iodes ที่แปลว่าสีม่วง","The name iodine comes from the Greek iodes, meaning violet.","Iodine","#6b4aa0")
+});
+Object.assign(FEATURED,{
+Mg:D("โลหะเบาสีเงินขาว|โลหะผสมน้ำหนักเบา ยาลดกรดบางชนิด|น้ำทะเลและแร่โดโลไมต์|ผงและเศษบางติดไฟแรง และดับด้วยน้ำไม่ได้","A light silvery-white metal.|Lightweight alloys and some antacids.|Seawater and dolomite.|Powder and thin strips burn fiercely and cannot be put out with water.","โลหะสีเงินขาว","Silvery-white metal","แมกนีเซียมเป็นอะตอมกลางของโมเลกุลคลอโรฟิลล์","Magnesium sits at the centre of the chlorophyll molecule.","Magnesium"),
+Ca:D("โลหะอ่อนสีเทาเงิน ทำปฏิกิริยากับน้ำ|ปูนซีเมนต์ ปูนขาว กระดูกและฟัน|หินปูนและยิปซัม|โลหะทำปฏิกิริยากับน้ำให้แก๊สไฮโดรเจน","A soft grey-silver metal that reacts with water.|Cement, lime, bones and teeth.|Limestone and gypsum.|The metal reacts with water to release hydrogen gas.","โลหะสีเทาเงิน","Grey-silver metal","แคลเซียมเป็นโลหะที่มีมากที่สุดในร่างกายมนุษย์","Calcium is the most abundant metal in the human body.","Calcium"),
+K:D("โลหะอ่อนมาก ทำปฏิกิริยารุนแรงกับน้ำ|ปุ๋ย และสารประกอบที่จำเป็นต่อร่างกาย|แร่โพแทชและเกลือ|ทำปฏิกิริยารุนแรงกับน้ำและอากาศ ต้องเก็บในน้ำมัน","A very soft metal that reacts violently with water.|Fertilisers and compounds essential to the body.|Potash minerals and salts.|Reacts violently with water and air; stored under oil.","โลหะอ่อนสีขาวเงิน","Soft silvery-white metal","สัญลักษณ์ K มาจากชื่อละติน kalium","The symbol K comes from the Latin name kalium.","Potassium"),
+S:D("อโลหะสีเหลือง เป็นของแข็งที่ไม่มีกลิ่นเมื่อบริสุทธิ์|ผลิตกรดซัลฟิวริก ปุ๋ย ยางวัลคาไนซ์ ดินปืน|บริเวณภูเขาไฟ แก๊สธรรมชาติ และแร่ซัลไฟด์|ผงติดไฟได้ การเผาให้ซัลเฟอร์ไดออกไซด์ที่ระคายเคือง","A yellow nonmetal; odourless when pure.|Sulfuric acid, fertiliser, vulcanised rubber and gunpowder.|Volcanic areas, natural gas and sulfide ores.|Powder is flammable; burning gives irritating sulfur dioxide.","ของแข็งสีเหลือง","Yellow solid","กรดซัลฟิวริกซึ่งผลิตจากกำมะถันเป็นสารเคมีอุตสาหกรรมที่ผลิตมากที่สุดชนิดหนึ่ง","Sulfuric acid, made from sulfur, is among the most widely produced industrial chemicals.","Sulfur"),
+P:D("อโลหะที่มีหลายรูปแบบ เช่น ขาว แดง ดำ|ปุ๋ย ผงซักฟอก หัวไม้ขีดไฟ|หินฟอสเฟต|ฟอสฟอรัสขาวเป็นพิษและลุกติดไฟเองในอากาศ","A nonmetal with several forms, such as white, red and black.|Fertilisers, detergents and matches.|Phosphate rock.|White phosphorus is toxic and ignites spontaneously in air.","ของแข็งหลายรูปแบบ","Solid in several forms","ชื่อฟอสฟอรัสมาจากคำกรีก phosphoros ที่แปลว่าผู้นำแสง","The name phosphorus comes from the Greek phosphoros, meaning light-bearer.","Phosphorus"),
+Ne:D("แก๊สเฉื่อยไม่มีสี|ป้ายไฟนีออน เลเซอร์|พบในอากาศปริมาณน้อยมาก|ไม่ติดไฟ แต่ในที่อับแทนที่ออกซิเจนได้","A colourless noble gas.|Neon signs and lasers.|A tiny fraction of air.|Non-flammable, but can displace oxygen in enclosed spaces.","แก๊สไม่มีสี (เรืองแสงสีส้มแดงในหลอดไฟ)","Colourless gas (glows red-orange in a tube)","ชื่อนีออนมาจากคำกรีก neon ที่แปลว่าใหม่","The name neon comes from the Greek neon, meaning new.","Neon"),
+Ar:D("แก๊สเฉื่อยที่พบมากที่สุดในอากาศ|งานเชื่อม หลอดไฟ สร้างบรรยากาศเฉื่อย|ราว 0.9% ของบรรยากาศ|ไม่ติดไฟ แต่ในที่อับแทนที่ออกซิเจนได้","The most abundant noble gas in air.|Welding, light bulbs and inert atmospheres.|About 0.9% of the atmosphere.|Non-flammable, but can displace oxygen in enclosed spaces.","แก๊สไม่มีสี","Colourless gas","ชื่ออาร์กอนมาจากคำกรีก argos ที่แปลว่าเฉื่อยชา","The name argon comes from the Greek argos, meaning idle.","Argon"),
+F:D("แก๊สสีเหลืองอ่อน เป็นธาตุที่ว่องไวมาก|ฟลูออไรด์ในยาสีฟัน เทฟลอน|แร่ฟลูออไรต์|แก๊สฟลูออรีนเป็นพิษรุนแรงและกัดกร่อน","A pale yellow gas and an extremely reactive element.|Fluoride in toothpaste and Teflon.|Fluorite mineral.|Fluorine gas is highly toxic and corrosive.","แก๊สสีเหลืองอ่อน","Pale yellow gas","ชื่อฟลูออรีนมาจากคำละติน fluere ที่แปลว่าไหล","The name fluorine comes from the Latin fluere, meaning to flow.","Fluorine"),
+Br:D("ของเหลวสีน้ำตาลแดง ระเหยง่าย กลิ่นฉุน|สารหน่วงการติดไฟบางชนิด ยา สารเคมี|น้ำทะเลและน้ำเกลือ|ของเหลวและไอเป็นพิษและกัดกร่อน","A red-brown, volatile liquid with a sharp smell.|Some flame retardants, medicines and chemicals.|Seawater and brines.|Liquid and vapour are toxic and corrosive.","ของเหลวสีน้ำตาลแดง","Red-brown liquid","โบรมีนเป็นอโลหะชนิดเดียวที่เป็นของเหลวที่อุณหภูมิห้อง","Bromine is the only nonmetal that is liquid at room temperature.","Bromine"),
+Cr:D("โลหะแข็ง เป็นมันวาว ทนการกัดกร่อน|เหล็กกล้าไร้สนิม ชุบโครเมียม|แร่โครไมต์|สารประกอบโครเมียม(VI) เป็นพิษและก่อมะเร็ง","A hard, shiny, corrosion-resistant metal.|Stainless steel and chrome plating.|Chromite ore.|Chromium(VI) compounds are toxic and carcinogenic.","โลหะสีเงินเป็นมันวาว","Shiny silvery metal","ชื่อโครเมียมมาจากคำกรีก chroma ที่แปลว่าสี","The name chromium comes from the Greek chroma, meaning colour.","Chromium"),
+Ni:D("โลหะสีเงินอมเหลือง แข็ง ทนการกัดกร่อน|สแตนเลส เหรียญ แบตเตอรี่|แร่ลาเทอไรต์และแร่ซัลไฟด์|ผู้ที่แพ้นิกเกิลอาจเป็นผื่นที่ผิวหนัง","A hard, corrosion-resistant silvery metal with a slight golden tinge.|Stainless steel, coins and batteries.|Laterite and sulfide ores.|Skin contact can cause allergic rashes in sensitive people.","โลหะสีเงินอมเหลืองอ่อน","Silvery metal with a slight golden tinge","ชื่อนิกเกิลมาจากคำเยอรมัน Nickel ซึ่งเป็นภูตซุกซนในนิทานของคนงานเหมือง","The name nickel comes from German Nickel, a mischievous sprite in miners' folklore.","Nickel"),
+Sn:D("โลหะอ่อนสีขาวเงิน ทนการกัดกร่อน|ตะกั่วบัดกรี เคลือบกระป๋องอาหาร|แร่แคสซิเทอไรต์|ตัวโลหะเสี่ยงต่ำ แต่สารประกอบดีบุกอินทรีย์บางชนิดเป็นพิษ","A soft, silvery-white, corrosion-resistant metal.|Solder and tin-plated food cans.|Cassiterite ore.|Low risk as a metal; some organotin compounds are toxic.","โลหะสีขาวเงิน","Silvery-white metal","สัญลักษณ์ Sn มาจากชื่อละติน stannum","The symbol Sn comes from the Latin name stannum.","Tin")
+});
+Object.assign(FEATURED,{
+B:D("กึ่งโลหะสีดำน้ำตาล แข็งมาก|แก้วทนความร้อน บอแรกซ์ ผงซักฟอก|แร่บอแรกซ์|สารประกอบบางชนิดเป็นพิษถ้ากลืน","A hard, dark brown metalloid.|Heat-resistant glass, borax and detergents.|Borax minerals.|Some compounds are poisonous if swallowed.","ของแข็งสีดำน้ำตาล","Dark brown solid","แก้วทนความร้อนหลายชนิดมีโบรอนเป็นส่วนผสม","Many heat-resistant glasses contain boron.","Boron"),
+Co:D("โลหะสีเงินอมฟ้า เป็นแม่เหล็กได้|แบตเตอรี่ แม่เหล็ก และสีน้ำเงินโคบอลต์ในแก้วและเซรามิก|แร่โคบอลไทต์ และผลพลอยได้จากการถลุงทองแดงและนิกเกิล|ฝุ่นและสารประกอบเป็นพิษถ้าสูดดมหรือกลืน","A bluish-silver, magnetic metal.|Batteries, magnets and cobalt-blue colour in glass and ceramics.|Cobaltite ore and a by-product of copper and nickel smelting.|Dust and compounds are harmful if inhaled or swallowed.","โลหะสีเงินอมฟ้า","Bluish-silver metal","โคบอลต์เป็นส่วนหนึ่งของวิตามินบี 12","Cobalt is part of vitamin B12.","Cobalt"),
+Ga:D("โลหะอ่อนที่หลอมเหลวที่อุณหภูมิประมาณ 30 °C|ชิปและไฟ LED (ในรูปสารประกอบ)|ผลพลอยได้จากการผลิตอะลูมิเนียมและสังกะสี|ตัวโลหะค่อนข้างปลอดภัย แต่ทำให้อะลูมิเนียมเปราะ ไม่ควรให้สัมผัสกัน","A soft metal that melts at about 30 °C.|Chips and LEDs (as compounds).|A by-product of aluminium and zinc production.|Fairly safe as a metal, but it makes aluminium brittle; keep them apart.","โลหะสีเงินอ่อน","Soft silvery metal","แกลเลียมละลายในมือได้เพราะหลอมเหลวที่ประมาณ 30 °C","Gallium can melt in your hand because it melts at about 30 °C.","Gallium"),
+As:D("กึ่งโลหะที่สารประกอบเป็นพิษ|สารกึ่งตัวนำ (แกลเลียมอาร์เซไนด์) และโลหะผสมบางชนิด|แร่อาร์เซโนไพไรต์|สารหนูและสารประกอบเป็นพิษร้ายแรง ห้ามสัมผัสหรือกลืน","A metalloid whose compounds are poisonous.|Semiconductors (gallium arsenide) and some alloys.|Arsenopyrite ore.|Arsenic and its compounds are seriously toxic; never touch or swallow.","ของแข็งสีเทาเป็นมัน","Shiny grey solid","สารหนูถูกรู้จักในฐานะยาพิษมาตั้งแต่โบราณ","Arsenic has been known as a poison since ancient times.","Arsenic"),
+Se:D("อโลหะที่ร่างกายต้องการในปริมาณน้อย|เซลล์แสงอาทิตย์ แก้วสีแดง แชมพูขจัดรังแคบางสูตร|ผลพลอยได้จากการผลิตทองแดง|จำเป็นในปริมาณน้อย แต่ได้รับเกินขนาดเป็นพิษ","A nonmetal needed in small amounts by the body.|Solar cells, red glass and some anti-dandruff shampoos.|A by-product of copper production.|Essential in small amounts but toxic in excess.","ของแข็งสีเทา (มีรูปแบบสีแดงด้วย)","Grey solid (also a red form)","ชื่อซีลีเนียมมาจากคำกรีก selene ที่แปลว่าดวงจันทร์","The name selenium comes from the Greek selene, meaning moon.","Selenium"),
+Kr:D("แก๊สเฉื่อยไม่มีสี|หลอดไฟบางชนิด เลเซอร์|ปริมาณน้อยมากในอากาศ|ไม่ติดไฟ แต่ในที่อับแทนที่ออกซิเจนได้","A colourless noble gas.|Some lamps and lasers.|A tiny fraction of air.|Non-flammable, but can displace oxygen in enclosed spaces.","แก๊สไม่มีสี","Colourless gas","ชื่อคริปทอนมาจากคำกรีก kryptos ที่แปลว่าซ่อนเร้น","The name krypton comes from the Greek kryptos, meaning hidden.","Krypton"),
+Xe:D("แก๊สเฉื่อยไม่มีสี หนักกว่าอากาศ|ไฟหน้ารถยนต์ซีนอน เครื่องยนต์ไอออนของยานอวกาศ|ปริมาณน้อยมากในอากาศ|ไม่ติดไฟ แต่ในที่อับแทนที่ออกซิเจนได้","A colourless noble gas, heavier than air.|Xenon headlights and spacecraft ion engines.|A tiny fraction of air.|Non-flammable, but can displace oxygen in enclosed spaces.","แก๊สไม่มีสี","Colourless gas","ชื่อซีนอนมาจากคำกรีก xenos ที่แปลว่าแปลกหน้า","The name xenon comes from the Greek xenos, meaning stranger.","Xenon"),
+Sr:D("โลหะอ่อนสีเงิน ทำปฏิกิริยากับอากาศและน้ำ|ดอกไม้ไฟสีแดง|แร่เซเลสไทต์|โลหะทำปฏิกิริยากับน้ำและอากาศได้ ต้องเก็บแยกไว้","A soft silvery metal that reacts with air and water.|Red fireworks.|Celestine ore.|The metal reacts with water and air; store it away from both.","โลหะอ่อนสีเงิน","Soft silvery metal","สตรอนเชียมทำให้ดอกไม้ไฟมีสีแดง","Strontium gives fireworks their red colour.","Strontium"),
+Ba:D("โลหะอ่อนสีเงินขาว|ดอกไม้ไฟสีเขียว และแบเรียมซัลเฟตใช้เป็นสารทึบรังสีในการเอกซเรย์ทางเดินอาหาร|แร่แบไรต์|สารประกอบแบเรียมที่ละลายน้ำได้เป็นพิษ ส่วนแบเรียมซัลเฟตไม่ละลายจึงใช้ในทางการแพทย์ได้","A soft silvery-white metal.|Green fireworks; barium sulfate is used as an X-ray contrast agent for the digestive tract.|Barite ore.|Soluble barium compounds are poisonous; insoluble barium sulfate is safe enough for medical use.","โลหะสีเงินขาว","Silvery-white metal","ดอกไม้ไฟสีเขียวมักมีแบเรียมเป็นส่วนผสม","Green fireworks often contain barium.","Barium"),
+Pt:D("โลหะมีค่าสีขาวเงิน ไม่เป็นสนิม|เครื่องประดับ และตัวเร่งปฏิกิริยาในท่อไอเสียรถยนต์|พบปริมาณน้อยในสายแร่และตะกอน|ตัวโลหะเสี่ยงต่ำ แต่เกลือแพลทินัมบางชนิดทำให้เกิดอาการแพ้","A precious silvery-white metal that does not rust.|Jewellery and catalysts in car exhaust systems.|Found in small amounts in veins and sediments.|Low risk as a metal; some platinum salts cause allergies.","โลหะสีขาวเงิน","Silvery-white metal","แพลทินัมใช้เป็นตัวเร่งปฏิกิริยาในตัวแปลงไอเสียของรถยนต์","Platinum is used as a catalyst in car catalytic converters.","Platinum"),
+Cd:D("โลหะอ่อนสีขาวอมฟ้า|แบตเตอรี่นิกเกิล-แคดเมียม และสีเหลืองส้ม|ผลพลอยได้จากการผลิตสังกะสี|เป็นพิษมาก ทำลายไตและกระดูก และก่อมะเร็ง","A soft bluish-white metal.|Nickel-cadmium batteries and yellow-orange pigments.|A by-product of zinc production.|Highly toxic: damages kidneys and bones, and is carcinogenic.","โลหะสีขาวอมฟ้า","Bluish-white metal","แคดเมียมมักพบร่วมกับสังกะสีในแร่","Cadmium is often found together with zinc in ores.","Cadmium"),
+Sb:D("กึ่งโลหะแข็งแต่เปราะ|โลหะผสม แบตเตอรี่ สารหน่วงการติดไฟ|แร่สติบไนต์|สารประกอบเป็นพิษ ห้ามกลืนหรือสูดดมฝุ่น","A hard but brittle metalloid.|Alloys, batteries and flame retardants.|Stibnite ore.|Compounds are toxic; do not swallow or inhale dust.","ของแข็งสีเทาเงินเป็นมัน","Shiny silvery-grey solid","สัญลักษณ์ Sb มาจากชื่อละติน stibium","The symbol Sb comes from the Latin name stibium.","Antimony"),
+Rn:D("แก๊สกัมมันตรังสี ไม่มีสี ไม่มีกลิ่น|แทบไม่มีการใช้ประโยชน์ทั่วไป|เกิดจากการสลายของยูเรเนียมในหินและดิน|สะสมในอาคารอับได้ การสูดดมนาน ๆ เพิ่มความเสี่ยงมะเร็งปอด ควรระบายอากาศ","A radioactive, colourless, odourless gas.|Almost no everyday uses.|Produced by the decay of uranium in rocks and soil.|Can build up in closed buildings; long-term inhalation raises lung-cancer risk, so ventilate.","แก๊สไม่มีสี","Colourless gas","เรดอนเป็นแก๊สเฉื่อยที่มีกัมมันตรังสี","Radon is a radioactive noble gas.","Radon"),
+Ra:D("โลหะกัมมันตรังสีสีขาวเงิน|เคยใช้ทำสีเรืองแสงบนหน้าปัดนาฬิกา ปัจจุบันเลิกใช้เพราะอันตราย|ปริมาณน้อยมากในแร่ยูเรเนียม|กัมมันตรังสีอันตราย ห้ามจัดการเอง","A radioactive silvery-white metal.|Once used in glow-in-the-dark watch dials; abandoned because it is dangerous.|Tiny amounts in uranium ores.|Dangerously radioactive; never handle it.","โลหะสีขาวเงิน","Silvery-white metal","มารี กูรีและปีแยร์ กูรีมีส่วนในการค้นพบเรเดียม","Marie and Pierre Curie took part in the discovery of radium.","Radium"),
+Pu:D("โลหะกัมมันตรังสีที่ใช้ในเทคโนโลยีนิวเคลียร์|เชื้อเพลิงนิวเคลียร์ และแหล่งพลังงานของยานอวกาศบางลำ|พบเพียงเล็กน้อยในธรรมชาติ ส่วนใหญ่ผลิตในเครื่องปฏิกรณ์|กัมมันตรังสีและเป็นพิษ ต้องจัดการตามข้อกำหนดเข้มงวด","A radioactive metal used in nuclear technology.|Nuclear fuel and power sources for some spacecraft.|Only traces in nature; mostly made in reactors.|Radioactive and toxic; requires strictly regulated handling.","โลหะสีเงิน","Silvery metal","พลูโทเนียมได้ชื่อมาจากดาวพลูโต","Plutonium is named after the planet Pluto.","Plutonium"),
+Cs:D("โลหะอ่อนที่ว่องไวมาก|นาฬิกาอะตอม|แร่พอลลูไซต์|ทำปฏิกิริยารุนแรงกับน้ำและอากาศ ต้องเก็บในที่ปลอดอากาศ","A very soft and extremely reactive metal.|Atomic clocks.|Pollucite ore.|Reacts violently with water and air; must be stored away from air.","โลหะอ่อนสีขาวอมทอง","Soft silvery-gold metal","นาฬิกาอะตอมซีเซียมใช้นิยามหนึ่งวินาทีสากล","Caesium atomic clocks define the international second.","Caesium")
+});
+Object.assign(FEATURED,{
+Be:D("โลหะเบา แข็ง สีเทาเหล็ก|โลหะผสมทองแดง-เบริลเลียม หน้าต่างเครื่องเอกซเรย์ ชิ้นส่วนอากาศยาน|แร่เบริล|ฝุ่นและไอเป็นพิษ ทำให้เกิดโรคปอด","A light, hard, steel-grey metal.|Copper-beryllium alloys, X-ray windows and aircraft parts.|Beryl ore.|Dust and fumes are toxic and cause lung disease.","โลหะสีเทาเหล็ก","Steel-grey metal","มรกตเป็นแร่เบริลชนิดหนึ่งที่มีเบริลเลียมเป็นองค์ประกอบ","Emerald is a form of the mineral beryl, which contains beryllium.","Beryllium"),
+Mn:D("โลหะแข็งเปราะสีเทาเงิน|เหล็กกล้า ถ่านไฟฉายอัลคาไลน์|แร่ไพโรลูไซต์|จำเป็นต่อร่างกายในปริมาณน้อย แต่ฝุ่นและควันที่สะสมนานทำลายระบบประสาทได้","A hard, brittle, silvery-grey metal.|Steel and alkaline batteries.|Pyrolusite ore.|Essential in small amounts, but long-term exposure to dust and fumes can harm the nervous system.","โลหะสีเทาเงิน","Silvery-grey metal","แมงกานีสช่วยให้เหล็กกล้าแข็งแรงและทนการสึกหรอ","Manganese makes steel stronger and more wear-resistant.","Manganese"),
+V:D("โลหะสีเงินอมฟ้า แข็ง|เหล็กกล้าสำหรับเครื่องมือและสปริง|แร่วานาไดต์และคาร์โนไทต์|ฝุ่นและสารประกอบบางชนิดระคายเคืองและเป็นพิษ","A hard, bluish-silver metal.|Steel for tools and springs.|Vanadinite and carnotite ores.|Dust and some compounds are irritating and toxic.","โลหะสีเงินอมฟ้า","Bluish-silver metal","ชื่อวานาเดียมมาจากวานาดิส เทพีแห่งความงามในเทพปกรณัมนอร์ส","Vanadium is named after Vanadis, a Norse goddess of beauty.","Vanadium"),
+Ge:D("กึ่งโลหะสีเทาเงิน เป็นสารกึ่งตัวนำ|เลนส์อินฟราเรด เส้นใยแก้วนำแสง|ผลพลอยได้จากการผลิตสังกะสี|ตัวธาตุเสี่ยงต่ำ แต่สารประกอบบางชนิดเป็นพิษ","A silvery-grey metalloid and semiconductor.|Infrared lenses and optical fibre.|A by-product of zinc production.|Low risk as an element; some compounds are toxic.","ของแข็งสีเทาเงิน","Silvery-grey solid","เจอร์เมเนียมถูกใช้ในทรานซิสเตอร์ยุคแรก ๆ","Germanium was used in some of the earliest transistors.","Germanium"),
+Rb:D("โลหะอ่อนมาก ว่องไวสูง|งานวิจัยและนาฬิกาบางแบบ|แร่เลพิโดไลต์|ทำปฏิกิริยารุนแรงกับน้ำและติดไฟในอากาศได้ ต้องเก็บแยก","A very soft, highly reactive metal.|Research and some timekeeping devices.|Lepidolite ore.|Reacts violently with water and can ignite in air; store it separately.","โลหะอ่อนสีขาวเงิน","Soft silvery-white metal","ชื่อรูบิเดียมมาจากคำละติน rubidus ที่แปลว่าแดงเข้ม","The name rubidium comes from the Latin rubidus, meaning deep red.","Rubidium"),
+Zr:D("โลหะสีเงินเทา ทนการกัดกร่อนสูง|ปลอกหุ้มแท่งเชื้อเพลิงนิวเคลียร์ เซรามิก|แร่เซอร์คอน|ตัวโลหะเสี่ยงต่ำ ผงละเอียดติดไฟได้","A silvery-grey, highly corrosion-resistant metal.|Cladding for nuclear fuel rods and ceramics.|Zircon ore.|Low risk as a metal; fine powder is flammable.","โลหะสีเงินเทา","Silvery-grey metal","เพชรเทียมคิวบิกเซอร์โคเนียเป็นสารประกอบของเซอร์โคเนียม","Cubic zirconia, a diamond simulant, is a compound of zirconium.","Zirconium"),
+Mo:D("โลหะสีเงินเทา หลอมเหลวที่อุณหภูมิสูงมาก|เหล็กกล้าผสมความแข็งแรงสูง และสารหล่อลื่น|แร่โมลิบดีไนต์|จำเป็นต่อร่างกายในปริมาณน้อย ได้รับมากเกินไม่ดีต่อสุขภาพ","A silvery-grey metal with a very high melting point.|High-strength steel alloys and lubricants.|Molybdenite ore.|Essential in small amounts; too much is harmful.","โลหะสีเงินเทา","Silvery-grey metal","โมลิบดีนัมเป็นองค์ประกอบของเอนไซม์บางชนิดในร่างกาย","Molybdenum is a component of some enzymes in the body.","Molybdenum"),
+Pd:D("โลหะมีค่าสีขาวเงิน|ตัวเร่งปฏิกิริยาในท่อไอเสียรถยนต์ อุปกรณ์อิเล็กทรอนิกส์ ทันตกรรม|พบปริมาณน้อยร่วมกับแพลทินัมและนิกเกิล|ตัวโลหะเสี่ยงต่ำ สารประกอบบางชนิดระคายเคืองหรือทำให้แพ้","A precious silvery-white metal.|Car exhaust catalysts, electronics and dentistry.|Found in small amounts with platinum and nickel.|Low risk as a metal; some compounds irritate or cause allergies.","โลหะสีขาวเงิน","Silvery-white metal","แพลเลเดียมตั้งชื่อตามดาวเคราะห์น้อยพัลลัส","Palladium is named after the asteroid Pallas.","Palladium"),
+In:D("โลหะอ่อนมาก สีเงินขาว|หน้าจอสัมผัสและจอ LCD (ในรูปสารประกอบ) โลหะบัดกรี|ผลพลอยได้จากการผลิตสังกะสี|ตัวโลหะเสี่ยงต่ำ ฝุ่นละเอียดอาจเป็นอันตรายต่อปอด","A very soft, silvery-white metal.|Touchscreens and LCDs (as compounds) and solder.|A by-product of zinc production.|Low risk as a metal; fine dust may harm the lungs.","โลหะอ่อนสีเงินขาว","Soft silvery-white metal","หน้าจอสัมผัสจำนวนมากใช้สารประกอบของอินเดียม","Many touchscreens use indium compounds.","Indium"),
+Te:D("กึ่งโลหะเปราะสีเงินขาว|เซลล์แสงอาทิตย์ (แคดเมียมเทลลูไรด์) โลหะผสม|ผลพลอยได้จากการผลิตทองแดง|สารประกอบเป็นพิษ และทำให้ลมหายใจมีกลิ่นคล้ายกระเทียม","A brittle, silvery-white metalloid.|Solar cells (cadmium telluride) and alloys.|A by-product of copper production.|Compounds are toxic and can give the breath a garlic smell.","ของแข็งสีเงินขาว","Silvery-white solid","ชื่อเทลลูเรียมมาจากคำละติน tellus ที่แปลว่าโลก","The name tellurium comes from the Latin tellus, meaning earth.","Tellurium"),
+Ta:D("โลหะสีเทาอมน้ำเงิน ทนการกัดกร่อนมาก|ตัวเก็บประจุในโทรศัพท์และคอมพิวเตอร์ อุปกรณ์การแพทย์|แร่โคลัมไบต์-แทนทาไลต์|ตัวโลหะเข้ากับร่างกายได้ดี จึงใช้ในอุปกรณ์ฝังในร่างกายบางชนิด","A blue-grey metal with excellent corrosion resistance.|Capacitors in phones and computers, and medical devices.|Columbite-tantalite ore.|Biocompatible as a metal, so it is used in some implants.","โลหะสีเทาอมน้ำเงิน","Blue-grey metal","แทนทาลัมใช้ทำตัวเก็บประจุขนาดเล็กในอุปกรณ์อิเล็กทรอนิกส์","Tantalum is used to make small capacitors in electronics.","Tantalum"),
+Bi:D("โลหะหนักสีขาวอมชมพู เป็นพิษน้อยกว่าโลหะหนักอื่น|ยาลดกรดบางชนิด เครื่องสำอาง โลหะผสมที่หลอมเหลวง่าย|ผลพลอยได้จากการผลิตตะกั่วและทองแดง|ปลอดภัยกว่าตะกั่ว แต่ไม่ควรรับประทานเกินขนาด","A heavy, pinkish-white metal that is less toxic than other heavy metals.|Some antacids, cosmetics and low-melting alloys.|A by-product of lead and copper production.|Safer than lead, but do not take it in excess.","โลหะสีขาวอมชมพู","Pinkish-white metal","ผลึกบิสมัทที่ปลูกในห้องปฏิบัติการมีรูปทรงขั้นบันไดและสีรุ้ง","Lab-grown bismuth crystals form stair-step shapes with rainbow colours.","Bismuth"),
+Nd:D("โลหะหายากสีเงิน|แม่เหล็กนีโอไดเมียมแรงสูงในหูฟัง ลำโพง มอเตอร์|แร่โมนาไซต์และแบสต์เนไซต์|ตัวโลหะเสี่ยงต่ำ แต่แม่เหล็กแรงสูงอาจหนีบนิ้วและกลืนแล้วอันตรายมาก","A silvery rare-earth metal.|Strong neodymium magnets in headphones, speakers and motors.|Monazite and bastnäsite ores.|Low risk as a metal, but strong magnets can pinch fingers and are very dangerous if swallowed.","โลหะสีเงิน","Silvery metal","แม่เหล็กนีโอไดเมียมเป็นแม่เหล็กถาวรที่แรงที่สุดชนิดหนึ่งที่มีขายทั่วไป","Neodymium magnets are among the strongest permanent magnets commonly sold.","Neodymium"),
+Th:D("โลหะกัมมันตรังสีอ่อน สีเงิน|ไส้ตะเกียงแมนเทิล (ในอดีต) และงานวิจัยเชื้อเพลิงนิวเคลียร์|แร่โมนาไซต์|กัมมันตรังสี ฝุ่นอันตรายถ้าสูดดม","A weakly radioactive silvery metal.|Lantern mantles (historically) and nuclear-fuel research.|Monazite ore.|Radioactive; dust is hazardous if inhaled.","โลหะสีเงิน","Silvery metal","ทอเรียมตั้งชื่อตามทอร์ เทพสายฟ้าในเทพปกรณัมนอร์ส","Thorium is named after Thor, the Norse god of thunder.","Thorium"),
+Am:D("โลหะกัมมันตรังสีสังเคราะห์|เครื่องตรวจจับควันไฟชนิดไอออไนเซชัน|ไม่พบตามธรรมชาติ ผลิตในเครื่องปฏิกรณ์|กัมมันตรังสี ในเครื่องตรวจจับควันมีปริมาณน้อยมากและปิดผนึก ไม่ควรแกะ","A synthetic radioactive metal.|Ionisation smoke detectors.|Not found in nature; made in reactors.|Radioactive; the tiny amount in a smoke detector is sealed in, so never open it.","โลหะสีเงินขาว","Silvery-white metal","เครื่องตรวจจับควันไฟบางรุ่นมีอะเมริเซียมปริมาณน้อยมาก","Some smoke detectors contain a tiny amount of americium.","Americium")
+});
+Object.assign(FEATURED,{
+Sc:D("โลหะอ่อนสีเงิน|โลหะผสมอะลูมิเนียม-สแกนเดียมในอุปกรณ์กีฬาและอากาศยาน ไฟสนามกีฬา|ปริมาณน้อยกระจายอยู่ในแร่หลายชนิด|ตัวโลหะเสี่ยงต่ำ ผงละเอียดติดไฟได้","A soft silvery metal.|Aluminium-scandium alloys in sports gear and aircraft, and stadium lighting.|Thinly spread through many minerals.|Low risk as a metal; fine powder is flammable.","โลหะอ่อนสีเงิน","Soft silvery metal","สแกนเดียมตั้งชื่อตามสแกนดิเนเวีย","Scandium is named after Scandinavia.","Scandium"),
+Y:D("โลหะหายากสีเงิน|ผงเรืองแสงในจอและไฟ LED สีขาว เลเซอร์|แร่โมนาไซต์และซีโนไทม์|ผงละเอียดติดไฟได้ สารประกอบบางชนิดระคายเคือง","A silvery rare-earth metal.|Phosphors in screens and white LEDs, and lasers.|Monazite and xenotime ores.|Fine powder is flammable; some compounds are irritating.","โลหะสีเงิน","Silvery metal","อิตเทรียมตั้งชื่อตามหมู่บ้านอิตเทอร์บีในประเทศสวีเดน","Yttrium is named after the village of Ytterby in Sweden.","Yttrium"),
+La:D("โลหะหายากอ่อน สีเงินขาว|เลนส์กล้อง แบตเตอรี่แบบนิกเกิล-เมทัลไฮไดรด์ ตัวเร่งปฏิกิริยาในโรงกลั่นน้ำมัน|แร่โมนาไซต์และแบสต์เนไซต์|ทำปฏิกิริยากับอากาศชื้น ตัวโลหะเสี่ยงต่ำ","A soft, silvery-white rare-earth metal.|Camera lenses, nickel-metal hydride batteries and refinery catalysts.|Monazite and bastnäsite ores.|Reacts with moist air; low risk as a metal.","โลหะอ่อนสีเงินขาว","Soft silvery-white metal","ชื่อแลนทานัมมาจากคำกรีก lanthanein ที่แปลว่าซ่อนเร้น","The name lanthanum comes from the Greek lanthanein, meaning to lie hidden.","Lanthanum"),
+Ce:D("โลหะหายากที่พบมากที่สุดในกลุ่มนี้|หินไฟแช็ก สารขัดกระจก ตัวเร่งปฏิกิริยาในท่อไอเสีย|แร่โมนาไซต์และแบสต์เนไซต์|เศษและผงละเอียดติดไฟเองได้ในอากาศ","The most abundant of the rare-earth metals.|Lighter flints, glass polish and exhaust catalysts.|Monazite and bastnäsite ores.|Shavings and fine powder can ignite on their own in air.","โลหะสีเงินเทา","Silvery-grey metal","หินไฟแช็กมักทำจากโลหะผสมที่มีซีเรียม","Lighter flints are often made from alloys containing cerium.","Cerium"),
+Eu:D("โลหะหายากที่ว่องไวมาก|ผงเรืองแสงสีแดงและน้ำเงินในจอและหลอดไฟ หมึกป้องกันการปลอมแปลงธนบัตรยูโร|แร่โมนาไซต์และแบสต์เนไซต์|ว่องไวกับอากาศและน้ำ ตัวโลหะเสี่ยงต่ำ","A very reactive rare-earth metal.|Red and blue phosphors in screens and lamps, and anti-counterfeit ink in euro banknotes.|Monazite and bastnäsite ores.|Reactive with air and water; low risk as a metal.","โลหะสีเงิน","Silvery metal","ยูโรเพียมได้ชื่อมาจากทวีปยุโรป","Europium is named after the continent of Europe.","Europium"),
+Gd:D("โลหะหายากสีเงินขาว เป็นแม่เหล็กได้เมื่ออุณหภูมิต่ำกว่าประมาณ 20 °C|สารเพิ่มความชัดของภาพ MRI (ในรูปสารประกอบทางการแพทย์) แท่งควบคุมนิวเคลียร์|แร่โมนาไซต์และแบสต์เนไซต์|สารประกอบที่ไม่ได้ออกแบบสำหรับการแพทย์เป็นพิษ ห้ามนำมาใช้เอง","A silvery-white rare-earth metal, magnetic below about 20 °C.|Contrast agents for MRI (as medical compounds) and nuclear control rods.|Monazite and bastnäsite ores.|Compounds not made for medical use are toxic; never use them yourself.","โลหะสีเงินขาว","Silvery-white metal","สารที่มีแกโดลิเนียมช่วยให้ภาพ MRI ชัดขึ้น","Gadolinium-based agents make MRI images clearer.","Gadolinium"),
+Hf:D("โลหะสีเงินเทา ทนความร้อนสูง|แท่งควบคุมเครื่องปฏิกรณ์นิวเคลียร์ ฉนวนในชิปคอมพิวเตอร์|แร่เซอร์คอน พบร่วมกับเซอร์โคเนียม|ผงละเอียดติดไฟได้ ตัวโลหะเสี่ยงต่ำ","A silvery-grey, heat-resistant metal.|Nuclear reactor control rods and insulators in computer chips.|Zircon ore, together with zirconium.|Fine powder is flammable; low risk as a metal.","โลหะสีเงินเทา","Silvery-grey metal","ฮาฟเนียมมีสมบัติคล้ายเซอร์โคเนียมมากจนแยกออกจากกันยาก","Hafnium is so similar to zirconium that the two are hard to separate.","Hafnium"),
+Re:D("โลหะหนักสีเงินขาว จุดหลอมเหลวสูงมาก|ใบพัดเครื่องยนต์ไอพ่น (โลหะผสมพิเศษ) ตัวเร่งปฏิกิริยา|ผลพลอยได้จากการผลิตโมลิบดีนัมและทองแดง|ตัวโลหะเสี่ยงต่ำ","A heavy silvery-white metal with a very high melting point.|Jet-engine blades (special alloys) and catalysts.|A by-product of molybdenum and copper production.|Low risk as a metal.","โลหะสีเงินขาว","Silvery-white metal","รีเนียมเป็นหนึ่งในธาตุที่พบในเปลือกโลกน้อยที่สุด","Rhenium is one of the rarest elements in Earth's crust.","Rhenium"),
+Os:D("โลหะหนักแน่นมาก สีเทาอมน้ำเงิน|ปลายปากกาหมึกซึม โลหะผสมแข็ง|พบร่วมกับแพลทินัม|ออสเมียมเตตระออกไซด์เป็นพิษและระเหยง่าย","An extremely dense, blue-grey metal.|Fountain-pen tips and hard alloys.|Found together with platinum.|Osmium tetroxide is toxic and volatile.","โลหะสีเทาอมน้ำเงิน","Blue-grey metal","ออสเมียมเป็นหนึ่งในธาตุที่มีความหนาแน่นสูงที่สุด","Osmium is one of the densest elements.","Osmium"),
+Ir:D("โลหะหนาแน่น แข็ง ทนการกัดกร่อนมาก|หัวเทียนประสิทธิภาพสูง ปลายปากกา|พบน้อยมากในเปลือกโลก|ตัวโลหะเสี่ยงต่ำ","A dense, hard, extremely corrosion-resistant metal.|High-performance spark plugs and pen tips.|Very scarce in Earth's crust.|Low risk as a metal.","โลหะสีขาวเงิน","Silvery-white metal","ชั้นหินที่มีอิริเดียมสูงทั่วโลกเป็นหลักฐานสำคัญของการชนของอุกกาบาตที่เกี่ยวข้องกับการสูญพันธุ์ของไดโนเสาร์","A worldwide iridium-rich rock layer is key evidence of the asteroid impact linked to the dinosaurs' extinction.","Iridium"),
+Tl:D("โลหะอ่อนสีเทาอมน้ำเงิน เป็นพิษมาก|อุปกรณ์ตรวจจับอินฟราเรดและเลนส์พิเศษ (ใช้จำกัด)|ปริมาณน้อยในแร่ซัลไฟด์|เป็นพิษร้ายแรง ห้ามสัมผัสหรือกลืน","A soft, bluish-grey metal that is highly toxic.|Infrared detectors and special optics (limited use).|Small amounts in sulfide ores.|Seriously toxic; never touch or swallow.","โลหะอ่อนสีเทาอมน้ำเงิน","Soft bluish-grey metal","แทลเลียมเคยใช้เป็นยาเบื่อหนู แต่เลิกใช้เพราะอันตรายต่อคน","Thallium was once used as rat poison but stopped because it is dangerous to people.","Thallium"),
+Po:D("โลหะกัมมันตรังสีรุนแรง|เคยใช้ในอุปกรณ์กำจัดไฟฟ้าสถิตบางชนิด|ปริมาณน้อยมากในแร่ยูเรเนียม|กัมมันตรังสีรุนแรงและเป็นพิษมาก ห้ามจัดการเอง","A strongly radioactive metal.|Once used in some static-elimination devices.|Tiny amounts in uranium ores.|Intensely radioactive and highly toxic; never handle it.","โลหะสีเงิน","Silvery metal","พอโลเนียมถูกค้นพบโดยมารี กูรี และตั้งชื่อตามโปแลนด์ บ้านเกิดของเธอ","Polonium was discovered by Marie Curie and named after her homeland, Poland.","Polonium")
+});
+Object.assign(FEATURED,{
+Pr:D("โลหะหายากสีเงินอมเหลืองอ่อน|แก้วและเซรามิกสีเหลืองเขียว แว่นกันแสงจ้าของช่างเชื่อม โลหะผสมแม่เหล็ก|แร่โมนาไซต์และแบสต์เนไซต์|ตัวโลหะเสี่ยงต่ำ ทำปฏิกิริยากับอากาศชื้น","A silvery rare-earth metal with a faint yellow tint.|Yellow-green glass and ceramics, welders' glare-filter glasses and magnet alloys.|Monazite and bastnäsite ores.|Low risk as a metal; reacts with moist air.","โลหะสีเงินอมเหลืองอ่อน","Silvery metal with a faint yellow tint","ชื่อเพรซีโอดิเมียมมาจากคำกรีกที่แปลว่าแฝดสีเขียว","The name praseodymium comes from Greek words meaning green twin.","Praseodymium"),
+Pm:D("โลหะกัมมันตรังสีที่ไม่มีไอโซโทปเสถียร|แบตเตอรี่นิวเคลียร์ขนาดเล็กและสีเรืองแสง (ในอดีต)|พบน้อยมากในธรรมชาติ ส่วนใหญ่ผลิตจากเครื่องปฏิกรณ์|กัมมันตรังสี ห้ามจัดการเอง","A radioactive metal with no stable isotopes.|Small nuclear batteries and luminous paint (historically).|Extremely scarce in nature; mostly made in reactors.|Radioactive; never handle it.","ยังไม่ทราบแน่ชัด","Not firmly known","โพรมีเทียมตั้งชื่อตามโพรมีธีอุส ผู้ขโมยไฟจากสวรรค์ในเทพปกรณัมกรีก","Promethium is named after Prometheus, who stole fire from the gods in Greek myth.","Promethium"),
+Sm:D("โลหะหายากสีเงินอมเหลืองอ่อน|แม่เหล็กซาแมเรียม-โคบอลต์ที่ทนความร้อนสูง|แร่โมนาไซต์และแบสต์เนไซต์|ตัวโลหะเสี่ยงต่ำ ผงละเอียดติดไฟได้","A silvery rare-earth metal.|Samarium-cobalt magnets that tolerate high heat.|Monazite and bastnäsite ores.|Low risk as a metal; fine powder is flammable.","โลหะสีเงิน","Silvery metal","ซาแมเรียมตั้งชื่อตามแร่ซามาร์สไกต์","Samarium is named after the mineral samarskite.","Samarium"),
+Tb:D("โลหะหายากสีเงิน|ผงเรืองแสงสีเขียวในจอและหลอดไฟ|แร่โมนาไซต์และแบสต์เนไซต์|ตัวโลหะเสี่ยงต่ำ","A silvery rare-earth metal.|Green phosphors in screens and lamps.|Monazite and bastnäsite ores.|Low risk as a metal.","โลหะสีเงิน","Silvery metal","เทอร์เบียมตั้งชื่อตามหมู่บ้านอิตเทอร์บีในประเทศสวีเดน","Terbium is named after the village of Ytterby in Sweden.","Terbium"),
+Dy:D("โลหะหายากสีเงิน|แม่เหล็กนีโอไดเมียมที่ทนความร้อน กังหันลมและมอเตอร์ไฟฟ้า|แร่โมนาไซต์และแบสต์เนไซต์|ตัวโลหะเสี่ยงต่ำ ผงละเอียดติดไฟได้","A silvery rare-earth metal.|Heat-tolerant neodymium magnets, wind turbines and electric motors.|Monazite and bastnäsite ores.|Low risk as a metal; fine powder is flammable.","โลหะสีเงิน","Silvery metal","ชื่อดิสโพรเซียมมาจากคำกรีกที่แปลว่าเข้าถึงยาก","The name dysprosium comes from a Greek word meaning hard to get.","Dysprosium"),
+Ho:D("โลหะหายากสีเงิน มีสมบัติแม่เหล็กโดดเด่น|เลเซอร์โฮลเมียมทางการแพทย์ เช่น การสลายนิ่ว|แร่โมนาไซต์และแบสต์เนไซต์|ตัวโลหะเสี่ยงต่ำ","A silvery rare-earth metal with outstanding magnetic properties.|Medical holmium lasers, for example for breaking up kidney stones.|Monazite and bastnäsite ores.|Low risk as a metal.","โลหะสีเงิน","Silvery metal","โฮลเมียมตั้งชื่อตามกรุงสตอกโฮล์ม","Holmium is named after Stockholm.","Holmium"),
+Er:D("โลหะหายากสีเงิน|เส้นใยแก้วนำแสงที่ช่วยขยายสัญญาณอินเทอร์เน็ต แก้วสีชมพู|แร่โมนาไซต์และแบสต์เนไซต์|ตัวโลหะเสี่ยงต่ำ","A silvery rare-earth metal.|Optical-fibre amplifiers for internet signals, and pink glass.|Monazite and bastnäsite ores.|Low risk as a metal.","โลหะสีเงิน","Silvery metal","เออร์เบียมช่วยขยายสัญญาณในสายใยแก้วนำแสงระยะไกล","Erbium helps amplify signals in long-distance optical fibre.","Erbium"),
+Tm:D("โลหะหายากที่พบน้อยที่สุดในกลุ่มที่เสถียร|เลเซอร์ทางการแพทย์|แร่โมนาไซต์และแบสต์เนไซต์ ปริมาณน้อย|ตัวโลหะเสี่ยงต่ำ","The least abundant of the stable rare-earth metals.|Medical lasers.|Small amounts in monazite and bastnäsite ores.|Low risk as a metal.","โลหะสีเงินเทา","Silvery-grey metal","ทูเลียมตั้งชื่อตามทูเล ดินแดนทางเหนือสุดในตำนานโบราณ","Thulium is named after Thule, a legendary land in the far north.","Thulium"),
+Yb:D("โลหะหายากสีเงิน อ่อน|นาฬิกาอะตอมที่แม่นยำสูง เลเซอร์|แร่โมนาไซต์และแบสต์เนไซต์|ตัวโลหะเสี่ยงต่ำ","A soft, silvery rare-earth metal.|Highly accurate atomic clocks and lasers.|Monazite and bastnäsite ores.|Low risk as a metal.","โลหะอ่อนสีเงิน","Soft silvery metal","นาฬิกาอะตอมที่ใช้อิตเทอร์เบียมมีความแม่นยำสูงมาก","Atomic clocks based on ytterbium are extremely precise.","Ytterbium"),
+Lu:D("โลหะหายากที่หนาแน่นและแข็งที่สุดในกลุ่มแลนทาไนด์|ผลึกในเครื่องตรวจ PET สแกน ตัวเร่งปฏิกิริยา|แร่โมนาไซต์และแบสต์เนไซต์|ตัวโลหะเสี่ยงต่ำ","The densest and hardest of the lanthanides.|Crystals in PET scanners, and catalysts.|Monazite and bastnäsite ores.|Low risk as a metal.","โลหะสีเงินขาว","Silvery-white metal","ลูทีเชียมตั้งชื่อตามลูเทเชีย ชื่อละตินของกรุงปารีส","Lutetium is named after Lutetia, the Latin name for Paris.","Lutetium"),
+Tc:D("โลหะกัมมันตรังสีสีเงินเทา|การแพทย์นิวเคลียร์ ใช้ถ่ายภาพอวัยวะ|แทบไม่พบในธรรมชาติ ผลิตจากเครื่องปฏิกรณ์|กัมมันตรังสี ใช้ภายใต้การควบคุมทางการแพทย์เท่านั้น","A silvery-grey radioactive metal.|Nuclear medicine, used to image organs.|Almost absent in nature; made in reactors.|Radioactive; used only under medical control.","โลหะสีเงินเทา","Silvery-grey metal","เทคนีเชียมเป็นธาตุแรกที่มนุษย์สังเคราะห์ขึ้นได้ ชื่อมาจากคำกรีกที่แปลว่าประดิษฐ์ขึ้น","Technetium was the first element made artificially; its name comes from a Greek word meaning artificial.","Technetium"),
+At:D("ธาตุกัมมันตรังสีที่หายากที่สุดตามธรรมชาติ|แทบไม่มีการใช้ทั่วไป มีงานวิจัยด้านการรักษามะเร็งบางแบบ|ปริมาณน้อยมากจากการสลายของยูเรเนียมและทอเรียม|กัมมันตรังสี ห้ามจัดการเอง","The rarest naturally occurring radioactive element.|Almost no everyday uses; studied for some cancer treatments.|Tiny amounts from the decay of uranium and thorium.|Radioactive; never handle it.","ยังไม่ทราบแน่ชัด","Not firmly known","แอสทาทีนเป็นธาตุที่หายากที่สุดตามธรรมชาติบนโลก","Astatine is the rarest naturally occurring element on Earth.","Astatine"),
+Fr:D("โลหะกัมมันตรังสีอายุสั้นมาก|ใช้เพื่อการวิจัยเท่านั้น|เกิดจากการสลายของแอกทิเนียมในปริมาณน้อยมาก|กัมมันตรังสี ห้ามจัดการเอง","A very short-lived radioactive metal.|Used for research only.|Produced in tiny amounts by the decay of actinium.|Radioactive; never handle it.","ยังไม่ทราบแน่ชัด","Not firmly known","แฟรนเซียมตั้งชื่อตามประเทศฝรั่งเศส","Francium is named after France.","Francium")
+});
+const SH=(ft,fe,w)=>D("ธาตุหนักยิ่งยวดสังเคราะห์ที่มีอายุสั้นมาก|ใช้เพื่อการวิจัยฟิสิกส์นิวเคลียร์เท่านั้น|ไม่พบตามธรรมชาติ สร้างทีละไม่กี่อะตอมในเครื่องเร่งอนุภาค|กัมมันตรังสี สลายตัวเร็วมาก ไม่มีให้สัมผัสในปริมาณที่มองเห็นได้","A synthetic superheavy element that lives for a very short time.|Used only in nuclear-physics research.|Not found in nature; made a few atoms at a time in particle accelerators.|Radioactive and decays very quickly; never available in visible amounts.","ยังไม่ทราบแน่ชัด","Not firmly known",ft,fe,w);
+const AC=(a,b,c,d,ft,fe,w)=>D(a+"|"+b+"|"+c+"|กัมมันตรังสี ห้ามจัดการเอง",d[0]+"|"+d[1]+"|"+d[2]+"|Radioactive; never handle it.","โลหะสีเงิน","Silvery metal",ft,fe,w);
+Object.assign(FEATURED,{
+Nb:D("โลหะสีเทา ทนการกัดกร่อน และเป็นตัวนำยิ่งยวดที่อุณหภูมิต่ำ|เหล็กกล้าความแข็งแรงสูง แม่เหล็กตัวนำยิ่งยวดในเครื่อง MRI|แร่โคลัมไบต์-แทนทาไลต์และไพโรคลอร์|ตัวโลหะเสี่ยงต่ำ","A grey, corrosion-resistant metal that becomes superconducting at low temperatures.|High-strength steel and superconducting magnets in MRI machines.|Columbite-tantalite and pyrochlore ores.|Low risk as a metal.","โลหะสีเทา","Grey metal","ไนโอเบียมตั้งชื่อตามไนโอบี ลูกสาวของแทนทาลัสในเทพปกรณัมกรีก","Niobium is named after Niobe, daughter of Tantalus in Greek myth.","Niobium"),
+Ru:D("โลหะสีขาวเงิน แข็ง อยู่ในกลุ่มแพลทินัม|หน้าสัมผัสไฟฟ้า ตัวเร่งปฏิกิริยา และเพิ่มความแข็งให้โลหะผสม|พบร่วมกับแพลทินัม|ตัวโลหะเสี่ยงต่ำ สารประกอบบางชนิดเป็นพิษ","A hard, silvery-white metal of the platinum group.|Electrical contacts, catalysts and hardening alloys.|Found together with platinum.|Low risk as a metal; some compounds are toxic.","โลหะสีขาวเงิน","Silvery-white metal","รูเทเนียมตั้งชื่อตามรูเทเนีย ชื่อละตินของรัสเซีย","Ruthenium is named after Ruthenia, the Latin name for Russia.","Ruthenium"),
+Rh:D("โลหะมีค่าสีขาวเงินเป็นประกาย|ตัวเร่งปฏิกิริยาในท่อไอเสียรถยนต์ ชุบเครื่องประดับให้เงางาม|พบน้อยมากร่วมกับแพลทินัม|ตัวโลหะเสี่ยงต่ำ","A shiny silvery-white precious metal.|Car exhaust catalysts and bright plating for jewellery.|Very scarce, found with platinum.|Low risk as a metal.","โลหะสีขาวเงินเป็นประกาย","Shiny silvery-white metal","ชื่อโรเดียมมาจากคำกรีก rhodon ที่แปลว่ากุหลาบ เพราะสารประกอบมีสีชมพู","The name rhodium comes from the Greek rhodon, meaning rose, because its compounds are pink.","Rhodium"),
+W:D("โลหะสีเทาขาว มีจุดหลอมเหลวสูงที่สุดในบรรดาโลหะ|ไส้หลอดไฟแบบไส้ เครื่องมือตัดที่แข็งมาก|แร่ชีไลต์และวูลแฟรไมต์|ตัวโลหะเสี่ยงต่ำ ควรหลีกเลี่ยงการสูดดมฝุ่นละเอียด","A grey-white metal with the highest melting point of all metals.|Incandescent bulb filaments and very hard cutting tools.|Scheelite and wolframite ores.|Low risk as a metal; avoid inhaling fine dust.","โลหะสีเทาขาว","Grey-white metal","ทังสเตนมีจุดหลอมเหลวสูงที่สุดในบรรดาโลหะ","Tungsten has the highest melting point of any metal.","Tungsten"),
+Ac:AC("โลหะกัมมันตรังสีสีเงินที่เรืองแสงจาง ๆ ในที่มืด","งานวิจัย และมีการศึกษาไอโซโทปเพื่อการรักษามะเร็ง","ปริมาณน้อยมากในแร่ยูเรเนียม",["A silvery radioactive metal that glows faintly in the dark.","Research, and an isotope is studied for cancer treatment.","Tiny amounts in uranium ores."],"แอกทิเนียมเป็นธาตุที่ให้ชื่อกลุ่มแอกทิไนด์","Actinium gives its name to the actinide group.","Actinium"),
+Pa:AC("โลหะกัมมันตรังสีสีเงินเป็นมัน","งานวิจัยเท่านั้น","ปริมาณน้อยมากในแร่ยูเรเนียม",["A shiny silvery radioactive metal.","Used for research only.","Tiny amounts in uranium ores."],"ชื่อโพรแทกทิเนียมหมายถึงตัวก่อนแอกทิเนียม เพราะสลายตัวกลายเป็นแอกทิเนียม","Protactinium means before actinium, because it decays into actinium.","Protactinium"),
+Np:AC("โลหะกัมมันตรังสีสีเงิน","งานวิจัย และเป็นวัตถุดิบผลิตพลูโทเนียม-238","พบน้อยมากในธรรมชาติ ส่วนใหญ่ผลิตในเครื่องปฏิกรณ์",["A silvery radioactive metal.","Research, and a raw material for making plutonium-238.","Very scarce in nature; mostly made in reactors."],"เนปทูเนียมตั้งชื่อตามดาวเนปจูน","Neptunium is named after the planet Neptune.","Neptunium"),
+Cm:AC("โลหะกัมมันตรังสีสังเคราะห์","แหล่งรังสีในเครื่องวิเคราะห์องค์ประกอบหินบนยานสำรวจดาวอังคาร","สังเคราะห์ในเครื่องปฏิกรณ์",["A synthetic radioactive metal.","A radiation source in rock-analysis instruments on Mars rovers.","Made in reactors."],"คูเรียมตั้งชื่อเพื่อเป็นเกียรติแก่มารีและปีแยร์ กูรี","Curium honours Marie and Pierre Curie.","Curium"),
+Bk:AC("โลหะกัมมันตรังสีสังเคราะห์","ใช้เป็นเป้าสร้างธาตุหนักยิ่งยวด เช่น เทนเนสซีน","สังเคราะห์ในเครื่องปฏิกรณ์ที่มีฟลักซ์นิวตรอนสูง",["A synthetic radioactive metal.","Used as a target to make superheavy elements such as tennessine.","Made in high-flux reactors."],"เบอร์คีเลียมตั้งชื่อตามเมืองเบิร์กลีย์ รัฐแคลิฟอร์เนีย","Berkelium is named after Berkeley, California.","Berkelium"),
+Cf:AC("โลหะกัมมันตรังสีสังเคราะห์","แหล่งนิวตรอนสำหรับสำรวจแหล่งน้ำมัน ตรวจวัสดุ และเริ่มเดินเครื่องปฏิกรณ์","สังเคราะห์ในเครื่องปฏิกรณ์",["A synthetic radioactive metal.","A neutron source for oil-well surveys, material testing and starting reactors.","Made in reactors."],"แคลิฟอร์เนียมตั้งชื่อตามรัฐแคลิฟอร์เนียและมหาวิทยาลัยแคลิฟอร์เนีย","Californium is named after the state and the University of California.","Californium"),
+Es:AC("โลหะกัมมันตรังสีสังเคราะห์ ผลิตได้ปริมาณน้อยมาก","งานวิจัยเท่านั้น","ถูกพบครั้งแรกในเศษซากจากการทดสอบระเบิดไฮโดรเจนครั้งแรก",["A synthetic radioactive metal made in tiny amounts.","Used for research only.","First found in debris from the first hydrogen-bomb test."],"ไอน์สไตเนียมตั้งชื่อเพื่อเป็นเกียรติแก่อัลเบิร์ต ไอน์สไตน์","Einsteinium honours Albert Einstein.","Einsteinium"),
+Fm:AC("โลหะกัมมันตรังสีสังเคราะห์","งานวิจัยเท่านั้น","สังเคราะห์ ถูกพบครั้งแรกในเศษซากการทดสอบระเบิดไฮโดรเจน",["A synthetic radioactive metal.","Used for research only.","Synthetic; first found in hydrogen-bomb test debris."],"เฟอร์เมียมตั้งชื่อเพื่อเป็นเกียรติแก่เอนรีโก แฟร์มี","Fermium honours Enrico Fermi.","Fermium"),
+Md:AC("ธาตุกัมมันตรังสีสังเคราะห์ ผลิตได้ทีละไม่กี่อะตอม","งานวิจัยเท่านั้น","สังเคราะห์ทีละไม่กี่อะตอมในเครื่องเร่งอนุภาค",["A synthetic radioactive element made a few atoms at a time.","Used for research only.","Made a few atoms at a time in particle accelerators."],"เมนเดลีเวียมตั้งชื่อเพื่อเป็นเกียรติแก่ดมิตรี เมนเดเลเยฟ ผู้สร้างตารางธาตุ","Mendelevium honours Dmitri Mendeleev, creator of the periodic table.","Mendelevium"),
+No:AC("ธาตุกัมมันตรังสีสังเคราะห์ ผลิตได้ทีละไม่กี่อะตอม","งานวิจัยเท่านั้น","สังเคราะห์ทีละไม่กี่อะตอมในเครื่องเร่งอนุภาค",["A synthetic radioactive element made a few atoms at a time.","Used for research only.","Made a few atoms at a time in particle accelerators."],"โนเบเลียมตั้งชื่อเพื่อเป็นเกียรติแก่อัลเฟรด โนเบล","Nobelium honours Alfred Nobel.","Nobelium"),
+Lr:AC("ธาตุกัมมันตรังสีสังเคราะห์ ผลิตได้ทีละไม่กี่อะตอม","งานวิจัยเท่านั้น","สังเคราะห์ทีละไม่กี่อะตอมในเครื่องเร่งอนุภาค",["A synthetic radioactive element made a few atoms at a time.","Used for research only.","Made a few atoms at a time in particle accelerators."],"ลอว์เรนเซียมตั้งชื่อเพื่อเป็นเกียรติแก่เออร์เนสต์ ลอว์เรนซ์ ผู้ประดิษฐ์ไซโคลตรอน","Lawrencium honours Ernest Lawrence, inventor of the cyclotron.","Lawrencium"),
+Rf:SH("รัทเทอร์ฟอร์เดียมตั้งชื่อเพื่อเป็นเกียรติแก่เออร์เนสต์ รัทเทอร์ฟอร์ด ผู้บุกเบิกฟิสิกส์นิวเคลียร์","Rutherfordium honours Ernest Rutherford, a pioneer of nuclear physics.","Rutherfordium"),
+Db:SH("ดุบเนียมตั้งชื่อตามเมืองดุบนาในรัสเซีย ที่ตั้งของสถาบันวิจัยนิวเคลียร์ร่วม","Dubnium is named after Dubna, Russia, home of the Joint Institute for Nuclear Research.","Dubnium"),
+Sg:SH("ซีบอร์เกียมตั้งชื่อตามเกลนน์ ซีบอร์ก ซึ่งยังมีชีวิตอยู่ตอนที่ตั้งชื่อ","Seaborgium honours Glenn Seaborg, who was still alive when it was named.","Seaborgium"),
+Bh:SH("โบห์เรียมตั้งชื่อเพื่อเป็นเกียรติแก่นีลส์ โบร์","Bohrium honours Niels Bohr.","Bohrium"),
+Hs:SH("ฮาสเซียมตั้งชื่อตามแคว้นเฮสเซินในเยอรมนี ซึ่งชื่อละตินคือ Hassia","Hassium is named after the German state of Hesse, whose Latin name is Hassia.","Hassium"),
+Mt:SH("ไมต์เนเรียมตั้งชื่อเพื่อเป็นเกียรติแก่ลีเซอ ไมต์เนอร์ นักฟิสิกส์หญิง","Meitnerium honours Lise Meitner, a physicist.","Meitnerium"),
+Ds:SH("ดาร์มสตัดเทียมตั้งชื่อตามเมืองดาร์มชตัดท์ ประเทศเยอรมนี","Darmstadtium is named after Darmstadt, Germany.","Darmstadtium"),
+Rg:SH("เรินต์เกเนียมตั้งชื่อเพื่อเป็นเกียรติแก่วิลเฮล์ม เรินต์เกน ผู้ค้นพบรังสีเอกซ์","Roentgenium honours Wilhelm Röntgen, who discovered X-rays.","Roentgenium"),
+Cn:SH("โคเปอร์นิเซียมตั้งชื่อเพื่อเป็นเกียรติแก่นิโคเลาส์ โคเปอร์นิคัส ผู้เสนอว่าโลกโคจรรอบดวงอาทิตย์","Copernicium honours Nicolaus Copernicus, who proposed that the Earth orbits the Sun.","Copernicium"),
+Nh:SH("นิโฮเนียมเป็นธาตุแรกที่ค้นพบในประเทศเอเชีย ชื่อมาจาก นิฮง ซึ่งเป็นชื่อประเทศญี่ปุ่นในภาษาญี่ปุ่น","Nihonium is the first element discovered in an Asian country; its name comes from Nihon, the Japanese name for Japan.","Nihonium"),
+Fl:SH("เฟลโรเวียมตั้งชื่อตามห้องปฏิบัติการปฏิกิริยานิวเคลียร์ฟลีโรฟในเมืองดุบนา","Flerovium is named after the Flerov Laboratory of Nuclear Reactions in Dubna.","Flerovium"),
+Mc:SH("มอสโกเวียมตั้งชื่อตามแคว้นมอสโก ประเทศรัสเซีย","Moscovium is named after the Moscow region of Russia.","Moscovium"),
+Lv:SH("ลิเวอร์มอเรียมตั้งชื่อตามห้องปฏิบัติการแห่งชาติลอว์เรนซ์ ลิเวอร์มอร์","Livermorium is named after Lawrence Livermore National Laboratory.","Livermorium"),
+Ts:SH("เทนเนสซีนตั้งชื่อตามรัฐเทนเนสซี สหรัฐอเมริกา","Tennessine is named after the US state of Tennessee.","Tennessine"),
+Og:SH("ออกาเนสซอนตั้งชื่อเพื่อเป็นเกียรติแก่ยูริ โอกาเนสเซียน และเป็นธาตุที่มีเลขอะตอมสูงที่สุดที่รู้จัก","Oganesson honours Yuri Oganessian and is the element with the highest known atomic number.","Oganesson")
+});
+const GENERIC_FACT = (e,lang)=> lang==="th"
+  ? `${e.th} (${e.sym}) มีเลขอะตอม ${e.z} และถูกจัดอยู่ในหมวด ${I18N.th.cat[e.cat]}`
+  : `${e.en} (${e.sym}) has atomic number ${e.z} and is classified as ${I18N.en.cat[e.cat]}.`;
+
+/* ============ I18N ============ */
+const I18N = {
+ th:{
+  L:{iKnow:"รู้แล้ว",iUnsure:"ยังไม่แน่ใจ",footNote:"เนื้อหาเพื่อการเรียนรู้ ไม่ใช่คำแนะนำด้านความปลอดภัย อย่าสัมผัสหรือทดลองกับสารจริงโดยไม่มีผู้ใหญ่ดูแล",footSrcH:"แหล่งข้อมูลและสถานะการตรวจทาน",footSrc:["มวลอะตอม: IUPAC / CIAAW (ค่าย่อ)","ความหนาแน่น จุดหลอมเหลว จุดเดือด สัดส่วนในเปลือกโลก ความแข็ง: Wikipedia (CC BY-SA) และ CRC Handbook","ปีที่ค้นพบและผู้ค้นพบ: Jefferson Lab","การจัดเรียงอิเล็กตรอน: 1728 Software Systems","ชื่อภาษาไทย: แนวราชบัณฑิตยสภา (ควรตรวจซ้ำกับฉบับล่าสุด)"],footReview:"คำอธิบายธาตุและช่อง “ข้อควรระวัง” เรียบเรียงจากความรู้ทั่วไป ยังไม่ได้ผ่านการตรวจทานโดยผู้เชี่ยวชาญด้านเคมี หากพบข้อผิดพลาด โปรดแจ้งผู้ดูแลเว็บไซต์",footVer:"เวอร์ชันแรก",animT:"เปิด/ปิดการเคลื่อนไหวของอะตอม",bohr:"โครงสร้างอะตอม (แบบ Bohr)",shellsL:"อิเล็กตรอนแต่ละชั้น (ใน→นอก)",bohrNote:"แบบจำลองง่าย ๆ เพื่อการเรียนรู้ ของจริงอิเล็กตรอนอยู่เป็นกลุ่มเมฆ ไม่ได้วิ่งเป็นวงกลม · ข้อมูลการจัดเรียง: 1728 Software Systems",bohrPred:"ธาตุเลขอะตอม 104 ขึ้นไปเป็นค่าที่ทำนายจากทฤษฎี",reviewWrong:"ทบทวนด้วยแฟลชการ์ด",disc:"ปีที่ค้นพบ",discBy:"ผู้ค้นพบ",ancient:"รู้จักมาตั้งแต่สมัยโบราณ",ancientBy:"ไม่ทราบ",discNote:"ปีและผู้ค้นพบ: Jefferson Lab ปรับการสะกดชื่อบางชื่อ ธาตุที่ 107 และ 113 แก้ตามผู้ค้นพบที่วงการยอมรับ และธาตุหนักยิ่งยวดอาจมีปีต่างกันตามแหล่ง (ปีที่ตรวจพบกับปีที่รายงานยืนยัน)",hintQ:"ทายธาตุจากคำใบ้",latQ:"ที่มาของสัญลักษณ์ละติน",sprint:"ท้าทาย 60 วินาที",pHint:"ธาตุนี้คือธาตุอะไร",pLat:"สัญลักษณ์นี้มาจากชื่อละตินว่าอะไร",time:"เวลา",sec:"วิ",statsLbl:"สถิติรวม",qs:"ข้อ",fdirS:"หน้าการ์ด: สัญลักษณ์",fdirN:"หน้าการ์ด: ชื่อ",allCats:"ทุกหมวดหมู่",deck:"ชุดการ์ด",answeredN:"ตอบแล้ว",heatL:"ระบายสีตาม",heatNone:"หมวดหมู่ (ค่าเริ่มต้น)",heatEn:"Electronegativity",heatMass:"มวลอะตอม",heatDens:"ความหนาแน่น (log)",heatMp:"จุดหลอมเหลว",heatCrust:"สัดส่วนในเปลือกโลก (log)",heatNoData:"สีเทา = ไม่มีข้อมูล",dens:"ความหนาแน่น",mp:"จุดหลอมเหลว",bp:"จุดเดือด",physNote:"ความหนาแน่น จุดหลอมเหลว และจุดเดือด: ชุดข้อมูลตารางธาตุจาก Wikipedia (ไม่ใส่ค่าประมาณ/คาดการณ์ ธาตุที่มีหลายรูปแบบใช้รูปแบบตามแหล่งอ้างอิง)",cat:"ทายหมวดหมู่",phase:"ทายสถานะที่อุณหภูมิห้อง",pCat:"ธาตุนี้อยู่หมวดหมู่ใด",pPh:"ที่อุณหภูมิห้องเป็นสถานะใด",sHard:"ความแข็ง",sHardCrit:"ความแข็งโมห์ส: ≥7 = 5 · 5–6.9 = 4 · 3–4.9 = 3 · 1.5–2.9 = 2 · <1.5 = 1",learnH:"ฝึกทบทวน",learnP:"ควิซสั้น ๆ และแฟลชการ์ด ได้ความรู้ใหม่ทุกข้อ",open:"เลือกโหมดเล่น",quick:"เล่นด่วน",lvH:"ระดับความยาก",lvEasy:"ง่าย",lvMid:"กลาง",lvAll:"ยาก",lvD20:"ธาตุ 1–20 (H ถึง Ca) · 3 ตัวเลือกต่อข้อ",lvD54:"ธาตุ 1–54 (H ถึง Xe) · 4 ตัวเลือกต่อข้อ",lvD118:"ครบทั้ง 118 ธาตุ · 4 ตัวเลือกต่อข้อ",acc:"ถูก",sprintS:"60 วิ",known:"ธาตุที่รู้จักแล้ว",sBest:"สูงสุด",startHint:"เล่นสักข้อ แล้วสะสมธาตุแรกของคุณ",didYou:"รู้หรือไม่",msg3:"เก่งมาก! จำธาตุได้แม่นสุด ๆ",msg2:"ดีมาก! อีกนิดเดียวก็เต็มแล้ว",msg1:"เริ่มต้นได้ดี ลองอีกรอบให้จำขึ้นใจ",msg0:"ไม่เป็นไร ทุกคนเริ่มจากศูนย์ ลองทบทวนด้วยแฟลชการ์ดแล้วเล่นใหม่นะ",dm_s2n:"เห็น Fe แล้วเลือกชื่อ",dm_n2s:"เห็นชื่อแล้วเลือกสัญลักษณ์",dm_num:"เห็นชื่อแล้วเลือกเลขอะตอม",dm_cat:"ธาตุนี้อยู่หมวดไหน",dm_phase:"แข็ง เหลว หรือแก๊ส",dm_hint:"อ่านคำใบ้แล้วเดาธาตุ",dm_lat:"Na มาจากคำละตินว่าอะไร",dm_mix:"ผสมหลายแบบ",dm_sprint:"ตอบให้ได้มากที่สุดใน 1 นาที",title:"เรียนรู้",quiz:"ควิซ (10 ข้อ)",s2n:"ทายชื่อจากสัญลักษณ์",n2s:"ทายสัญลักษณ์จากชื่อ",num:"ทายเลขอะตอม",mix:"สุ่มผสม",flash:"แฟลชการ์ด",start:"เริ่ม",wrong:"ธาตุที่ตอบผิดบ่อย",wrongEmpty:"ยังไม่มีข้อที่ตอบผิด",clear:"ล้างสถิติ",best:"คะแนนสูงสุด",q:"ข้อ",score:"คะแนน",next:"ข้อถัดไป",finish:"ดูผล",again:"เล่นอีกครั้ง",menu:"เมนู",missed:"ข้อที่ตอบผิดรอบนี้",perfect:"ถูกทุกข้อ!",pS2N:"ธาตุนี้ชื่ออะไร",pN2S:"สัญลักษณ์ของธาตุนี้คืออะไร",pNum:"เลขอะตอมของธาตุนี้คือเท่าไร",flip:"แตะเพื่อพลิกการ์ด",shuffle:"สลับลำดับ",ok:"✓ ถูกต้อง",no:"✗ ไม่ถูก"},
+  tagline:"สำรวจทุกธาตุ", random:"สุ่มธาตุ", reroll:"สุ่มใหม่", dark:"โหมดมืด", light:"โหมดสว่าง",
+  search:"ค้นหาด้วยชื่อไทย ชื่ออังกฤษ สัญลักษณ์ หรือเลขอะตอม", searchLabel:"ค้นหาธาตุ",
+  h1:"ตารางธาตุ 118 ธาตุ", lead:"แตะธาตุเพื่อดูรายละเอียด หรือพิมพ์ค้นหาได้ทันที สีแสดงหมวดหมู่ของธาตุ",
+  hint:"บนมือถือ เลื่อนตารางไปทางซ้าย-ขวาเพื่อดูครบทุกคอลัมน์",
+  noResult:q=>`ไม่พบธาตุที่ตรงกับ “${q}” ลองพิมพ์ชื่อ สัญลักษณ์ หรือเลขอะตอมอีกครั้ง`,
+  fav:"รายการโปรด", rec:"ดูล่าสุด", favEmpty:"ยังไม่มีรายการโปรด เปิดธาตุแล้วกด ☆ เพื่อบันทึก", recEmpty:"ยังไม่มีประวัติการดู เริ่มจากการแตะธาตุในตาราง",
+  close:"ปิด", prev:"ก่อนหน้า", next:"ถัดไป", share:"แชร์", copy:"คัดลอกลิงก์", copied:"คัดลอกลิงก์แล้ว", copyFail:"คัดลอกไม่สำเร็จ ลองคัดลอกจากแถบที่อยู่",
+  atomicNo:"เลขอะตอม", symbol:"สัญลักษณ์", mass:"มวลอะตอม", phase:"สถานะที่อุณหภูมิห้อง", category:"หมวดหมู่", groupPeriod:"หมู่ / คาบ",
+  appearance:"สีและลักษณะ", latin:"ที่มาของสัญลักษณ์ (ละติน)", massNote:"ค่าในวงเล็บคือเลขมวลของไอโซโทปที่มีอายุยาวที่สุดที่ทราบ (ธาตุนี้ไม่มีมวลอะตอมมาตรฐาน)",
+  fPeriod:"บล็อก f", noData:"ไม่มีข้อมูลในชุดนี้",
+  summary:"คำอธิบายสั้น ๆ", uses:"ประโยชน์/การใช้งาน", found:"แหล่งที่พบ", safety:"ข้อควรระวัง",
+  noDesc:"ยังไม่มีคำอธิบายของธาตุนี้ในรุ่นนี้ ข้อมูลพื้นฐานด้านบนมาจากแหล่งอ้างอิงที่ระบุด้านล่าง ส่วนบรรยายจะเพิ่มทีละธาตุเมื่อตรวจสอบแหล่งที่มาแล้ว",
+  heroSuperheavy:"หมวดหมู่ของธาตุหนักยิ่งยวด (104–118) เป็นการคาดการณ์จากตำแหน่งในตาราง เพราะยังศึกษาสมบัติทางเคมีได้น้อยมาก",
+  stats:"สถิติธาตุ", statsNote:"ค่าจริง = ข้อมูลวิทยาศาสตร์ คะแนน 1–5 = คำนวณจากค่าจริงด้วยเกณฑ์ที่ระบุ ไม่ใช่คะแนนเพื่อความสนุก",
+  real:"ค่าจริง", score:"คะแนน", criteria:"เกณฑ์",
+  sRarity:"ความหายาก", sRarityCrit:"สัดส่วนในเปลือกโลก (ppm โดยมวล): ≥10,000 = 1 · 1,000–9,999 = 2 · 100–999 = 3 · 1–99 = 4 · <1 = 5",
+  sCond:"การนำไฟฟ้า", sCondCrit:"สภาพนำไฟฟ้า ~20 °C (S/m): ≥3×10⁷ = 5 · 1×10⁷–3×10⁷ = 4 · 1×10⁶–1×10⁷ = 3 · 1×10⁴–1×10⁶ = 2 · <1×10⁴ = 1",
+  sRad:"กัมมันตรังสี", sReact:"การเกิดปฏิกิริยา (ค่า electronegativity)", sReactCrit:"ไม่มีมาตรฐานเดียวสำหรับจัดอันดับ จึงแสดงค่า Pauling electronegativity แทนคะแนน",
+  sLife:"ความสำคัญต่อสิ่งมีชีวิต", sNature:"การพบในธรรมชาติ",
+  radYes:"ไม่มีไอโซโทปที่เสถียรสมบูรณ์ (กัมมันตรังสี)", radNo:"มีไอโซโทปเสถียร", radBi:"บิสมัท-209 สลายช้ามาก ครึ่งชีวิตราว 2×10¹⁹ ปี",
+  lifeMajor:"จำเป็นต่อมนุษย์ (ปริมาณมาก)", lifeTrace:"จำเป็นต่อมนุษย์ (ปริมาณน้อย)", lifeNone:"ไม่ได้จัดเป็นธาตุจำเป็นในชุดข้อมูลนี้",
+  natPrim:"พบตามธรรมชาติตั้งแต่ก่อตัวของโลก (primordial)", natTrace:"พบปริมาณน้อยมากจากการสลายหรือฟิชชันของธาตุอื่น", natSyn:"สังเคราะห์ในห้องปฏิบัติการ",
+  notNatural:"ไม่พบตามธรรมชาติ",
+  missing:"ยังไม่มีข้อมูลที่ตรวจสอบแล้วสำหรับ", missingList:"ความอันตราย (NFPA/GHS), ความไวไฟ, ความสำคัญทางอุตสาหกรรม (USGS)",
+  facts:"เกร็ดความรู้", nextFact:"เปลี่ยนเกร็ด", readMore:"อ่านเพิ่มเติม", source:"แหล่งข้อมูล", noFact:"ยังไม่มีเกร็ดที่ตรวจสอบแล้วของธาตุนี้",
+  refs:"แหล่งอ้างอิง", refMass:"มวลอะตอม: IUPAC / CIAAW (ค่าย่อ)", refName:"ชื่อภาษาไทย: ตามแนวราชบัณฑิตยสภา (ควรตรวจซ้ำกับฉบับล่าสุด)",
+  refCrust:"สัดส่วนในเปลือกโลก: CRC Handbook / Wikipedia · ความหนาแน่น จุดหลอมเหลว จุดเดือด: Wikipedia", refLife:"ธาตุจำเป็นต่อมนุษย์: NIH Office of Dietary Supplements",
+  notFound:"ไม่พบธาตุนี้", notFoundMsg:"ลิงก์ที่เปิดอาจพิมพ์ผิด กลับไปที่ตารางเพื่อเลือกธาตุ",
+  back:"กลับไปตาราง", errStore:"บันทึกการตั้งค่าไม่ได้ (เบราว์เซอร์บล็อกที่เก็บข้อมูล)",
+  footer:"Elementia · เวอร์ชันเริ่มต้น ข้อมูลหลักมาจาก IUPAC/CIAAW, CRC Handbook และ Wikipedia/RSC/PubChem ตามที่ระบุในแต่ละหน้า",
+  phases:{s:"ของแข็ง",l:"ของเหลว",g:"แก๊ส",u:"ยังไม่ทราบแน่ชัด"},
+  cat:{ak:"โลหะแอลคาไล",ae:"โลหะแอลคาไลน์เอิร์ท",tm:"โลหะทรานซิชัน",pt:"โลหะหลังทรานซิชัน",md:"กึ่งโลหะ",nm:"อโลหะ",hl:"เฮโลเจน",ng:"แก๊สเฉื่อย",ln:"แลนทาไนด์",ac:"แอกทิไนด์"}
+ },
+ en:{
+  L:{iKnow:"I know it",iUnsure:"Not sure",footNote:"Content is for learning only and is not safety advice. Do not touch or experiment with real substances without adult supervision.",footSrcH:"Sources and review status",footSrc:["Atomic mass: IUPAC / CIAAW (abridged)","Density, melting and boiling points, crustal abundance, hardness: Wikipedia (CC BY-SA) and the CRC Handbook","Year and discoverer: Jefferson Lab","Electron shells: 1728 Software Systems","Thai names: following the Royal Society of Thailand (re-check against the latest edition)"],footReview:"Element descriptions and the Safety notes were written from general knowledge and have not yet been reviewed by a chemistry expert. If you spot an error, please tell the site owner.",footVer:"first version",animT:"Turn atom animation on/off",bohr:"Atom structure (Bohr model)",shellsL:"Electrons per shell (inner→outer)",bohrNote:"A simple model for learning; real electrons form clouds rather than circling in rings · Shell data: 1728 Software Systems",bohrPred:"For atomic numbers 104 and above these are values predicted by theory.",reviewWrong:"Review with flashcards",disc:"Year discovered",discBy:"Discovered by",ancient:"Known since ancient times",ancientBy:"Unknown",discNote:"Year and discoverers: Jefferson Lab, with some name spellings corrected; elements 107 and 113 corrected to the generally accepted discoverers; years for superheavy elements vary by source (first detection vs confirmed report).",hintQ:"Guess from a clue",latQ:"Latin origin of symbols",sprint:"60-second challenge",pHint:"Which element is this?",pLat:"Which Latin name does this symbol come from?",time:"Time",sec:"s",statsLbl:"Overall",qs:"questions",fdirS:"Card front: symbol",fdirN:"Card front: name",allCats:"All categories",deck:"Card deck",answeredN:"Answered",heatL:"Colour by",heatNone:"Category (default)",heatEn:"Electronegativity",heatMass:"Atomic mass",heatDens:"Density (log)",heatMp:"Melting point",heatCrust:"Crustal abundance (log)",heatNoData:"Grey = no data",dens:"Density",mp:"Melting point",bp:"Boiling point",physNote:"Density, melting and boiling points: Wikipedia periodic-table dataset (estimated/predicted values omitted; for allotropes, the form used by the source).",cat:"Guess the category",phase:"Guess the state at room temp",pCat:"Which category is this element in?",pPh:"What is its state at room temperature?",sHard:"Hardness",sHardCrit:"Mohs hardness: ≥7 = 5 · 5–6.9 = 4 · 3–4.9 = 3 · 1.5–2.9 = 2 · <1.5 = 1",learnH:"Practice",learnP:"Short quizzes and flashcards. Learn something new every time.",open:"Choose a mode",quick:"Quick play",lvH:"Difficulty",lvEasy:"Easy",lvMid:"Medium",lvAll:"Hard",lvD20:"Elements 1–20 (H to Ca) · 3 choices per question",lvD54:"Elements 1–54 (H to Xe) · 4 choices per question",lvD118:"All 118 elements · 4 choices per question",acc:"Correct",sprintS:"60 s",known:"Elements known",sBest:"Best",startHint:"Play a round to collect your first element",didYou:"Did you know",msg3:"Excellent! You really know your elements!",msg2:"Great job! Almost a perfect score.",msg1:"Good start. Try again to make it stick.",msg0:"That is okay, everyone starts at zero. Review with flashcards and play again.",dm_s2n:"See Fe, pick the name",dm_n2s:"See the name, pick the symbol",dm_num:"See the name, pick the atomic number",dm_cat:"Which category is it in?",dm_phase:"Solid, liquid or gas",dm_hint:"Read the clue, guess the element",dm_lat:"What Latin name does Na come from?",dm_mix:"A mix of everything",dm_sprint:"Answer as many as you can in 1 minute",title:"Learn",quiz:"Quiz (10 questions)",s2n:"Name from symbol",n2s:"Symbol from name",num:"Atomic number",mix:"Mixed",flash:"Flashcards",start:"Start",wrong:"Most-missed elements",wrongEmpty:"No missed answers yet",clear:"Reset stats",best:"Best score",q:"Question",score:"Score",next:"Next question",finish:"See result",again:"Play again",menu:"Menu",missed:"Missed this round",perfect:"Perfect score!",pS2N:"Which element is this?",pN2S:"What is this element's symbol?",pNum:"What is this element's atomic number?",flip:"Tap to flip the card",shuffle:"Shuffle",ok:"✓ Correct",no:"✗ Incorrect"},
+  tagline:"Explore every element", random:"Random", reroll:"Roll again", dark:"Dark mode", light:"Light mode",
+  search:"Search by name, symbol or atomic number", searchLabel:"Search elements",
+  h1:"The Periodic Table", lead:"Tap an element for details, or start typing to search instantly. Colours show element categories.",
+  hint:"On a phone, scroll the table sideways to see every column.",
+  noResult:q=>`No element matches “${q}”. Try a name, symbol or atomic number.`,
+  fav:"Favorites", rec:"Recently viewed", favEmpty:"No favorites yet. Open an element and tap ☆ to save it.", recEmpty:"Nothing viewed yet. Tap any element in the table to begin.",
+  close:"Close", prev:"Previous", next:"Next", share:"Share", copy:"Copy link", copied:"Link copied", copyFail:"Couldn't copy. Copy it from the address bar instead.",
+  atomicNo:"Atomic number", symbol:"Symbol", mass:"Atomic mass", phase:"State at room temperature", category:"Category", groupPeriod:"Group / Period",
+  appearance:"Appearance", latin:"Symbol origin (Latin)", massNote:"A value in brackets is the mass number of the longest-lived known isotope (no standard atomic weight).",
+  fPeriod:"f-block", noData:"Not in this dataset",
+  summary:"Overview", uses:"Uses", found:"Where it's found", safety:"Safety",
+  noDesc:"No description for this element yet. The basic data above comes from the references listed below; descriptions are added element by element once sources are verified.",
+  heroSuperheavy:"Categories for superheavy elements (104–118) are predicted from their position in the table; their chemistry is barely studied.",
+  stats:"Element stats", statsNote:"Real value = scientific data. A 1–5 score is computed from that value using the stated criteria; none are invented.",
+  real:"Real value", score:"Score", criteria:"Criteria",
+  sRarity:"Rarity", sRarityCrit:"Crustal abundance (ppm by mass): ≥10,000 = 1 · 1,000–9,999 = 2 · 100–999 = 3 · 1–99 = 4 · <1 = 5",
+  sCond:"Electrical conductivity", sCondCrit:"Conductivity at ~20 °C (S/m): ≥3×10⁷ = 5 · 1×10⁷–3×10⁷ = 4 · 1×10⁶–1×10⁷ = 3 · 1×10⁴–1×10⁶ = 2 · <1×10⁴ = 1",
+  sRad:"Radioactivity", sReact:"Reactivity (electronegativity)", sReactCrit:"There is no single standard for ranking reactivity, so the Pauling electronegativity is shown instead of a score.",
+  sLife:"Importance to life", sNature:"Natural occurrence",
+  radYes:"No fully stable isotope (radioactive)", radNo:"Has stable isotopes", radBi:"Bismuth-209 decays extremely slowly, half-life about 2×10¹⁹ years",
+  lifeMajor:"Essential to humans (large amounts)", lifeTrace:"Essential to humans (trace amounts)", lifeNone:"Not listed as essential in this dataset",
+  natPrim:"Found in nature since Earth's formation (primordial)", natTrace:"Trace amounts from decay or fission of other elements", natSyn:"Made in the laboratory",
+  notNatural:"Not found in nature",
+  missing:"No verified data yet for", missingList:"hazard (NFPA/GHS), flammability, industrial importance (USGS)",
+  facts:"Did you know", nextFact:"Next fact", readMore:"Read more", source:"Source", noFact:"No verified fact for this element yet",
+  refs:"References", refMass:"Atomic mass: IUPAC / CIAAW (abridged values)", refName:"Thai names: following the Royal Society of Thailand (re-check against the latest edition)",
+  refCrust:"Crustal abundance: CRC Handbook / Wikipedia · density, melting and boiling points: Wikipedia", refLife:"Essential elements: NIH Office of Dietary Supplements",
+  notFound:"Element not found", notFoundMsg:"The link may be mistyped. Go back to the table and pick an element.",
+  back:"Back to table", errStore:"Couldn't save settings (the browser blocked storage).",
+  footer:"Elementia · early version. Core data from IUPAC/CIAAW, the CRC Handbook and Wikipedia/RSC/PubChem as cited on each page.",
+  phases:{s:"Solid",l:"Liquid",g:"Gas",u:"Not firmly known"},
+  cat:{ak:"Alkali metal",ae:"Alkaline earth metal",tm:"Transition metal",pt:"Post-transition metal",md:"Metalloid",nm:"Nonmetal",hl:"Halogen",ng:"Noble gas",ln:"Lanthanide",ac:"Actinide"}
+ }
+};
+
+/* ============ STATE & STORAGE ============ */
+let storageOK = true;
+const store = {
+  get(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){storageOK=false;return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){storageOK=false}}
+};
+const state = {
+  lang: store.get("el_lang", (navigator.language||"th").toLowerCase().startsWith("th")?"th":"en"),
+  dark: store.get("el_dark", window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches),
+  fav: store.get("el_fav", []), recent: store.get("el_recent", []),
+  accOpen:{stats:false,refs:false}, anim: store.get('el_anim', !(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)), heat: null, cat: null, query: "", current: null, factIdx: 0, activeRes: -1, lastFocus: null
+};
+const $ = s=>document.querySelector(s);
+const T = ()=>I18N[state.lang];
+const nameOf = e=> state.lang==="th"?e.th:e.en;
+const altName = e=> state.lang==="th"?e.en:e.th;
+const svg=(d,fill)=>`<svg width="22" height="22" viewBox="0 0 24 24" fill="${fill?"currentColor":"none"}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const ICON={prev:svg('<path d="M19 12H5M11 6l-6 6 6 6"/>'),next:svg('<path d="M5 12h14M13 6l6 6-6 6"/>'),
+  shuffle:svg('<path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>'),
+  star:svg('<path d="M12 2.5l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 18.3l-6.2 3.3L7 14.7 2 9.8l6.9-1z"/>'),
+  starOn:svg('<path d="M12 2.5l3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 18.3l-6.2 3.3L7 14.7 2 9.8l6.9-1z"/>',true),
+  play:svg('<path d="M7 5l12 7-12 7z"/>',true),pause:svg('<path d="M8 5v14M16 5v14"/>'),
+  check:svg('<path d="M5 12l5 5 9-10"/>'),
+  close:svg('<path d="M6 6l12 12M18 6 6 18"/>')};
+let closeT=null;
+const RM=()=>!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
+function showOverlay(){
+  clearTimeout(closeT);
+  const ov=$("#overlay"), sh=$("#sheet");
+  const first = ov.hidden;
+  ov.classList.remove("closing");
+  document.body.classList.remove("sheet-closing");
+  sh.style.transition=""; sh.style.transform=""; sh.style.opacity="";
+  ov.style.opacity="";
+  ov.hidden=false;
+  document.body.classList.add("sheet-open");
+  document.body.style.overflow="hidden";
+  if(first){
+    sh.classList.remove("enter");
+    void sh.offsetWidth;
+    sh.classList.add("enter");
+  } else {
+    sh.classList.remove("enter");
+  }
+}
+function hideOverlay(){
+  const ov=$("#overlay"), sh=$("#sheet");
+  clearTimeout(closeT);
+  document.body.classList.add("sheet-closing");
+  const done=()=>{
+    ov.hidden=true; ov.classList.remove("closing");
+    sh.style.transition=""; sh.style.transform=""; sh.style.opacity="";
+    ov.style.opacity="";
+    document.body.classList.remove("sheet-open");
+    document.body.classList.remove("sheet-closing");
+    document.body.style.overflow="";
+    const sh2=$("#sheet"); if(sh2) sh2.classList.remove("enter");
+  };
+  if(RM()){ done(); return; }
+  ov.classList.add("closing");
+  closeT=setTimeout(done, 340);
+}
+function setHash(u){try{history.replaceState(null,"",u)}catch(e){/* sandboxed preview: ignore */}}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+
+/* ============ THEME ============ */
+function accentOf(e){ const f=FEATURED[e.sym]; return f&&f.color ? f.color : `hsl(${CATS[e.cat].h} 62% 48%)`; }
+function applyTheme(e){
+  const r=document.documentElement.style;
+  if(e){ r.setProperty("--accent",accentOf(e)); document.body.classList.add("themed"); }
+  else { r.removeProperty("--accent"); document.body.classList.remove("themed"); }
+}
+function setDark(v){
+  state.dark=v; store.set("el_dark",v);
+  document.documentElement.dataset.theme = v?"dark":"light";
+  const b=$("#btnDark"); b.setAttribute("aria-pressed",v); b.textContent = v ? "☀" : "☾"; b.setAttribute("aria-label", v ? T().light : T().dark);
+  document.querySelector('meta[name="theme-color"]').content = v?"#0f1217":"#f6f7f9";
+  if(state.heat) applyHeat();
+}
+
+/* ============ TOAST ============ */
+let toastT;
+function toast(msg){
+  const t=$("#toast");
+  t.textContent=msg; t.hidden=false;
+  // force reflow so CSS transition always plays
+  void t.offsetWidth;
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>{ t.hidden=true; }, 2200);
+}
+
+/* ============ STATIC TEXT ============ */
+function renderStatic(){
+  const t=T(); document.documentElement.lang=state.lang;
+  $("#tagline").textContent=t.tagline; $("#btnRandom").innerHTML='🎲'; $("#btnRandom").setAttribute("aria-label",t.random); $("#btnRandom").title=t.random;
+  $("#q").placeholder=t.search; $("#qLabel").textContent=t.searchLabel;
+  $("#h1").textContent=t.h1; $("#learnH").textContent=t.L.learnH; $("#learnP").textContent=t.L.learnP; $("#btnLearn").textContent=t.L.open; $("#btnQuick").textContent=t.L.quick; updateLearnPill(); $("#lead").textContent=t.lead; $("#hint").textContent=t.hint;
+  $("#favH").textContent=t.fav; $("#recH").textContent=t.rec; $("#foot").innerHTML=`<p style="margin:0 0 .5rem">${esc(t.L.footNote)}</p><details class="fdet"><summary>${esc(t.L.footSrcH)}</summary><ul>${t.L.footSrc.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><p style="margin:.4rem 0 0">${esc(t.L.footReview)}</p></details><p style="margin:.7rem 0 0">Elementia · ${esc(t.L.footVer)}</p>`;
+  { const bl=$("#btnLang");
+    if(bl){
+      bl.textContent = state.lang==="th" ? "TH" : "EN";
+      bl.setAttribute("aria-label", state.lang==="th" ? "ภาษา: ไทย (แตะเพื่อเปลี่ยนเป็น English)" : "Language: English (tap for ไทย)");
+      bl.title = state.lang==="th" ? "เปลี่ยนเป็น English" : "Switch to ไทย";
+    }
+  }
+  $("#btnDark").textContent = state.dark ? "☀" : "☾"; $("#btnDark").setAttribute("aria-label", state.dark ? t.light : t.dark);
+  $("#qClear").setAttribute("aria-label",t.close);
+  document.title = state.lang==="th" ? "Elementia — สำรวจทุกธาตุ | ตารางธาตุ" : "Elementia — Explore Every Element | Periodic Table";
+}
+
+/* ============ LEGEND + TABLE ============ */
+function renderLegend(){
+  const t=T(), el=$("#legend"); el.innerHTML="";
+  Object.keys(CATS).forEach(c=>{
+    const b=document.createElement("button"); b.className="chip"; b.style.setProperty("--h",CATS[c].h);
+    b.setAttribute("aria-pressed",state.cat===c); b.innerHTML=`<i></i>${esc(t.cat[c])}`;
+    b.onclick=()=>{state.cat=state.cat===c?null:c; renderLegend(); updateDim()};
+    el.appendChild(b);
+  });
+}
+function renderTable(){
+  const t=T(), wrap=$("#ptable"); wrap.innerHTML="";
+  EL.forEach(e=>{
+    const b=document.createElement("button"); b.className="tile"; b.dataset.z=e.z; b.style.setProperty("--h",CATS[e.cat].h);
+    b.style.gridRow=e.pos[0]; b.style.gridColumn=e.pos[1];
+    b.setAttribute("aria-label",`${e.z} ${e.sym} ${nameOf(e)}, ${t.cat[e.cat]}`);
+    b.innerHTML=`<span class="n">${e.z}</span>${state.fav.includes(e.sym)?'<span class="fav" aria-hidden="true">★</span>':""}<span class="s">${e.sym}</span><span class="t">${esc(nameOf(e))}</span>`;
+    b.onclick=()=>openElement(e.sym);
+    wrap.appendChild(b);
+  });
+  [[6,"57–71"],[7,"89–103"]].forEach(([r,txt])=>{
+    const d=document.createElement("div"); d.className="ph"; d.style.gridRow=r; d.style.gridColumn=3; d.textContent=txt; d.setAttribute("aria-hidden","true"); wrap.appendChild(d);
+  });
+  updateDim(); applyHeat();
+}
+const HEAT={
+  en:{f:e=>EN_PAULING[e.z], scale:"en"},
+  mass:{f:e=>parseFloat(e.mass.replace(/[\[\]]/g,"")), scale:"mass"},
+  dens:{f:e=>(PHYS[e.z]||{}).d, log:1, scale:"dens"},
+  mp:{f:e=>(PHYS[e.z]||{}).mp, scale:"mp"},
+  crust:{f:e=>CRUST_PPM[e.sym], log:1, scale:"crust"}
+};
+/* Meaningful heat scales: t in [0,1] → {bg, ink} */
+function heatColor(scale, t, dark){
+  t=Math.max(0, Math.min(1, t));
+  // low → high
+  if(scale==="mp"){
+    // cold blue → warm yellow → hot red
+    const h=210-t*210; // 210→0
+    const s=55+t*30;
+    const l=dark ? (28+t*8) : (92-t*42);
+    return {bg:`hsl(${h} ${s}% ${l}%)`, ink: (!dark && l>58) || (dark && l<40) ? (dark?"#eceff4":"#14181f") : (l>55?"#14181f":"#fff")};
+  }
+  if(scale==="dens"){
+    // airy sky → dense deep indigo
+    const h=200-t*40; // 200→160
+    const s=35+t*35;
+    const l=dark ? (30-t*8) : (94-t*48);
+    return {bg:`hsl(${h} ${s}% ${l}%)`, ink:l>(dark?36:55)?"#14181f":"#f5f7fa"};
+  }
+  if(scale==="mass"){
+    // light silver → heavy slate
+    const h=230, s=18+t*25, l=dark?(32-t*6):(93-t*45);
+    return {bg:`hsl(${h} ${s}% ${l}%)`, ink:l>(dark?36:55)?"#14181f":"#f5f7fa"};
+  }
+  if(scale==="en"){
+    // low EN soft teal → high EN vivid violet
+    const h=165+t*110; // 165→275
+    const s=40+t*35;
+    const l=dark ? (30+t*4) : (90-t*38);
+    return {bg:`hsl(${h} ${s}% ${l}%)`, ink:l>(dark?38:55)?"#14181f":"#f5f7fa"};
+  }
+  if(scale==="crust"){
+    // rare (low) purple → abundant (high) green
+    const h=280-t*200; // 280→80
+    const s=40+t*20;
+    const l=dark ? (28+t*6) : (90-t*35);
+    return {bg:`hsl(${h} ${s}% ${l}%)`, ink:l>(dark?36:55)?"#14181f":"#f5f7fa"};
+  }
+  // fallback blue
+  const l=dark?(30):(92-t*35);
+  return {bg:`hsl(215 65% ${l}%)`, ink:l>55?"#14181f":"#fff"};
+}
+function heatGradient(scale, dark){
+  const a=heatColor(scale,0,dark).bg, b=heatColor(scale,0.5,dark).bg, c=heatColor(scale,1,dark).bg;
+  return `linear-gradient(90deg,${a},${b},${c})`;
+}
+function applyHeat(){
+  const h=HEAT[state.heat], bar=$("#heatBar"); const tiles=document.querySelectorAll(".tile");
+  const dark=!!state.dark;
+  if(!h){tiles.forEach(b=>{b.style.background="";b.style.color=""});bar.innerHTML="";return}
+  const tr=h.log?Math.log10:(x=>x), ok=v=>v!=null&&isFinite(v)&&(!h.log||v>0);
+  const vals=EL.map(e=>h.f(e)).filter(ok);
+  if(!vals.length){tiles.forEach(b=>{b.style.background="var(--line)";b.style.color="var(--muted)"});bar.innerHTML=esc(T().L.heatNoData);return}
+  const lo=Math.min(...vals.map(tr)), hi=Math.max(...vals.map(tr));
+  tiles.forEach(b=>{
+    const v=h.f(EL[b.dataset.z-1]);
+    if(!ok(v)){b.style.background="var(--line)";b.style.color="var(--muted)";return}
+    const t=(tr(v)-lo)/((hi-lo)||1);
+    const col=heatColor(h.scale, t, dark);
+    b.style.background=col.bg; b.style.color=col.ink;
+  });
+  const f=x=>+x.toPrecision(3);
+  bar.innerHTML=`${f(Math.min(...vals))} <span style="display:inline-block;width:120px;height:10px;vertical-align:middle;border-radius:5px;background:${heatGradient(h.scale,dark)}"></span> ${f(Math.max(...vals))} · ${esc(T().L.heatNoData)}`;
+}
+
+function renderHeatSelect(){
+  const L=T().L, sel=$("#heat"); $("#heatL").textContent=L.heatL+" ";
+  sel.innerHTML=[["",L.heatNone],["en",L.heatEn],["mass",L.heatMass],["dens",L.heatDens],["mp",L.heatMp],["crust",L.heatCrust]].map(([v,l])=>`<option value="${v}">${esc(l)}</option>`).join("");
+  sel.value=state.heat||"";
+}
+function matches(e,q){
+  q=q.trim().toLowerCase(); if(!q) return true;
+  if(/^\d+$/.test(q)) return String(e.z)===q;
+  return e.sym.toLowerCase().startsWith(q) || e.en.toLowerCase().includes(q) || e.th.includes(q);
+}
+function updateDim(){
+  const q=state.query;
+  document.querySelectorAll(".tile").forEach(b=>{
+    const e=EL[b.dataset.z-1];
+    const okCat=!state.cat||e.cat===state.cat, okQ=matches(e,q);
+    b.classList.toggle("dim",!(okCat&&okQ));
+    b.classList.toggle("hit",!!q.trim()&&okQ&&okCat);
+  });
+}
+
+/* ============ SEARCH ============ */
+function rankMatches(q){
+  q=q.trim().toLowerCase(); if(!q) return [];
+  const score=e=>{
+    if(/^\d+$/.test(q)) return String(e.z)===q?0:9;
+    if(e.sym.toLowerCase()===q) return 0;
+    if(e.en.toLowerCase()===q||e.th===q) return 1;
+    if(e.en.toLowerCase().startsWith(q)||e.th.startsWith(q)) return 2;
+    if(e.sym.toLowerCase().startsWith(q)) return 3;
+    if(e.en.toLowerCase().includes(q)||e.th.includes(q)) return 4;
+    return 9;
+  };
+  return EL.map(e=>[score(e),e]).filter(x=>x[0]<9).sort((a,b)=>a[0]-b[0]||a[1].z-b[1].z).map(x=>x[1]);
+}
+function renderResults(){
+  const box=$("#results"), q=state.query.trim(), t=T();
+  $("#qClear").hidden=!state.query;
+  if(!q){box.hidden=true;$("#q").setAttribute("aria-expanded","false");return}
+  const list=rankMatches(q).slice(0,8); state.activeRes=list.length?0:-1;
+  box.hidden=false; $("#q").setAttribute("aria-expanded","true");
+  if(!list.length){box.innerHTML=`<div class="empty">${esc(t.noResult(q))}</div>`;return}
+  box.innerHTML="";
+  list.forEach((e,i)=>{
+    const b=document.createElement("button"); b.className="res"; b.setAttribute("role","option"); b.id="res"+i;
+    b.setAttribute("aria-selected",i===0); b.style.setProperty("--h",CATS[e.cat].h); b.dataset.sym=e.sym;
+    b.innerHTML=`<span class="sym">${e.sym}</span><span><span class="nm">${esc(nameOf(e))}</span><br><span class="sub">${esc(altName(e))} · ${t.atomicNo} ${e.z}</span></span>`;
+    b.onclick=()=>{closeResults();openElement(e.sym)};
+    box.appendChild(b);
+  });
+}
+function closeResults(){$("#results").hidden=true;$("#q").setAttribute("aria-expanded","false")}
+function moveRes(d){
+  const items=[...document.querySelectorAll(".res")]; if(!items.length) return;
+  state.activeRes=(state.activeRes+d+items.length)%items.length;
+  items.forEach((b,i)=>b.setAttribute("aria-selected",i===state.activeRes));
+  items[state.activeRes].scrollIntoView({block:"nearest"});
+}
+
+/* ============ FAVORITES / RECENT ============ */
+function miniBtn(e){
+  const b=document.createElement("button"); b.className="mini"; b.style.setProperty("--h",CATS[e.cat].h);
+  b.innerHTML=`<b>${e.sym}</b><span>${esc(nameOf(e))}</span>`; b.onclick=()=>openElement(e.sym); return b;
+}
+function renderLists(){
+  const t=T(), f=$("#favList"), r=$("#recList"); f.innerHTML=""; r.innerHTML="";
+  if(!state.fav.length) f.innerHTML=`<div class="emptybox">${esc(t.favEmpty)}</div>`;
+  state.fav.forEach(s=>BY_SYM[s.toLowerCase()]&&f.appendChild(miniBtn(BY_SYM[s.toLowerCase()])));
+  if(!state.recent.length) r.innerHTML=`<div class="emptybox">${esc(t.recEmpty)}</div>`;
+  state.recent.forEach(s=>BY_SYM[s.toLowerCase()]&&r.appendChild(miniBtn(BY_SYM[s.toLowerCase()])));
+}
+function pushRecent(sym){
+  state.recent=[sym,...state.recent.filter(s=>s!==sym)].slice(0,8); store.set("el_recent",state.recent);
+}
+function toggleFav(sym){
+  state.fav = state.fav.includes(sym)?state.fav.filter(s=>s!==sym):[...state.fav,sym]; store.set("el_fav",state.fav);
+  renderLists(); renderTable(); if(state.current) renderSheet();
+  if(!storageOK) toast(T().errStore);
+}
+
+/* ============ SHEET ============ */
+function openElement(sym,opts={}){
+  const e=BY_SYM[String(sym).toLowerCase()];
+  state.lastFocus = state.lastFocus || document.activeElement;
+  if(!e){ state.current=null; showNotFound(); return; }
+  const wasOpen = !$("#overlay").hidden && !document.body.classList.contains("sheet-closing");
+  const prev = state.current;
+  state.current=e.sym; state.factIdx=0; learn.mode=null;
+  pushRecent(e.sym); renderLists(); applyTheme(e);
+  showOverlay();
+  renderSheet();
+  // animate enter only on first open — skip when stepping / random spam
+  if(!wasOpen || !prev){
+    const bd=document.querySelector("#sheet .body");
+    if(bd) bd.classList.add("in");
+  } else {
+    // instant swap: kill residual enter animation on sheet
+    const sh=$("#sheet");
+    if(sh){ sh.style.animation="none"; void sh.offsetWidth; sh.style.animation=""; }
+  }
+  if(!opts.noHash && location.hash!=="#/element/"+e.sym) setHash("#/element/"+e.sym);
+  $("#sheet").scrollTop=0;
+  if(!wasOpen) $("#sheet").focus();
+}
+function closeSheet(){
+  hideOverlay(); state.current=null; learn.mode=null; clearInterval(learn.timer); updateLearnPill(); applyTheme(null);
+  setHash(location.pathname+location.search);
+  if(state.lastFocus&&document.contains(state.lastFocus)) state.lastFocus.focus(); state.lastFocus=null;
+}
+function showNotFound(){
+  const t=T(); showOverlay();
+  $("#sheet").innerHTML=`<div class="body"><div class="card"><h2 id="sheetTitle">${esc(t.notFound)}</h2><p>${esc(t.notFoundMsg)}</p><button class="btn primary" id="nfBack">${esc(t.back)}</button></div></div>`;
+  $("#nfBack").onclick=closeSheet;
+}
+function randomElement(){
+  let e; do{ e=EL[Math.floor(Math.random()*EL.length)]; }while(e.sym===state.current && EL.length>1);
+  openElement(e.sym);
+}
+function sci(v){
+  if(v>=1e4||v<1e-2){const ex=Math.floor(Math.log10(v));const m=(v/Math.pow(10,ex)).toFixed(2);
+    return `${m}×10${String(ex).replace(/-/g,"⁻").replace(/\d/g,d=>"⁰¹²³⁴⁵⁶⁷⁸⁹"[d])}`}
+  return String(v);
+}
+function dots(n){return `<span class="dots" aria-hidden="true">${[1,2,3,4,5].map(i=>`<i class="${i<=n?"on":""}"></i>`).join("")}</span>`}
+function statRow(label,valueHtml,scoreN,crit){
+  const t=T();
+  return `<div class="stat"><div class="top2"><span class="lab">${esc(label)}</span><span class="val">${valueHtml}</span></div>
+  ${scoreN?`<div class="note">${dots(scoreN)}${esc(t.score)} ${scoreN}/5<span class="tag">${esc(t.score)} · ${esc(state.lang==="th"?"คำนวณจากค่าจริง":"computed from real value")}</span></div>`:""}
+  ${crit?`<div class="note">${esc(t.criteria)}: ${esc(crit)}</div>`:""}</div>`;
+}
+function buildStats(e){
+  const t=T(), rows=[];
+  const real=`<span class="tag real">${esc(t.real)}</span>`;
+  // ความหายาก
+  if(CRUST_PPM[e.sym]!==undefined){const p=CRUST_PPM[e.sym];rows.push(statRow(t.sRarity,`${sci(p)} ppm ${real}`,scoreRarity(p),t.sRarityCrit))}
+  else if(occurrence(e.z)==="syn") rows.push(statRow(t.sRarity,esc(t.notNatural),0,""));
+  else rows.push(statRow(t.sRarity,esc(t.noData),0,""));
+  { const m=MOHS[e.sym]; rows.push(m!==undefined?statRow(t.L.sHard,`${m} Mohs ${real}`,scoreHard(m),t.L.sHardCrit):statRow(t.L.sHard,esc(t.noData),0,"")) }
+  // การนำไฟฟ้า
+  if(COND[e.sym]!==undefined){const c=COND[e.sym];rows.push(statRow(t.sCond,`${sci(c)} S/m ${real}`,scoreCond(c),t.sCondCrit))}
+  else rows.push(statRow(t.sCond,esc(t.noData),0,""));
+  // กัมมันตรังสี
+  const bi=e.sym==="Bi";
+  rows.push(statRow(t.sRad,`${esc(noStableIsotope(e.z)?t.radYes:t.radNo)} ${real}${bi?`<br><span class="note">${esc(t.radBi)}</span>`:""}`,0,""));
+  // การเกิดปฏิกิริยา
+  const en=EN_PAULING[e.z];
+  rows.push(statRow(t.sReact,en!==undefined?`${en} ${real}`:esc(t.noData),0,t.sReactCrit));
+  // ความสำคัญต่อสิ่งมีชีวิต
+  const life=ESSENTIAL_MAJOR.has(e.sym)?t.lifeMajor:ESSENTIAL_TRACE.has(e.sym)?t.lifeTrace:t.lifeNone;
+  rows.push(statRow(t.sLife,`${esc(life)} ${real}`,0,""));
+  // การพบในธรรมชาติ
+  const o=occurrence(e.z); rows.push(statRow(t.sNature,`${esc(o==="prim"?t.natPrim:o==="trace"?t.natTrace:t.natSyn)} ${real}`,0,""));
+  return rows.join("")+`<p class="note" style="margin:.8rem 0 0">${esc(t.missing)}: ${esc(t.missingList)}</p>`;
+}
+function sourcesFor(e){
+  const slug=e.en.toLowerCase();
+  return [
+    ["Royal Society of Chemistry",`https://periodic-table.rsc.org/element/${e.z}/${slug}`],
+    ["Jefferson Lab (discoverers)","https://education.jlab.org/qa/discover_ele.html"],
+    ["PubChem",`https://pubchem.ncbi.nlm.nih.gov/element/${e.z}`],
+    ["Wikipedia",`https://en.wikipedia.org/wiki/${e.en}`]
+  ];
+}
+function renderSheet(){
+  const e=BY_SYM[state.current.toLowerCase()], t=T(), f=FEATURED[e.sym], L=f&&f[state.lang];
+  const isFav=state.fav.includes(e.sym);
+  const group = e.pos[0]>=9 ? t.fPeriod : e.pos[1];
+  const period = e.pos[0]===9?6:e.pos[0]===10?7:e.pos[0];
+  const facts = f ? f.facts : [];
+  const fact = facts.length ? facts[state.factIdx % facts.length] : null;
+  $("#sheet").innerHTML=`
+  <div class="bar">
+    <div class="grp">
+      <button class="ib" id="bPrev" aria-label="${esc(t.prev)}">${ICON.prev}</button>
+      <button class="ib" id="bNext" aria-label="${esc(t.next)}">${ICON.next}</button>
+      <button class="ib" id="bRand" aria-label="${esc(t.reroll)}" title="${esc(t.reroll)}">${ICON.shuffle}</button>
+    </div>
+    <div class="grp">
+      <button class="ib" id="bFav" aria-pressed="${isFav}" aria-label="${esc(t.fav)}">${isFav?ICON.starOn:ICON.star}</button>
+      <button class="ib" id="bClose" aria-label="${esc(t.close)}">${ICON.close}</button>
+    </div>
+  </div>
+  <div class="hero">
+    <div class="bigsym" aria-hidden="true"><span class="z">${e.z}</span><span class="sy l${e.sym.length}">${e.sym}</span><span class="ms">${esc(e.mass)}</span></div>
+    <div>
+      <h2 id="sheetTitle">${esc(nameOf(e))}</h2>
+      <div class="en">${esc(altName(e))} · ${esc(e.sym)}</div>
+      ${LATIN[e.sym]?`<div class="lat">${esc(t.latin)}: <i>${LATIN[e.sym]}</i></div>`:""}
+    </div>
+  </div>
+  <div class="body">
+    <div class="card"><div class="kv">
+      <div><span>${esc(t.atomicNo)}</span><b>${e.z}</b></div>
+      <div><span>${esc(t.symbol)}</span><b>${e.sym}</b></div>
+      <div><span>${esc(t.mass)}</span><b>${esc(e.mass)}</b></div>
+      <div><span>${esc(t.phase)}</span><b>${esc(t.phases[e.phase])}</b></div>
+      <div><span>${esc(t.category)}</span><b>${esc(t.cat[e.cat])}</b></div>
+      <div><span>${esc(t.groupPeriod)}</span><b>${group} / ${period}</b></div>
+      <div><span>${esc(t.L.disc)}</span><b>${esc((DISC[e.z]||{}).y||t.L.ancient)}</b></div>
+      <div><span>${esc(t.L.discBy)}</span><b>${esc((DISC[e.z]||{}).w||t.L.ancientBy)}</b></div>
+      <div><span>${esc(t.L.dens)}</span><b>${esc(fmtD((PHYS[e.z]||{}).d)||t.noData)}</b></div>
+      <div><span>${esc(t.L.mp)}</span><b>${esc(physTxt(e,"mp"))}</b></div>
+      <div><span>${esc(t.L.bp)}</span><b>${esc(physTxt(e,"bp"))}</b></div>
+      <div><span>${esc(t.appearance)}</span><b>${f?esc(f.app[state.lang]):esc(t.noData)}</b></div>
+    </div>
+    <p class="note" style="margin:.8rem 0 0">${esc(t.L.physNote)}<br>${esc(t.L.discNote)}</p>
+    ${e.mass.startsWith("[")?`<p class="note" style="margin:.8rem 0 0">${esc(t.massNote)}</p>`:""}
+    ${e.z>=104?`<p class="note" style="margin:.4rem 0 0">${esc(t.heroSuperheavy)}</p>`:""}
+    </div>
+
+    <div class="card txt">
+      ${L?`<h4>${esc(t.summary)}</h4><p>${esc(L.sum)}</p><h4>${esc(t.uses)}</h4><p>${esc(L.use)}</p><h4>${esc(t.found)}</h4><p>${esc(L.occ)}</p><h4>${esc(t.safety)}</h4><p class="warn">${esc(L.safe)}</p>`
+        :`<div class="emptybox">${esc(t.noDesc)}</div>`}
+    </div>
+
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem"><h3 style="margin:0">${esc(t.L.bohr)}</h3><button class="ib" id="bAnim" aria-pressed="${state.anim}" aria-label="${esc(t.L.animT)}" title="${esc(t.L.animT)}" style="min-width:36px;min-height:36px;width:36px;height:36px;padding:0;display:inline-grid;place-items:center;opacity:.65">${state.anim?ICON.pause:ICON.play}</button></div><div style="text-align:center">${bohrSvg(e)}<div style="margin-top:.6rem"><span class="note" style="white-space:nowrap;font-size:clamp(.72rem,3.6vw,.9rem)">${esc(t.L.shellsL)}</span><br><b style="font-size:1.3rem">${shells(e.z).join(" · ")}</b></div></div><p class="note" style="margin:.7rem 0 0">${esc(t.L.bohrNote)}${e.z>=104?"<br>"+esc(t.L.bohrPred):""}</p></div>
+
+    <div class="card"><h3>${esc(t.facts)}</h3>
+      ${fact?`<div class="fact"><p style="margin:0;max-width:60ch">${esc(fact[state.lang])}</p>
+        <div class="links"><a href="${fact.src}" target="_blank" rel="noopener">${esc(t.readMore)}</a>${facts.length>1?`<button class="ib" id="bFact">${esc(t.nextFact)}</button>`:""}</div></div>
+        <p class="note" style="margin:.5rem 0 0">${esc(t.source)}: ${esc(fact.src.replace("https://",""))}</p>`
+        :`<div class="emptybox">${esc(t.noFact)}</div>`}
+    </div>
+
+    <details class="acc" id="accStats" ${state.accOpen.stats?"open":""}><summary>${esc(t.stats)}</summary><div class="acc-body"><p class="note" style="margin-top:0">${esc(t.statsNote)}</p>${buildStats(e)}</div></details>
+    <details class="acc" id="accRefs" ${state.accOpen.refs?"open":""}><summary>${esc(t.refs)}</summary><div class="acc-body">
+      <div class="links">${sourcesFor(e).map(([n,u])=>`<a href="${u}" target="_blank" rel="noopener">${esc(n)}</a>`).join("")}</div>
+      <p class="note" style="margin:.5rem 0 0">${esc(t.refMass)}<br>${esc(t.refName)}<br>${esc(t.refCrust)}<br>${esc(t.refLife)}</p></div></details>
+  </div>`;
+  $("#bClose").onclick=closeSheet;
+  const sv=document.querySelector("#sheet .bohr"), ba=$("#bAnim");
+  const syncAnim=()=>{ if(sv&&sv.pauseAnimations){ state.anim?sv.unpauseAnimations():sv.pauseAnimations(); } if(ba){ ba.innerHTML=state.anim?ICON.pause:ICON.play; ba.setAttribute("aria-pressed",state.anim); } };
+  syncAnim(); if(ba) ba.onclick=()=>{ state.anim=!state.anim; store.set("el_anim",state.anim); syncAnim(); };
+  ["Stats","Refs"].forEach(k=>{const d=$("#acc"+k); if(d) d.ontoggle=()=>{state.accOpen[k.toLowerCase()]=d.open}});
+  $("#bPrev").onclick=()=>step(-1); $("#bNext").onclick=()=>step(1);
+  $("#bRand").onclick=randomElement; $("#bFav").onclick=()=>toggleFav(e.sym);
+    const bf=$("#bFact"); if(bf) bf.onclick=()=>{state.factIdx++;renderSheet();$("#bFact")&&$("#bFact").focus()};
+}
+function step(d){
+  const e=BY_SYM[state.current.toLowerCase()]; const n=(e.z-1+d+EL.length)%EL.length; openElement(EL[n].sym);
+}
+/* ============ LEARN (Quiz / Flashcard) ============ */
+const learn={max:store.get("el_lv",20),flist:null,fcat:null,fdir:"s",timer:null,end:0,mode:null,kind:null,qs:[],i:0,score:0,picked:null,missed:[],deck:[],ci:0,flip:false};
+const inLv=x=>x.z<=learn.max;
+const ND=()=>learn.max<=20?2:3; // จำนวนตัวเลือกหลอก: ง่าย=2 (รวม 3 ตัวเลือก) อื่น ๆ=3 (รวม 4)
+const known=()=>store.get("el_known",[]);
+function markKnown(sym){const k=known(); if(!k.includes(sym)){k.push(sym); store.set("el_known",k)}}
+function updateLearnPill(){const el=$("#learnPill"); if(el) el.textContent=known().length+"/118"}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function learnShell(inner,mode,title,keep){
+  clearInterval(learn.timer); learn.mode=mode; state.current=null; applyTheme(null);
+  showOverlay();
+  $("#sheet").innerHTML=`<div class="bar lbar"><div>${mode!=="menu"?`<button class="ib" id="lBack" aria-label="${esc(T().L.menu)}" title="${esc(T().L.menu)}">${ICON.prev}</button>`:""}</div><h2 id="sheetTitle" class="sr">${esc(title||T().L.title)}</h2><div style="justify-self:end"><button class="ib" id="lClose" aria-label="${esc(T().close)}">${ICON.close}</button></div></div><div class="body${keep?"":" in"}">${inner}</div>`;
+  $("#lClose").onclick=closeSheet; const lb=$("#lBack"); if(lb) lb.onclick=learnMenu; if(!keep) $("#sheet").scrollTop=0; return $("#sheet");
+}
+function learnMenu(){
+  const L=T().L, wrong=store.get("el_wrong",{}), best=store.get("el_best",null), st=store.get("el_stats",{n:0,c:0}), bs=store.get("el_best_sprint",null), kn=known().length;
+  const w=Object.entries(wrong).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const tiles=st.n?[[st.n,L.answeredN],[Math.round(100*st.c/st.n)+"%",L.acc],...(best!==null?[[best+"/10",L.sBest]]:[]),...(bs!==null?[[bs,L.sprintS]]:[])]:[];
+  const modes=[["s2n",L.s2n,8],["n2s",L.n2s,30],["num",L.num,48],["cat",L.cat,150],["phase",L.phase,200],["hint",L.hintQ,228],["lat",L.latQ,275],["mix",L.mix,318],["sprint",L.sprint,345]];
+  learnShell(`<div class="card hero2"><div style="display:flex;align-items:baseline;justify-content:space-between;gap:.5rem"><span><span class="bignum">${kn}</span><span class="of">/118</span></span><span class="note">${esc(L.known)}</span></div><div class="pbar" aria-hidden="true"><i style="width:${Math.round(kn/118*100)}%"></i></div>${tiles.length?`<div class="stats3" style="grid-template-columns:repeat(${tiles.length},minmax(0,1fr))">${tiles.map(([v,l])=>`<div><b>${esc(v)}</b><span class="note">${esc(l)}</span></div>`).join("")}</div>`:`<p class="note" style="margin:.2rem 0 .9rem">${esc(L.startHint)}</p>`}<button class="btn primary bigbtn" id="lQuick">${ICON.play}<span>${esc(L.quick)}</span></button></div>
+  <div class="card"><h3>${esc(L.quiz)}</h3><div class="note" style="margin:.1rem 0 .4rem">${esc(L.lvH)}</div><div class="seg full" role="group" aria-label="${esc(L.lvH)}">${[[20,L.lvEasy],[54,L.lvMid],[118,L.lvAll]].map(([v,l])=>`<button data-lv="${v}" aria-pressed="${learn.max===v}">${esc(l)}</button>`).join("")}</div><p class="note" style="margin:.6rem 0 0">${esc(L["lvD"+learn.max]||"")}</p><div style="height:.6rem"></div><div class="modes">${modes.map(([k,l,h])=>`<button class="mode" data-q="${k}" style="border-left:5px solid hsl(${h} 60% 55%)">${esc(l)}<span class="note" style="display:block;font-weight:400">${esc(L["dm_"+k])}</span></button>`).join("")}</div></div>
+  <div class="card"><h3>${esc(L.flash)}</h3><div class="stack"><select id="lCat" class="btn" aria-label="${esc(L.deck)}"><option value="">${esc(L.allCats)}</option>${Object.keys(CATS).map(c=>`<option value="${c}">${esc(T().cat[c])}</option>`).join("")}</select><button class="btn primary" id="lFlash">${esc(L.start)}</button></div></div>
+  <div class="card"><h3>${esc(L.wrong)}</h3>${w.length?`<div class="row" id="lWrong"></div><p style="margin:.7rem 0 0" class="row"><button class="btn primary" id="lRevWrong">${esc(L.reviewWrong)}</button><button class="ib" id="lClear">${esc(L.clear)}</button></p>`:`<div class="emptybox">${esc(L.wrongEmpty)}</div>`}</div>`,"menu");
+  $("#lQuick").onclick=()=>startQuiz("mix");
+  document.querySelectorAll("[data-lv]").forEach(b=>b.onclick=()=>{learn.max=+b.dataset.lv; store.set("el_lv",learn.max); learnMenu()});
+  document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>startQuiz(b.dataset.q));
+  $("#lFlash").onclick=()=>startFlash($("#lCat").value||null);
+  const box=$("#lWrong"); if(box) w.forEach(([sym,n])=>{const e=BY_SYM[sym.toLowerCase()]; if(!e) return; const m=miniBtn(e); m.insertAdjacentHTML("beforeend",`<span class="badge">×${n}</span>`); box.appendChild(m)});
+  const rw=$("#lRevWrong"); if(rw) rw.onclick=()=>startFlashList(w.map(x=>x[0]));
+  const c=$("#lClear"); if(c) c.onclick=()=>{store.set("el_wrong",{});store.set("el_stats",{n:0,c:0});learnMenu()};
+  $("#sheet").focus();
+}
+// คำใบ้ของธาตุหนักยิ่งยวด (Z>=100) ซ้ำกันมาก จึงไม่นำมาออกข้อสอบแบบคำใบ้
+const hintOK=x=>!!FEATURED[x.sym]&&x.z<100;
+function buildQ(e,k){
+  if(k==="cat") return {e,k,ans:e.cat,opts:shuffle([e.cat,...shuffle(Object.keys(CATS).filter(c=>c!==e.cat)).slice(0,ND())])};
+  if(k==="phase") return {e,k,ans:e.phase,opts:["s","l","g"]};
+  if(k==="lat"){const a=LATIN[e.sym]; return {e,k,ans:a,opts:shuffle([a,...shuffle(Object.values(LATIN).filter(x=>x!==a)).slice(0,ND())])}}
+  const base=(k==="hint"?EL.filter(x=>x.cat!==e.cat&&hintOK(x)):EL).filter(inLv);
+  return {e,k,opts:shuffle([e,...shuffle(base.filter(x=>x.z!==e.z)).slice(0,ND())])};
+}
+function startQuiz(kind){
+  learn.kind=kind; learn.i=0; learn.score=0; learn.picked=null; learn.missed=[];
+  const sp=kind==="sprint", mk=["s2n","n2s","num"];
+  const pool=(kind==="lat"?Object.keys(LATIN).map(k=>BY_SYM[k.toLowerCase()]):kind==="phase"?EL.filter(x=>x.phase!=="u"):kind==="cat"?EL.filter(x=>x.z<104):kind==="hint"?EL.filter(hintOK):EL).filter(x=>kind==="lat"||inLv(x));
+  learn.qs=shuffle(pool).slice(0,sp?80:10).map(e=>buildQ(e,(kind==="mix"||sp)?mk[Math.floor(Math.random()*3)]:kind));
+  if(sp) learn.end=Date.now()+60000;
+  renderQ();
+}
+function isRight(q,i){return q.ans!==undefined?q.opts[i]===q.ans:q.opts[i].z===q.e.z}
+function optLabel(q,o){if(q.k==="lat") return o; if(q.k==="hint") return nameOf(o); if(q.k==="cat") return T().cat[o]; if(q.k==="phase") return T().phases[o]; return q.k==="s2n"?nameOf(o):q.k==="n2s"?o.sym:String(o.z)}
+function renderQ(){
+  const L=T().L;
+  if(learn.i>=learn.qs.length) return renderResult();
+  const q=learn.qs[learn.i], e=q.e, answered=learn.picked!==null, sp=learn.kind==="sprint";
+  const hf=FEATURED[e.sym], prompt=q.k==="s2n"||q.k==="lat"?e.sym:q.k==="hint"?hf[state.lang].sum+" "+hf[state.lang].use:nameOf(e), ptxt=q.k==="hint"?L.pHint:q.k==="lat"?L.pLat:q.k==="s2n"?L.pS2N:q.k==="n2s"?L.pN2S:q.k==="cat"?L.pCat:q.k==="phase"?L.pPh:L.pNum;
+  const right=answered&&isRight(q,learn.picked);
+  learnShell(`<div class="chips2"><span class="chip2">${sp?`<span class="timer" id="sTime"></span>`:`${esc(L.q)} ${learn.i+1}/${learn.qs.length}`}</span><span class="chip2">${esc(L.score)} ${learn.score}</span></div>
+   ${sp?"":`<div class="pbar" aria-hidden="true"><i style="width:${Math.round((learn.i+(answered?1:0))/learn.qs.length*100)}%"></i></div>`}
+   <div class="qbox"><div class="qprompt" id="qp" style="margin:0 0 .3rem;${q.k==="hint"?"font-size:1.2rem;font-weight:600":""}">${esc(prompt)}</div><div class="note">${esc(ptxt)}</div></div>
+   <div role="group" aria-labelledby="qp">${q.opts.map((o,i)=>{
+     const ok=answered&&isRight(q,i), bad=answered&&i===learn.picked&&!isRight(q,i);
+     return `<button class="opt ${ok?"ok":""} ${bad?"bad":""}" data-i="${i}" ${answered?"disabled":""}><span class="kb">${i+1}</span><span>${esc(optLabel(q,o))}${ok?" ✓":""}${bad?" ✗":""}</span></button>`}).join("")}</div>
+   ${answered&&!sp?`<div class="fb ${right?"ok":"bad"}" role="status"><b>${esc(right?L.ok:L.no)}</b> · ${esc(nameOf(e))} (${e.sym}, ${e.z})<div class="note" style="margin-top:.3rem">${esc(L.didYou)}: ${esc(((FEATURED[e.sym]||{facts:[{}]}).facts[0]||{})[state.lang]||"")}</div></div><button class="btn primary bigbtn" id="qNext"><span>${esc(learn.i+1>=learn.qs.length?L.finish:L.next)}</span>${ICON.next}</button>`:""}`,"quiz",null,answered);
+  document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>pickOpt(+b.dataset.i));
+  if(sp){
+    const tick=()=>{const left=Math.max(0,Math.ceil((learn.end-Date.now())/1000)); const el=$("#sTime"); if(el) el.textContent=left+" "+L.sec;
+      if(left<=0){clearInterval(learn.timer); if(learn.mode==="quiz") renderResult();}};
+    tick(); learn.timer=setInterval(tick,250);
+  }
+  const n=$("#qNext"); if(n){n.onclick=()=>{learn.i++;learn.picked=null;renderQ()};n.focus({preventScroll:true}); if(n.scrollIntoView) n.scrollIntoView({block:"nearest"})}
+}
+
+function pickOpt(i){
+  if(learn.mode!=="quiz"||learn.picked!==null) return;
+  const q=learn.qs[learn.i]; if(!q||i<0||i>=q.opts.length) return;
+  learn.picked=i;
+  const ok=isRight(q,i);
+  if(ok){learn.score++; markKnown(q.e.sym)}
+  else{ learn.missed.push(q.e.sym); const w=store.get("el_wrong",{}); w[q.e.sym]=(w[q.e.sym]||0)+1; store.set("el_wrong",w); }
+  const st=store.get("el_stats",{n:0,c:0}); st.n++; if(ok) st.c++; store.set("el_stats",st);
+  if(learn.kind==="sprint") setTimeout(()=>{ if(learn.mode==="quiz"&&learn.kind==="sprint"&&learn.picked!==null){learn.i++;learn.picked=null;renderQ()} },450);
+  renderQ();
+}
+function renderResult(){
+  const L=T().L, sp=learn.kind==="sprint", bk=sp?"el_best_sprint":"el_best", best=store.get(bk,null), done=learn.i+(learn.picked!==null?1:0), sc=learn.score, tier=sp?(sc>=15?3:sc>=10?2:sc>=5?1:0):(sc>=9?3:sc>=7?2:sc>=4?1:0);
+  if(best===null||learn.score>best) store.set(bk,learn.score);
+  const total=sp?done:learn.qs.length;
+  learnShell(`<div class="card resbox"><div class="stars" role="img" aria-label="${tier}/3">${[1,2,3].map(i=>i<=tier?ICON.starOn:ICON.star).join("")}</div>
+   <div class="bigscore">${sc}<span class="of">/${total}</span></div>
+   <p style="margin:0 0 .3rem;font-weight:600">${esc(L["msg"+tier])}${!sp&&sc===learn.qs.length?" · "+esc(L.perfect):""}</p>
+   <p class="note" style="margin:0">${esc(L.best)}: ${Math.max(best||0,sc)}${sp?"":"/10"}</p></div>
+   ${learn.missed.length?`<div class="card"><h3>${esc(L.missed)}</h3><div class="row" id="rMiss"></div></div>`:""}
+   <div class="stack"><button class="btn primary bigbtn" id="rAgain"><span>${esc(L.again)}</span></button>${learn.missed.length?`<button class="btn" id="rFlash">${esc(L.reviewWrong)}</button>`:""}<button class="btn" id="rMenu">${esc(L.menu)}</button></div>`,"result");
+  const box=$("#rMiss"); if(box) [...new Set(learn.missed)].forEach(x=>box.appendChild(miniBtn(BY_SYM[x.toLowerCase()])));
+  const rf=$("#rFlash"); if(rf) rf.onclick=()=>startFlashList([...new Set(learn.missed)]);
+  $("#rAgain").onclick=()=>startQuiz(learn.kind); $("#rMenu").onclick=learnMenu;
+}
+function startFlashList(syms){learn.flist=syms.map(x=>BY_SYM[String(x).toLowerCase()]).filter(Boolean); if(!learn.flist.length) return; startFlash()}
+function startFlash(cat){if(cat!==undefined){learn.fcat=cat;learn.flist=null} {const d=learn.flist||(learn.fcat?EL.filter(x=>x.cat===learn.fcat):EL), f=d.filter(inLv); learn.deck=shuffle(learn.flist||!f.length?d:f)}learn.ci=0;learn.flip=false;renderFlash()}
+function renderFlash(enter){
+  const L=T().L,t=T(),e=learn.deck[learn.ci], sd=learn.fdir==="s";
+  const symB=`<span class="sy">${e.sym}</span>`,nameB=`<span class="nm">${esc(nameOf(e))}</span>`,info=`<span class="note">${e.z} · ${esc(t.cat[e.cat])}</span><span class="note">${esc(altName(e))}</span><span>${esc(t.mass)}: ${esc(e.mass)}</span>`,hint=`<span class="note">${esc(L.flip)}</span>`;
+  const face=learn.flip?(sd?nameB+info:symB+info):(sd?symB:nameB)+hint;
+  learnShell(`<div class="pbar" aria-hidden="true"><i style="width:${Math.round((learn.ci+1)/learn.deck.length*100)}%"></i></div>
+   <button class="fcard${enter?" flipIn":""}" id="fc" style="--accent:${accentOf(e)}" aria-label="${esc(L.flip)}">${face}</button>
+   ${learn.flip?`<div class="two"><button class="btn" id="fNo">${esc(L.iUnsure)}</button><button class="btn primary" id="fYes">${esc(L.iKnow)}</button></div>`:""}
+   <div class="chips2"><button class="ib" id="fPrev" aria-label="${esc(t.prev)}">${ICON.prev}</button><span class="chip2" aria-live="polite">${learn.ci+1}/${learn.deck.length}</span><button class="ib" id="fNext" aria-label="${esc(t.next)}">${ICON.next}</button></div>
+   <div class="row" style="justify-content:center"><button class="ib" id="fShuf">${esc(L.shuffle)}</button><button class="ib" id="fDir">${esc(learn.fdir==="s"?L.fdirS:L.fdirN)}</button></div>`,"flash");
+  $("#fc").onclick=()=>{ if(RM()){learn.flip=!learn.flip;renderFlash();return} $("#fc").classList.add("flipOut"); setTimeout(()=>{learn.flip=!learn.flip;renderFlash(true)},170); };
+  $("#fPrev").onclick=()=>fStep(-1); $("#fNext").onclick=()=>fStep(1); $("#fShuf").onclick=()=>startFlash(); $("#fDir").onclick=()=>{learn.fdir=learn.fdir==="s"?"n":"s";learn.flip=false;renderFlash()};
+  const y=$("#fYes"),n=$("#fNo"); if(y) y.onclick=()=>fMark(true); if(n) n.onclick=()=>fMark(false);
+  $("#fc").focus({preventScroll:true});
+}
+function fMark(ok){ const e=learn.deck[learn.ci]; if(ok) markKnown(e.sym); else { const w=store.get("el_wrong",{}); w[e.sym]=(w[e.sym]||0)+1; store.set("el_wrong",w); } fStep(1); }
+function fStep(d){ if(learn.mode!=="flash") return; learn.ci=(learn.ci+d+learn.deck.length)%learn.deck.length; learn.flip=false; renderFlash(); }
+
+/* ============ ROUTING ============ */
+function route(){
+  const h=location.hash||"";
+  let m=h.match(/^#\/element\/([A-Za-z]{1,3})$/);
+  if(m){ openElement(m[1],{noHash:true}); return }
+  if(h==="#/random"){ randomElement(); return }
+  if(h==="#/learn"){ learnMenu(); return }
+  if(!$("#overlay").hidden && !h){ /* leave open */ }
+}
+
+/* ============ EVENTS ============ */
+function bind(){
+  { const sh=$("#sheet"); let ty=null, dy=0, lastY=0, lastT=0, vel=0;
+    const ov=$("#overlay");
+    sh.addEventListener("touchstart",ev=>{
+      if(!ev.target.closest(".bar")) return;
+      const t=ev.touches[0];
+      ty=t.clientY; dy=0; lastY=ty; lastT=performance.now(); vel=0;
+      sh.style.transition="none"; sh.style.animation="none";
+      if(ov) ov.style.transition="none";
+    },{passive:true});
+    sh.addEventListener("touchmove",ev=>{
+      if(ty===null) return;
+      const t=ev.touches[0], now=performance.now();
+      dy=Math.max(0, t.clientY-ty);
+      // rubber-band resistance past mid-screen
+      const resist = dy>180 ? 180+(dy-180)*0.35 : dy;
+      const dt=Math.max(1, now-lastT);
+      vel=(t.clientY-lastY)/dt; lastY=t.clientY; lastT=now;
+      sh.style.transform="translate3d(0,"+resist+"px,0)";
+      if(ov) ov.style.opacity=String(Math.max(0.25, 1-resist/420));
+    },{passive:true});
+    sh.addEventListener("touchend",()=>{
+      if(ty===null) return;
+      const dismiss = dy>120 || (dy>48 && vel>0.45);
+      sh.style.transition="transform .38s cubic-bezier(.32,.72,0,1), opacity .28s ease";
+      if(ov) ov.style.transition="opacity .32s cubic-bezier(.32,.72,0,1)";
+      if(dismiss){
+        sh.style.transform="translate3d(0,110%,0)";
+        if(ov) ov.style.opacity="0";
+        closeSheet();
+      } else {
+        sh.style.transform="";
+        if(ov) ov.style.opacity="";
+      }
+      ty=null; dy=0; vel=0;
+      setTimeout(()=>{ if(sh) sh.style.animation=""; }, 400);
+    },{passive:true});
+    // cancel if touch leaves
+    sh.addEventListener("touchcancel",()=>{
+      if(ty===null) return;
+      sh.style.transition="transform .32s cubic-bezier(.32,.72,0,1)";
+      sh.style.transform=""; if(ov){ ov.style.transition="opacity .28s ease"; ov.style.opacity=""; }
+      ty=null;
+    },{passive:true});
+  }
+  $("#q").addEventListener("input",ev=>{state.query=ev.target.value;updateDim();renderResults()});
+  $("#q").addEventListener("keydown",ev=>{
+    if(ev.key==="ArrowDown"){ev.preventDefault();moveRes(1)}
+    else if(ev.key==="ArrowUp"){ev.preventDefault();moveRes(-1)}
+    else if(ev.key==="Enter"){const it=document.querySelectorAll(".res")[Math.max(state.activeRes,0)]; if(it){ev.preventDefault();closeResults();openElement(it.dataset.sym)}}
+    else if(ev.key==="Escape"){closeResults()}
+  });
+  $("#qClear").onclick=()=>{state.query="";$("#q").value="";updateDim();renderResults();$("#q").focus()};
+  document.addEventListener("click",ev=>{ if(!ev.target.closest(".search")) closeResults() });
+  $("#heat").onchange=ev=>{state.heat=ev.target.value||null;applyHeat()};
+  $("#btnQuick").onclick=()=>{state.lastFocus=$("#btnQuick");startQuiz("mix")};
+  $("#btnLearn").onclick=()=>{state.lastFocus=$("#btnLearn");learnMenu()};
+  $("#btnRandom").onclick=()=>{state.lastFocus=$("#btnRandom");randomElement()};
+  $("#btnLang").onclick=()=>setLang(state.lang==="th"?"en":"th");
+  $("#btnDark").onclick=()=>setDark(!state.dark);
+  $("#overlay").addEventListener("click",ev=>{ if(ev.target.id==="overlay") closeSheet() });
+  document.addEventListener("keydown",ev=>{
+    if($("#overlay").hidden){
+      if(ev.key==="/" && document.activeElement!==$("#q")){ev.preventDefault();$("#q").focus()}
+      return;
+    }
+    if(ev.key==="Escape"){closeSheet()}
+    else if(learn.mode==="quiz"&&/^[1-4]$/.test(ev.key)){pickOpt(+ev.key-1)}
+    else if(learn.mode==="flash"&&ev.key==="ArrowRight"){fStep(1)}
+    else if(learn.mode==="flash"&&ev.key==="ArrowLeft"){fStep(-1)}
+    else if(ev.key==="ArrowRight"&&state.current&&!ev.target.closest("input")){step(1)}
+    else if(ev.key==="ArrowLeft"&&state.current&&!ev.target.closest("input")){step(-1)}
+    else if(ev.key==="Tab"){ // focus trap
+      const f=[...$("#sheet").querySelectorAll("button,a[href]")].filter(n=>!n.disabled); if(!f.length) return;
+      const first=f[0],last=f[f.length-1];
+      if(ev.shiftKey&&(document.activeElement===first||document.activeElement===$("#sheet"))){ev.preventDefault();last.focus()}
+      else if(!ev.shiftKey&&document.activeElement===last){ev.preventDefault();first.focus()}
+    }
+  });
+  window.addEventListener("hashchange",route);
+}
+function setLang(l){
+  state.lang=l; store.set("el_lang",l);
+  renderStatic(); renderHeatSelect(); renderLegend(); renderTable(); renderLists(); renderResults();
+  if(state.current) renderSheet();
+  else if(learn.mode==="menu") learnMenu(); else if(learn.mode==="quiz") renderQ(); else if(learn.mode==="flash") renderFlash(); else if(learn.mode==="result") renderResult();
+}
+
+/* ============ INIT ============ */
+function init(){
+  setDark(!!state.dark); renderStatic(); renderHeatSelect(); renderLegend(); renderTable(); renderLists(); bind(); route();
+  if(!storageOK) toast(T().errStore);
+}
+init();
+</script>
+</body>
+</html>
